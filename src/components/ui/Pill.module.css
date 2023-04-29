@@ -1,0 +1,9 @@
+.pill{
+background-color: transparent;
+border: 2px solid;
+border-radius: 12px;
+padding:1% 2% ;
+font-weight: bold;
+margin-top: 5px;
+height: max-content;
+}

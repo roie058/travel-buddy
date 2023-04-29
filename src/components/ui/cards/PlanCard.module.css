@@ -1,0 +1,102 @@
+@import url('https://fonts.googleapis.com/css2?family=Heebo:wght@400;700&display=swap');
+
+.card{
+background-color:#FFFFFF ;
+border: rgba(0, 0, 0, 0.3) solid 1px inset;
+font-family: 'Heebo', sans-serif;
+border-radius: 12px;
+display: flex;
+flex-direction: column;
+box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
+width: 300px;
+transition: 0.3s ease transform;
+position: relative;
+}
+
+.new_card:hover,.card:hover {
+    transform: scale(1.1);
+}
+
+
+.new_card{
+    background-color:#ffffff00 ;
+    border: rgba(0, 0, 0, 0.3) solid 1px inset;
+    font-family: 'Heebo', sans-serif;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+  align-items: center;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
+    width: 300px;
+    height: 471px;
+    transition: 0.3s ease transform;
+}
+
+.new_card .btn{
+margin-top: 40%;
+
+width: 80%;
+
+}
+.main_img{
+    width: 300px;
+    height: 150px;
+    box-shadow: 0px 10px 15px 0px #00000040;
+border-top-left-radius: 12px;
+border-top-right-radius: 12px;
+}
+
+.place{
+margin: 10% 10% 0 10%;
+font-weight: bold;
+font-size: 1.5rem;
+text-transform: capitalize;
+}
+
+.dates{
+    margin: 0 10% 5% 10%;
+  color: rgba(53, 53, 53, 0.8);
+   font-weight: bold;
+    }
+
+    .btn{
+margin: 5% 15%;
+width: 80%;
+border-radius: 30px;
+
+    }
+
+
+    .tags{
+    
+display: flex;
+gap: 5%;
+flex-wrap: wrap;
+height: 75px;
+
+margin: 0 10% 5% 10%;
+    }
+
+    .deleteBtn{
+    position:absolute;
+    right: 10%;
+    top: 5%;
+        padding: 0;
+        border: none;
+    background-color: rgba(255, 255, 255, 0.507);
+    transition: 0.3s ease transform;
+    cursor: pointer;
+    border-radius: 5px;
+    
+    }
+
+    .deleteBtn:hover{
+    
+      
+    transform: scale(1.1);
+    }
+
+    .deleteBtn:hover img{
+        
+   
+      }

@@ -1,0 +1,87 @@
+.day{
+    width: 100%;
+    padding: 3%;
+display: flex;
+flex-direction: column;
+align-items: center;
+background-image: linear-gradient(to bottom, #002353, #032859, #062c60, #0a3166, #0e366d);
+border-radius: 15px;
+height: 70vh;
+}
+
+.dayOpen{
+    width: 30%;
+    padding: 3%;
+display: flex;
+flex-direction: column;
+align-items: center;
+background-image: linear-gradient(to bottom, #002353, #032859, #062c60, #0a3166, #0e366d);
+height: 70vh;
+border-top-left-radius: 15px;
+border-bottom-left-radius: 15px;
+}
+
+.container{
+    display: flex;
+    width: 100%;
+    position: relative;
+}
+
+.daySummery{
+    cursor: pointer;
+position: absolute;
+right:-15px;
+top: -15px;
+background-color: white;
+border-radius: 40px;
+width: 30px;
+height: 30px;
+padding: 1px;
+background-image: url('/images/arrow.svg');
+background-size:contain;
+
+background-repeat: no-repeat;
+background-position: center;
+border: 0.5px solid #b9b9b971;
+}
+
+
+
+.daySummeryFliped{
+    cursor: pointer;
+    position: absolute;
+    right:-15px;
+    top: -15px;
+    background-color: white;
+    border-radius: 40px;
+    width: 30px;
+    height: 30px;
+    padding: 1px;
+    background-image: url('/images/rightArrow.svg');
+    background-size:contain;
+
+
+    background-repeat: no-repeat;
+    background-position: center;
+    border: 0.5px solid #b9b9b971;
+    }
+
+    @media screen and (max-width: 700px) {
+        .dayOpen{
+            width: 94%;
+            padding: 3%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background-image: linear-gradient(to bottom, #002353, #032859, #062c60, #0a3166, #0e366d);
+        height: min-content;
+        border-top-left-radius: 15px;
+        border-bottom-left-radius: 15px;
+        }
+        .container{
+            display: flex;
+            width: 100%;
+            flex-direction: column;
+            position: relative;
+        }
+    }

@@ -1,0 +1,32 @@
+.daylist{
+width: 100%;
+
+overflow-y: scroll;
+
+}
+
+
+.newBtn{
+    border: solid 1px #0000002d;
+    color: #9b9b9bc2;
+    background-color: white;
+    padding: 1%;
+    padding-left: 2%;
+}
+
+.firstNewBtn{
+    border: solid 1px #0000002d;
+    color: #9b9b9bc2;
+    background-color: white;
+    padding: 10%;
+    padding-left: 2%;
+    font-size: larger;
+}
+
+
+
+.newBtn:hover, .firstNewBtn:hover{
+    cursor: pointer;
+    background-color: rgb(245, 245, 245);
+    
+    }

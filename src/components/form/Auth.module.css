@@ -1,0 +1,27 @@
+.background{
+    align-content: center;
+justify-items: center;
+    flex-direction: column;
+    display: grid;
+    background-color: #FAFAFA;
+    min-height:calc(100vh - 60px) ;
+    height: 100%;
+width: 100%;
+
+
+}
+
+.form{
+    width: 80%;
+display: flex;
+justify-content: center;
+flex-direction: column;
+gap: 15px;
+}
+
+.changeForm:hover{
+color: blue;
+text-decoration-color: blue;
+cursor: pointer;
+
+}

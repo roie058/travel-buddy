@@ -1,0 +1,20 @@
+.header{
+font-size: 1rem;
+margin: 0;
+
+
+}
+
+.address{
+font-size: 0.8rem;
+margin: 0;
+
+}
+
+.diractions{
+display: flex;
+flex-direction: row-reverse;
+justify-content: space-evenly;
+color: #9B9B9BCC;
+
+}

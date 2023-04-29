@@ -1,0 +1,15 @@
+.addBtn{
+    border:  solid 1px #0000002d;
+    color: #9b9b9bc2;
+    background-color: white;
+    
+    width:calc( 100% - 2px);
+    padding: 1% 0;
+    margin: 0;
+}
+
+.addBtn:hover{
+cursor: pointer;
+background-color: rgb(245, 245, 245);
+
+}

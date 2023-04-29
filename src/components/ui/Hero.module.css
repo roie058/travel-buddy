@@ -1,0 +1,85 @@
+@import url('https://fonts.googleapis.com/css2?family=Glory&family=Kavoon&display=swap');
+
+
+.box{
+
+background-color: white;
+margin: 2% 20% 5% 20%;
+border: 2px solid #0075FF4D ;
+border-radius: 12px;
+box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
+
+text-align: center;
+position: relative;
+padding: 2% 0;
+
+}
+
+.content{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.header{
+    font-family: 'Kavoon', cursive;
+font-size: 2rem;
+
+}
+.peragraph{
+    font-family: 'Glory', sans-serif;
+padding:0 5%;
+font-size: 1.2rem;
+margin-bottom: 10%;
+
+}
+
+.bottom_text{
+    font-family: 'Glory', sans-serif;
+    padding:0 10%;
+    font-weight: bold;
+    font-size: 1.4rem;
+
+    
+}
+
+.logo{
+    position: absolute;
+right: 90%;
+top:45%;
+flex-basis: 1;
+width:230px;
+ height:230px;
+
+}
+
+@media screen and (max-width: 800px) {
+    .box{
+        margin: 5% ;
+        padding: 2% 0;  
+        }
+        
+        
+        .header{
+        font-size: 1.5rem;  
+        }
+        .peragraph{
+        padding:0 5%;
+        font-size: 1rem;
+        margin-bottom: 10%;
+        }
+        
+        .bottom_text{
+            padding:0 10%;
+            font-weight: bold;
+            font-size: 1.2rem;   
+        }
+        
+        .logo{
+      position: static;
+      width: 150px;
+      height: 150px;
+        flex-basis: 1;
+        }
+}
