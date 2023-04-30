@@ -40,7 +40,7 @@ margin: 0 10px;
 
 
 .selected_link{
-font-family: Heebo;
+font-family: Heebo ,Roboto, Helvetica, Arial, sans-serif;
 text-decoration: none;
 border-radius: 10%;
 
