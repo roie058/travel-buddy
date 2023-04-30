@@ -63,7 +63,7 @@ console.log(`to ${formData.dayType}`);
           {props.place.location_id?
     <PlaceItemDetailCard place={props.place}/>
     : 
-    <Card sx={{backgroundImage:'url(/images/paper.jpg)'}}>
+    <Card sx={{backgroundColor:"peachpuff"}}>
       
        <CardContent sx={{width:'100%'}}  >
     <Box  sx={{cursor:'pointer'}} display={"flex"} justifyContent="space-between">

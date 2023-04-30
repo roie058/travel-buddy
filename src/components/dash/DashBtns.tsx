@@ -25,7 +25,7 @@ const DashBtns = (props: Props) => {
   return (
     <>
     <Link href={`/plans/${query.planId}/schedule`}>
-<Card    sx={{flexGrow:'3',minHeight:'16vh',position:'relative',backgroundImage:'url(/images/schedule.jpg)',backgroundPosition:'center',backgroundRepeat:"no-repeat",backgroundSize:"cover",}} >
+<Card    sx={{flexGrow:'3',minHeight:'16vh',position:'relative',backgroundImage:'url(/images/schedule.webp)',backgroundPosition:'center',backgroundRepeat:"no-repeat",backgroundSize:"cover",}} >
 <CardHeader   titleTypographyProps={{textAlign:'center',color:'white'}} title="Schedule"></CardHeader>
 
     </Card>
@@ -38,25 +38,25 @@ const DashBtns = (props: Props) => {
         onClick={handleClickModal}
         sx={{padding:'0'}}
       >
-    <Card sx={{flexGrow:'3',minHeight:'16vh' ,position:'relative',backgroundImage:'url(/images/editplan.jpg)',backgroundPosition:'center',backgroundRepeat:"no-repeat",backgroundSize:"cover",}} >
+    <Card sx={{flexGrow:'3',minHeight:'16vh' ,position:'relative',backgroundImage:'url(/images/editplan.webp)',backgroundPosition:'center',backgroundRepeat:"no-repeat",backgroundSize:"cover",}} >
       
 <CardHeader titleTypographyProps={{textAlign:'center',color:'white'}} title="Edit Plan"></CardHeader>
     </Card>
     </Button> 
     <Link href={`/plans/${query.planId}/flights`}>
-    <Card sx={{flexGrow:'3',minHeight:'16vh',position:'relative',backgroundImage:'url(/images/flights.jpg)',backgroundPosition:'center',backgroundRepeat:"no-repeat",backgroundSize:"cover"}}>
+    <Card sx={{flexGrow:'3',minHeight:'16vh',position:'relative',backgroundImage:'url(/images/flights.webp)',backgroundPosition:'center',backgroundRepeat:"no-repeat",backgroundSize:"cover"}}>
     
 <CardHeader titleTypographyProps={{textAlign:'center',color:'white'}} title="Flights"></CardHeader>
     </Card>
     </Link>
     <Link href={`/plans/${query.planId}/hotels`}>
-    <Card sx={{flexGrow:'3',minHeight:'16vh',position:'relative',backgroundImage:'url(/images/hotels.jpg)',backgroundPosition:'center',backgroundRepeat:"no-repeat",backgroundSize:"cover"}}>
+    <Card sx={{flexGrow:'3',minHeight:'16vh',position:'relative',backgroundImage:'url(/images/hotels.webp)',backgroundPosition:'center',backgroundRepeat:"no-repeat",backgroundSize:"cover"}}>
     
 <CardHeader titleTypographyProps={{textAlign:'center',color:'white'}} title="Hotels"></CardHeader>
     </Card>
     </Link>
     <Link href={`/plans/${query.planId}/hotels`}>
-    <Card sx={{flexGrow:'3',minHeight:'16vh',position:'relative',backgroundImage:'url(/images/weather.jpg)',backgroundPosition:'center',backgroundRepeat:"no-repeat",backgroundSize:"cover"}}>
+    <Card sx={{flexGrow:'3',minHeight:'16vh',position:'relative',backgroundImage:'url(/images/weather.webp)',backgroundPosition:'center',backgroundRepeat:"no-repeat",backgroundSize:"cover"}}>
     
 <CardHeader titleTypographyProps={{textAlign:'center',color:'white'}} title="Weather"></CardHeader>
     </Card>
