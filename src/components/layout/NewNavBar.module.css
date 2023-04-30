@@ -51,7 +51,7 @@ color: rgb(126, 221, 245);
 
 .link{
     text-decoration: none;
-    font-family: Heebo;
+    font-family: Heebo,Roboto, Helvetica, Arial, sans-serif;
 color: black;
 }
 
