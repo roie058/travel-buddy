@@ -19,7 +19,7 @@ const {userId}=req.body
 //if(!userNotGoogle){return res.status(409).json({error:'user is logged in from google'})}
 //else{
 try {
-
+// @ts-ignore
      const userPlans=await Plan.find({author:userId}).populate({ 
           path: 'liked',
            populate: [{
@@ -64,6 +64,7 @@ try {
           const {userId,populate}=req.query
           try {
           if(populate){
+               // @ts-ignore
                const userPlans=await Plan.find({author:userId}).populate({ 
                     path: 'liked',
                      populate: [{
@@ -80,6 +81,7 @@ try {
                  })
                  return res.status(200).json({success:true,plans:userPlans})
                }else{
+                    // @ts-ignore
                     const userPlans=await Plan.find({author:userId})
                       return res.status(200).json({success:true,plans:userPlans})
                }

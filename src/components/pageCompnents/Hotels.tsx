@@ -7,7 +7,7 @@ import React, {  useEffect, useState } from 'react'
 import axios, { AxiosError } from 'axios'
 import { useSession } from 'next-auth/react'
 import { Plan } from './Schedule'
-import { NewSesstion } from '@/pages/api/auth/[...nextauth]'
+import { NewSesstion } from '@/pages/api/auth/signup'
 
 
 

@@ -19,6 +19,7 @@ if(!req.query)return res.status(400).json({error:'data is missing'})
 const {userId}=req.query
 
 try {
+    // @ts-ignore
     const plans=await Plan.find({author:userId})
          return res.status(200).json({success:true,count:plans.length})
 

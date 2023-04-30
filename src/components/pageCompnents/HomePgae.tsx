@@ -8,7 +8,7 @@ import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import {useSession} from 'next-auth/react'
 import axios, { AxiosError } from 'axios'
-import { NewSesstion } from '@/pages/api/auth/[...nextauth]'
+import { NewSesstion } from '@/pages/api/auth/signup'
 
 
 

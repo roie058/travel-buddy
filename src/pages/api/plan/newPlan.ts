@@ -37,13 +37,13 @@ return {
 }})
 
 
-
-const userNotGoogle=await User.findOne({userId})
+// @ts-ignore
+//const userNotGoogle=await User.findOne({userId})
 
 try {
 
 //const DayDocArr=await Day.create({})
-
+// @ts-ignore
     const data=await Plan.create({country:city.length>=1?city+', '+country :country,tags:type,header:title,start,end,image,author:userId,days,budget:{transportation:[],expenses:[],budget},hotels:[],flights:[]}) 
 
     

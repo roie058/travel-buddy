@@ -21,6 +21,7 @@ if(!req.query)return res.status(400).json({error:'data is missing'})
 const {planId,hotelId}=req.query
 
 try {
+    // @ts-ignore
 const plan=await Plan.findById(planId)
 const hotelIndex=plan.hotels.findIndex((hotel:Hotel)=>hotel._id===hotelId)
 plan.hotels.splice(hotelIndex,1)

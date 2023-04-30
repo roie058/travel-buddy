@@ -16,7 +16,8 @@ import { FieldValues, SubmitHandler } from 'react-hook-form/dist/types'
 import axios, { AxiosError } from 'axios'
 import {useRouter} from 'next/router'
 import Image from 'next/image'
-import { NewSesstion } from '@/pages/api/auth/[...nextauth]'
+
+import { NewSesstion } from '@/pages/api/auth/signup'
 
  type Props = {}
 

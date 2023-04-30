@@ -21,6 +21,7 @@ if(!req.query)return res.status(400).json({error:'data is missing'})
 const {planId,expenseId,expenseType}=req.query
 
 try {
+    // @ts-ignore
 const plan=await Plan.findById(planId)
 
 const expenseIndex=plan.budget[expenseType].findIndex((expense:Expense)=>expense._id===expenseId)

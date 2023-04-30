@@ -29,6 +29,7 @@ return {...day,budget:Number(data.budget)? Math.round(Number(data.budget)/data.d
 
 try {
     //const updated=await Plan.findByIdAndUpdate(data._id,{...data,days})
+    // @ts-ignore
     const plan=await Plan.findById(data._id)
     if(isDateChange){
 const dateArr=new Set(plan.days.map((day:Days)=>day.date))
@@ -52,11 +53,11 @@ return {...plan.days.find((day:Days)=>day.date===date),weather:dailyWeather.temp
     }
 
 
+plan.days=days
+plan.save()
 
 
-
-
-         return res.status(201).json({success:true,updated})
+         return res.status(201).json({success:true,plan})
 
 } catch (error) {
     if(error&&error instanceof mongoose.Error.ValidationError){

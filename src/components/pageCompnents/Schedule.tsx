@@ -5,7 +5,7 @@ import { RoutineItem } from '@/components/ui/calender/DayList'
 
 import { PlanContext } from '@/context/plan-context'
 import { IPlace } from '@/dummyData'
-import { NewSesstion } from '@/pages/api/auth/[...nextauth]'
+import { NewSesstion } from '@/pages/api/auth/signup'
 import {  Grid} from '@mui/material'
 
 import axios, { AxiosError } from 'axios'

@@ -19,6 +19,7 @@ if(!req.query)return res.status(400).json({error:'data is missing'})
 const {planId,flightId}=req.query
 
 try {
+    // @ts-ignore
 const plan=await Plan.findById(planId)
 const flightIndex=plan.flights.findIndex((flight)=>flight._id===flightId)
 plan.flights.splice(flightIndex,1)

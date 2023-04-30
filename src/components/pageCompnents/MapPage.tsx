@@ -13,7 +13,7 @@ import { useSession } from 'next-auth/react'
 
 import { useEffect, useState } from 'react'
 import { Plan } from './Schedule'
-import { NewSesstion } from '@/pages/api/auth/[...nextauth]'
+import { NewSesstion } from '@/pages/api/auth/signup'
 
 
 

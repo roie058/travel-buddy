@@ -3,6 +3,7 @@ import dbConnect from "lib/dbConnect"
 import User from "models/User"
 import mongoose from "mongoose"
 import { NextApiRequest, NextApiResponse } from "next"
+import { DefaultSession } from "next-auth"
 
 export interface IUser{
     _id:string,
@@ -11,6 +12,13 @@ export interface IUser{
     fullName:string
 }
 
+export interface NewSesstion extends DefaultSession  {
+    user?:DefaultSession['user']&{
+      id?:string
+    }
+    expires:DefaultSession["expires"]|undefined
+    
+    }
 
  const handler = async (req:NextApiRequest,res:NextApiResponse)=>{
 dbConnect().catch(err=>res.json(err))
@@ -18,12 +26,14 @@ if(req.method==='POST'){
 if(!req.body)return res.status(400).json({error:'data is missing'})
 
 const {fullName,email,password}=req.body
+// @ts-ignore
 const userExist=await User.findOne({email})
 if(userExist){return res.status(409).json({error:'user is already exists'})}
 else{
     if(password.length<6)return res.status(409).json({error:'Password must be at least six characters long'})
 const hashedPassword= await hash(password,12)
 try {
+    // @ts-ignore
     const data=await User.create({fullName,email,password:hashedPassword}) 
 
     const user={

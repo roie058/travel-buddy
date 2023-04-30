@@ -19,14 +19,17 @@ if(!req.body)return res.status(400).json({error:'data is missing'})
 const {planId,index,listItem,position}=req.body
 
 try {
+    // @ts-ignore
 const plan=await Plan.findById(planId)
 
 
 if(listItem.place){
+    // @ts-ignore
     const place=await Place.findById(listItem.place._id)
     const newListItem=await {...listItem,place:place}
     await plan.days[index].rutine.push(newListItem)
 }else{
+    // @ts-ignore
     const place=await Place.findById(listItem._id)
      plan.days[index][position]=place
 }
@@ -52,6 +55,7 @@ await plan.save()
     const {dragId,index,planId,placeId,position}=req.query
     try {
         //{$pull:{path:`days[${index}].rutine`,'dragId':dragId}}
+        // @ts-ignore
         const plan=await Plan.findById(planId)
         await Place.findOneAndDelete({_id:placeId,location_id:null})
   

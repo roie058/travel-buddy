@@ -21,7 +21,7 @@ const {position,planId,index,place,budget,dragId}=req.body
 
 
 try {
-    
+    // @ts-ignore
   const plan=await Plan.findById(planId)
   const placeIndex=plan.days[index].rutine.findIndex((place:RoutineItem)=>place.dragId==dragId)
 //no dragId
@@ -36,6 +36,7 @@ if(lastPosition){
 }
  
   if(position&& position !== 0){
+    // @ts-ignore
     const docPlace=await Place.findById(place._id)
     if(plan.days[index][position] && plan.days[index][position]!== place._id ){
 

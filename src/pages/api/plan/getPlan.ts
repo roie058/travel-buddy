@@ -18,7 +18,7 @@ if(!req.query)return res.status(400).json({error:'data is missing'})
 const {userId,planId}=req.query
 
 try {
-
+// @ts-ignore
      const userPlan=await Plan.findById(planId).populate({ 
           path: 'liked',
            populate: [{

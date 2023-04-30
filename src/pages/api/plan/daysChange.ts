@@ -18,6 +18,7 @@ if(!req.body)return res.status(400).json({error:'data is missing'})
 const {plan:newPlan}=req.body
 
 try {
+    // @ts-ignore
 const plan=await Plan.findByIdAndUpdate(newPlan._id,{days:newPlan.days})
 
          return res.status(201).json({success:true,plan})

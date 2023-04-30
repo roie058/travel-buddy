@@ -9,6 +9,7 @@ export default async function handler (req:NextApiRequest, res:NextApiResponse) 
   switch (method) {
     case 'GET':
       try {
+        // @ts-ignore
         const users = await User.find({})
         res.status(200).json({ success: true, data: users })
       } catch (error) {
@@ -17,6 +18,7 @@ export default async function handler (req:NextApiRequest, res:NextApiResponse) 
       break
     case 'POST':
       try {
+        // @ts-ignore
         const user = await User.create(req.body)
         res.status(201).json({ success: true, data: user })
       } catch (error) {

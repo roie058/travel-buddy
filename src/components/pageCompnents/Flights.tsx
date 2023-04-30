@@ -1,7 +1,7 @@
 import FlightAdd from '@/components/flights/FlightAdd'
 import MyFlights from '@/components/flights/MyFlights'
 import SkyScanner from '@/components/flights/SkyScanner'
-import { NewSesstion } from '@/pages/api/auth/[...nextauth]'
+import { NewSesstion } from '@/pages/api/auth/signup'
 import { CircularProgress, Grid } from '@mui/material'
 import axios, { AxiosError } from 'axios'
 import { useSession } from 'next-auth/react'

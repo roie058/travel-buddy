@@ -5,7 +5,7 @@ import styles from '../../styles/Plans.module.css'
 import {useSession} from 'next-auth/react'
 import axios, { AxiosError } from 'axios'
 
-import { NewSesstion } from '@/pages/api/auth/[...nextauth]'
+import { NewSesstion } from '@/pages/api/auth/signup'
 
 
 

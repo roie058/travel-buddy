@@ -19,6 +19,7 @@ const {flight,planId}=req.body
 
 try {
     console.log('here1');
+    // @ts-ignore
 const plan=await Plan.findById(planId)
 console.log(plan);
 

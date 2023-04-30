@@ -20,6 +20,7 @@ if(!req.query)return res.status(400).json({error:'data is missing'})
 
 const {planId,index,location}=req.query
 try {
+    // @ts-ignore
     const plan=await Plan.findById(planId)
  const date= moment(new Date(plan.days[Number(index)].date)).format('YYYY-MM-DD');
     

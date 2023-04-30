@@ -25,8 +25,9 @@ if(req.body.category){
 const {place,planId,category}:{place:IPlace,planId:string,category:string}=req.body
 
 
-
+// @ts-ignore
 const isExist=await Place.findOne({location_id:place.location_id})
+// @ts-ignore
 const plan =await Plan.findById(planId)
 
 if(isExist&&plan){
@@ -52,6 +53,7 @@ await plan.save()
 
 try {
 const likedId=[plan,]
+// @ts-ignore
     const newPlace=await Place.create({likedId:likedId,...place}) 
    await plan.liked[category].push(newPlace);
   await plan.save()
@@ -75,6 +77,7 @@ const likedId=[plan,]
 }else{
 const {place}=req.body
 try {
+  // @ts-ignore
 const newPlace=await Place.create(place)
 return res.status(201).json({success:true,newPlace})
 } catch (error) {
@@ -88,8 +91,9 @@ return res.status(201).json({success:true,newPlace})
   if(!req.body)return res.status(400).json({error:'data is missing'})
 try {
   const {place,planId,category}:{place:IPlace,planId:string,category:string}=req.body
+  // @ts-ignore
   const doc=await Place.findOneAndUpdate({location_id:place.location_id},{$pull:{likedId:planId}},{ safe: true })
- 
+ // @ts-ignore
   const plan =await Plan.findByIdAndUpdate(planId,{$pull:{['liked.'+category]:doc._id}},{ safe: true })
   const hotelIndex=plan.hotels.findIndex((hotel:Hotel)=>hotel.place._id===doc._id)
   plan.hotels.splice(hotelIndex,1)

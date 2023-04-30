@@ -18,6 +18,7 @@ if(!req.body)return res.status(400).json({error:'data is missing'})
 const {data,planId}=req.body
 
 try {
+    // @ts-ignore
 const plan=await Plan.findById(planId)
  plan.budget[data.position].push({category: data.category,name:data.name,price:data.price})
  await plan.save()
