@@ -21,11 +21,12 @@ if(cur.active==="Y"&&cur.iata.length>1){
     return  [...prev,{name:cur.name,iata:cur.iata,country:cur.country}]
 }else return prev
 },[])
+
 function getAirportLocation(iata:string){
- 
-    for (const property in airports) {
-        if(airports[property].iata == iata ){
-           return {lat:airports[property].lat,lng:airports[property].lon}
+const newAirports=JSON.parse(JSON.stringify(airports))
+    for (const property in newAirports) {
+        if(newAirports[property].iata == iata ){
+           return {lat:newAirports[property].lat,lng:newAirports[property].lon}
         
       }
     }

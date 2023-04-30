@@ -51,7 +51,7 @@ setOpen(false)
 
       return (
         <>
-        <PlaceDescriptionModal listItem={props.listItem} index={props.index} place={props.listItem.place??props.listItem} close={closeHandler} open={open} />
+        <PlaceDescriptionModal listItem={props.listItem} index={props.index} place={props.listItem.place} close={closeHandler} open={open} />
         <Card     >
 
         {props.position&&Number(props.position)!==0&& <CardHeader  sx={{width:'100%',height:'10px',background:'linear-gradient(60deg, rgba(35,58,102,1) 0%, rgba(36,53,98,1) 100%)',color:'white'}}  titleTypographyProps={{variant:'body1'}}  title={props.position==='mainAttraction'?'Main Attraction':props.position}/>}

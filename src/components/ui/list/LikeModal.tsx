@@ -5,7 +5,7 @@ import axios from 'axios'
 import React, { useContext, useState } from 'react'
 import AddToPlanModal from './AddToPlanModal'
 
-type Props = {open:boolean,onClose:()=>void,clickedLocation:IPlace,type:string,likeHandler:()=>void}
+type Props = {open:boolean,onClose:()=>void,clickedLocation:IPlace,type:"restaurants" | "hotels" | "attractions",likeHandler:()=>void}
 
 const LikeModal = (props: Props) => {
 const userCtx = useContext(UserContext)

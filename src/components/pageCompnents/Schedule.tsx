@@ -5,6 +5,7 @@ import { RoutineItem } from '@/components/ui/calender/DayList'
 
 import { PlanContext } from '@/context/plan-context'
 import { IPlace } from '@/dummyData'
+import { NewSesstion } from '@/pages/api/auth/[...nextauth]'
 import {  Grid} from '@mui/material'
 
 import axios, { AxiosError } from 'axios'
@@ -27,6 +28,7 @@ export type Days={
   breakfest?:IPlace|undefined,
   lunch?:IPlace|undefined,
   dinner?:IPlace|undefined,
+  mainAttraction?:IPlace|undefined,
   end?:IPlace|undefined,
   budget:number,
   weather:{temp:string,rainProb:string,weatherType:string,icon:string}
@@ -69,13 +71,13 @@ const Schedule = (props: Props) => {
 const forceUpdate = useCallback(() => updateState({}), []);
   const [isLoading,setIsLoading]=useState(false)
   const {data:session}=useSession()
-const id= {userId:session?.user?.id} 
+const newSession:NewSesstion={...session}
 
   useEffect(() => {
     const getPlan=async ()=>{
      try {
        setIsLoading(true)
-     const {data} =await axios.get('/api/plan/getPlan',{params:{userId:id.userId,planId:planId}})
+     const {data} =await axios.get('/api/plan/getPlan',{params:{userId:newSession.user?.id,planId:planId}})
      if(data.success){
        setList(data.plan)
        console.log(data.plan);
@@ -93,7 +95,7 @@ const id= {userId:session?.user?.id}
       getPlan()
     }
 
-   }, [session,id.userId,planId])
+   }, [session,planId])
 
   
  
@@ -114,8 +116,10 @@ if(dstDropId!==srcDropId){
   dstArr.splice(dstIndex,0,item)
 
 if(item.position&& Number(item.position) !== 0 ){
-  list.days[Number(srcDropId.split('/')[0])][String(item.position)]=null
-  item.position="0"
+  const dayIndex:number=Number(srcDropId.split('/')[0])
+  const position:'mainAttraction'|'breakfest'|'lunch'|'dinner'=item.position
+  list.days[dayIndex][position]=undefined
+  item.position=undefined
 }
 
 }else{
@@ -140,7 +144,7 @@ setList((list)=> list )
 
 
   return (<>
-      <PlanContext.Provider value={{plan:list}}>
+    {list&&  <PlanContext.Provider value={{plan:list}}>
      <main style={{alignContent:"flex-start",display:"block",padding:'0 10%'}}>
     
      <DragDropContext onDragEnd={handleDragEnd} >
@@ -156,7 +160,7 @@ setList((list)=> list )
         </DragDropContext>
         
         </main>
-        </PlanContext.Provider>
+        </PlanContext.Provider>}
       </>
   )
 }

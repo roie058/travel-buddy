@@ -20,6 +20,10 @@ type Props = {
   liked?:boolean
 }
 
+function isType(selected:string| "restaurants" | "hotels" | "attractions" ): selected is "restaurants" | "hotels" | "attractions"{
+  return (selected as "restaurants" | "hotels" | "attractions") !== undefined;
+}
+
 const PlaceCard = (props: Props) => {
 const [open, setOpen] = useState(false)
   const [liked,setLiked]=useState(props.liked)
@@ -60,9 +64,11 @@ mapCtx?.setCoordinates({lat:Number(props.place.latitude),lng:Number(props.place.
 mapCtx.setChildClicked(props.index)
 }
 
+const type:"restaurants" | "hotels" | "attractions"|string=(props.place?.category?.key??'hotel')+'s'
+
   return (
     <>
-    <LikeModal likeHandler={likeHandler} clickedLocation={props.place} type={props.place?.category?.key+'s'??'hotels'} onClose={closeHandler} open={open} />
+    <LikeModal likeHandler={likeHandler} clickedLocation={props.place} type={isType(type)?type:'hotels'} onClose={closeHandler} open={open} />
     <Card elevation={6} sx={{display:'flex'}} ref={props.refEl} >
       <CardMedia onClick={coordinatesHandler} sx={{width:'150px',cursor:'pointer'}} title={props.place.name}  image={props.place.photo? props.place.photo.images.large.url: "/images/placeholder.png"}  />
     <CardContent sx={{width:'60%'}}  >

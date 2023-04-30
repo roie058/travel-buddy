@@ -95,7 +95,7 @@ type Props={
 }
 export default function List(props:Props) {
   const mapCtx= useContext(MapContext)
-  const types= ['hotels',"restaurants","attractions"]
+  const types:Array<'hotels'|"restaurants"|"attractions">= ['hotels',"restaurants","attractions"]
   
   const [value, setValue] = useState(0);
 

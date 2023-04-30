@@ -11,6 +11,7 @@ import { useRouter } from 'next/router'
 
 import React, { useEffect, useState } from 'react'
 import { Plan } from './Schedule'
+import { NewSesstion } from '@/pages/api/auth/[...nextauth]'
 
 
 type Props = {}
@@ -22,13 +23,13 @@ const PlanPage = (props: Props) => {
   const [list,setList ] =useState<Plan>()
 const [isLoading,setIsLoading]=useState(false)
   const {data:session}=useSession()
-const id= {userId:session?.user?.id} 
+
   useEffect(() => {
     const getPlan=async ()=>{
-     
+      const newSession:NewSesstion={...session}
      try {
        setIsLoading(true)
-     const {data} =await axios.get('/api/plan/getPlan',{params:{userId:id.userId,planId:query.planId}})
+     const {data} =await axios.get('/api/plan/getPlan',{params:{userId:newSession.user?.id,planId:query.planId}})
      if(data.success){
        setList(data.plan)
        console.log(data.plan);
@@ -46,7 +47,7 @@ const id= {userId:session?.user?.id}
       getPlan()
     }
 
-   }, [session,id.userId,query.planId])
+   }, [session,query.planId])
 
 
 
@@ -55,7 +56,8 @@ const id= {userId:session?.user?.id}
   return (
     <>
     {isLoading ? <CircularProgress sx={{padding:'20% 40%'}} size={'10vw'}/> :
-   <PlanContext.Provider value={{plan:list}}>
+    <>
+  {list&& <PlanContext.Provider value={{plan:list}}>
     <main style={{justifyContent:'normal',height:'100%'}}>
 
     <Grid justifyContent={"center"}    columnGap={1} rowGap={1}   container >
@@ -68,7 +70,10 @@ const id= {userId:session?.user?.id}
 </Grid>
 
     </main>
-    </PlanContext.Provider>}
+    </PlanContext.Provider>
+  }
+  </>
+    }
  
   </>
   )

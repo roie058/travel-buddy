@@ -22,7 +22,7 @@ const [, updateState] = useState<any>();
     flightList=props.plan?.flights
 
   }else if(props.plans){
-    flightList=props.plans.reduce((prev,cur)=>  [...prev,...cur.flights],[])
+    flightList=props.plans.reduce((prev:Flight[],cur)=>  [...prev,...cur.flights],[])
   }
 
 
@@ -30,21 +30,26 @@ const [, updateState] = useState<any>();
 const deleteFlightHandler = async (flight:Flight,index:number)=>{
 
 try {
+  let planId;
   let planIndex;
   if(props.plans){
  planIndex= props?.plans.findIndex((plan)=>{
 return plan.flights.find((fligthPlan)=>flight._id===fligthPlan._id)
-}) }
+})
+planId=props?.plans[planIndex]._id
 
-if( typeof planIndex !=='number'){ return }
+}else if (props.plan){
+  planId=props.plan._id
+}
 
-const {data}=await axios.delete('/api/flight/deleteFlight',{params:{planId:props.plan?._id??props?.plans[planIndex]._id,flightId:flight._id}})
+
+const {data}=await axios.delete('/api/flight/deleteFlight',{params:{planId:planId,flightId:flight._id}})
 if(data.success){
  if (props.plan){
   props.plan.flights.splice(index,1)
  }
  if(props.plans){
-  props?.plans[planIndex].flights.splice(index,1)
+  props?.plans[Number(planIndex)].flights.splice(index,1)
  }
   forceUpdate()
 }

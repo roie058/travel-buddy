@@ -1,5 +1,5 @@
 
-import { Place } from "@/dummyData";
+import { IPlace } from "@/dummyData";
 import { createContext, Dispatch, SetStateAction } from "react";
 
 type MapContextType={
@@ -11,8 +11,8 @@ type MapContextType={
     setChildClicked:Dispatch<SetStateAction<any>>,
     isLoading:boolean,
     setIsLoading: Dispatch<SetStateAction<boolean>>
-placeList:Place[]|any[],
-setPlaceList:Dispatch<SetStateAction<Place[]|any[]>>,
+placeList:IPlace[]|any[],
+setPlaceList:Dispatch<SetStateAction<IPlace[]|any[]>>,
 type:'hotels'|'restaurants'|'attractions',
 setType:Dispatch<SetStateAction<'hotels'|'restaurants'|'attractions'>>,
 rating:string,

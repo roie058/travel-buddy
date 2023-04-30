@@ -6,6 +6,7 @@ import { NextApiRequest, NextApiResponse } from "next"
 
 export interface IUser{
     _id:string,
+    id?:string,
     email:string,
     fullName:string
 }

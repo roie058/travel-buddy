@@ -5,6 +5,8 @@ import styles from '../../styles/Plans.module.css'
 import {useSession} from 'next-auth/react'
 import axios, { AxiosError } from 'axios'
 
+import { NewSesstion } from '@/pages/api/auth/[...nextauth]'
+
 
 
 export default function PlansPage() {
@@ -12,15 +14,16 @@ export default function PlansPage() {
 const [plans, setPlans] = useState<undefined|Array<any>>()
 const [isLoading, setIsLoading] = useState<boolean>(false)
 
-const {data:session,}=useSession()
+const {data:session}=useSession()
 
-const id= {userId:session?.user?.id} 
+const newSession:NewSesstion={...session}
+
   useEffect(() => {
     const getPlans=async ()=>{
      
      try {
        setIsLoading(true)
-     const {data} =await axios.post('/api/plan/getPlans',id)
+     const {data} =await axios.get('/api/plan/getPlans',{params:{userId:newSession.user?.id}})
      if(data.success){
        setPlans(data.plans)
        console.log(data.plans);
@@ -37,7 +40,8 @@ const id= {userId:session?.user?.id}
     }
     if(session){
       getPlans()
-    }},[session,id])
+    }}
+    ,[session])
 
 const deleteHandler=async(id:string)=>{
   setIsLoading(true)

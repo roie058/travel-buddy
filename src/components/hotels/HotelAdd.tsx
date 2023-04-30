@@ -76,8 +76,8 @@ const HotelAdd = (props: Props) => {
 <Button sx={{height:'30px',color:'#923CF8cc',textTransform:'capitalize',border:'2px solid #923CF8cc'}}   size='small' onClick={()=> window.open(hotel.website,'_blank')} >Website</Button>
 
 </CardActions>}
-{ hotel.business_listings.desktop_contacts.length>0 || hotel.business_listings.mobile_contacts.length>0 &&  <CardActions > {hotel.business_listings.mobile_contacts[0] && <Button sx={{height:'30px',color:'#923CF8cc',textTransform:'capitalize',border:'2px solid #923CF8cc'}}   size='small' onClick={()=> window.open(hotel.business_listings.mobile_contacts[0].value,'_blank')} >Website</Button>}
-{hotel.business_listings.desktop_contacts[0] && <Button sx={{height:'30px',color:'#923CF8cc',textTransform:'capitalize',border:'2px solid #923CF8cc'}}   size='small' onClick={()=> window.open(hotel.business_listings.desktop_contacts[0].value,'_blank')} >Website</Button>}
+{hotel.business_listings&& (hotel.business_listings.desktop_contacts.length>0 || hotel.business_listings.mobile_contacts.length>0) &&  <CardActions > {hotel.business_listings.mobile_contacts[0] && <Button sx={{height:'30px',color:'#923CF8cc',textTransform:'capitalize',border:'2px solid #923CF8cc'}}   size='small' onClick={()=> window.open(hotel.business_listings?.mobile_contacts[0].value,'_blank')} >Website</Button>}
+{hotel.business_listings&& hotel.business_listings.desktop_contacts[0] && <Button sx={{height:'30px',color:'#923CF8cc',textTransform:'capitalize',border:'2px solid #923CF8cc'}}   size='small' onClick={()=> window.open(hotel.business_listings?.desktop_contacts[0].value,'_blank')} >Website</Button>}
 
 </CardActions>}
 

@@ -8,6 +8,7 @@ import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import {useSession} from 'next-auth/react'
 import axios, { AxiosError } from 'axios'
+import { NewSesstion } from '@/pages/api/auth/[...nextauth]'
 
 
 
@@ -18,13 +19,14 @@ export default function HomePage() {
   const [plans, setPlans] = useState<number>()
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const {data:session,}=useSession()
-  
+ 
   useEffect(()=>{
   const getPlans=async()=>{
-    const id= {userId:session?.user?.id} 
+     
+    const newSession:NewSesstion={...session}
   try {
     setIsLoading(true)
-  const {data} =await axios.get('api/plan/getPlansCount',{params:{userId:id.userId}})
+  const {data} =await axios.get('api/plan/getPlansCount',{params:{userId:newSession.user?.id}})
   if(data.success){
     setPlans(data.count)
   }
@@ -38,7 +40,7 @@ export default function HomePage() {
   setIsLoading(false)
   }
   getPlans()
-  },[session?.user?.id])
+  },[])
   
 
 const router=useRouter()

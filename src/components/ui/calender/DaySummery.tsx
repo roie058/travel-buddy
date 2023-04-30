@@ -24,6 +24,10 @@ const reduced=(array:RoutineItem[])=>{
     return budget
 }
 
+function isPlace(selected: IPlace|Flight['destination']): selected is IPlace {
+  return (selected as IPlace).latitude !== undefined;
+}
+
 const DaySummery = (props: Props) => {
   const  [diractionArr,setDiractionsArr]=useState< google.maps.DirectionsRoute | undefined>()
   const  [budget,setBudget]=useState<Number>(reduced(props.day.rutine))
@@ -45,14 +49,15 @@ const res =await geo.geocode({address:planCtx?.plan.country})
 }
 
 const setNewWeather=async()=>{
-  if(props.start&& props.start?.latitude ){
+  
+  if(props.start&& isPlace(props.start) ){
 try {
   const {data}=  await axios.get("/api/weather/getWeather",{params:{planId:planCtx?.plan._id,index:props.index,location:`${props.start?.latitude},${props.start?.longitude}`}})
   setWeather(data.weather);
   setLiveWeather(data.liveWeather)
 } catch (error) {
   
-}}else if(props.start&& props.start?.lat){
+}}else if(props.start&& !isPlace(props.start)){
   try {
   const {data}=  await axios.get("/api/weather/getWeather",{params:{planId:planCtx?.plan._id,index:props.index,location:`${props.start?.lat},${props.start?.lng}`}})
   setWeather(data.weather);
@@ -96,17 +101,18 @@ getDefaultLocation()
     
           return {location:{lat:Number(item.place.latitude),lng:Number(item.place.longitude)}}
             })
-         if(props.start&& props.start?.latitude){
+
+         if(props.start&& isPlace(props.start)){
           origin = { lat: Number(props.start?.latitude), lng: Number(props.start?.longitude) };
-         }else if(props.start&& props.start?.lat){
+         }else if(props.start&& !isPlace(props.start)){
           origin = { lat: Number(props.start?.lat), lng: Number(props.start?.lng) };
          }else{
           origin = { lat: Number(props.day?.rutine[0]?.place.latitude), lng: Number(props.day?.rutine[0]?.place.longitude) };
         wayp.shift()
         }
-         if(props.end&&props.end?.latitude){
+         if(props.end&&isPlace(props.end)){
           destination = { lat:Number(props.end?.latitude),lng: Number( props.end?.longitude) };
-         }else if(props.end&&props.end?.lat){
+         }else if(props.end&& !isPlace(props.end)){
           destination = { lat:Number(props.end?.lat),lng: Number( props.end?.lng) };
          } else{
           destination = { lat: Number(props.day?.rutine[props.day?.rutine.length-1]?.place.latitude), lng: Number(props.day?.rutine[props.day?.rutine.length-1]?.place.longitude) };

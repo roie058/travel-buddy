@@ -10,6 +10,7 @@ import UiButton from '../ui/buttons/UiButton'
 import AddExpenseModal from './AddExpenseModal'
 import styles from './BudgetBoard.module.css'
 import { Expense, Plan } from '../pageCompnents/Schedule'
+import { Flight } from '../flights/AddFlightModal'
 
 type Props = {plan:Plan,setList:React.Dispatch<React.SetStateAction<Plan|undefined>>}
 
@@ -24,7 +25,7 @@ const forceUpdate = useCallback(() => updateState({}), []);
 
 useEffect(() => {
     if(props.plan){
-      const rutineExpenses:Expense[]=props.plan.days.flatMap((day)=> (day.rutine.reduce((prv,cur)=>{
+      const rutineExpenses=props.plan.days.flatMap((day)=> (day.rutine.reduce((prv:Expense[],cur)=>{
         if(cur.budget&&cur.budget>0){
           return [...prv,{name:cur.place.name,category:cur.place?.category?.key??'Note',price:cur.budget}]
         }else return prv
@@ -32,7 +33,7 @@ useEffect(() => {
          setStopsBudget(rutineExpenses)
         const sumBudget={
           budget:props?.plan?.budget.budget,
-          transportation:props.plan.budget.transportation.concat(props.plan.flights).reduce((prv,cur)=>{return cur?.price? prv+ cur?.price:0},0),
+          transportation:[...props.plan.budget.transportation,...props.plan.flights].reduce((prv,cur:Expense|Flight)=>{return cur?.price? prv+ cur?.price:0},0),
           expenses:props.plan.budget.expenses.reduce((prv,cur)=>{return cur?.price? prv+ cur?.price:0},0),
           hotels:props.plan.hotels.reduce((prv,cur)=>{return prv+ (moment(cur.end).dayOfYear() - moment(cur.start).dayOfYear())*cur.nightPrice},0),
         stops:rutineExpenses.reduce((prv,cur)=>{return cur?.price? prv+ cur?.price:0},0)
@@ -51,7 +52,7 @@ const {data}= await axios.delete('/api/budget/deleteBudget',{params:{planId:prop
 if(data.success){
 props.setList((plan)=> {
   const index=plan?.budget[type].findIndex((expense)=>expense._id===id)
-plan?.budget[type].splice(index,1)
+plan?.budget[type].splice(Number(index),1)
 return plan
 })
 forceUpdate()
@@ -148,7 +149,7 @@ const isMobile=useMediaQuery('(max-width:600px)')
       <Box marginTop={'10%'} display="flex" flexDirection={"column"} justifyContent="center">
           <Box marginBottom={'15%'} gap="10px" display={"flex"} flexDirection={'column'}  >
           <Typography fontWeight={"bold"} textAlign={"center"} variant="h2" fontSize="2rem">Total Cost: {totalCost}$</Typography>
-          <Typography fontWeight={"bold"} textAlign={"center"} variant="h2" fontSize="2rem">Budget Left: <span style={{color:budget.budget-totalCost>=0?'#65E76B':"#F35757"}} > {props.plan.budget.budget-totalCost}$</span></Typography>
+          <Typography fontWeight={"bold"} textAlign={"center"} variant="h2" fontSize="2rem">Budget Left: <span style={{color:budget.budget-Number(totalCost)>=0?'#65E76B':"#F35757"}} > {props.plan.budget.budget-Number(totalCost)}$</span></Typography>
           </Box>
       <UiButton clickFn={()=>{setOpen(true)}} color='blue' >Add New Expense</UiButton>
       </Box>

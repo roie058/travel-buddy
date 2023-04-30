@@ -14,7 +14,7 @@ type Props = {onClose:()=>void,open:boolean,hotel:IPlace,plan:Plan}
 const AddReservationModal = (props: Props) => {
 
     const {register,formState,getValues,handleSubmit,control}=useForm({defaultValues:{start:new Date(props.plan.start)?? new Date(),end:new Date(props.plan.start)?? new Date(),nightPrice:0,place:props.hotel}})
-    const [submitError, setSubmitError] = useState<undefined|string>()
+    const [submitError, setSubmitError] = useState<undefined|string|unknown>()
     const [isLoading, setIsLoading] = useState<boolean>(false)
    
  
@@ -80,7 +80,7 @@ const AddReservationModal = (props: Props) => {
 </FormControl>
 
 {isLoading?<CircularProgress size={'5rem'}/>:<UiButton disabled={!formState.isValid} clickFn={()=>{}}  submit size='small'>Add</UiButton>}
-<FormHelperText sx={{color:'#d32f2f'}}>{submitError}</FormHelperText>
+<FormHelperText sx={{color:'#d32f2f'}}>{String(submitError)}</FormHelperText>
     </form>
     </Box></Modal>
   )

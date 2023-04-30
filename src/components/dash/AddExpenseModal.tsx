@@ -23,7 +23,8 @@ try {
 const {data:res} =await  axios.patch('/api/budget/addBudget',{planId:planCtx?.plan._id,data})
 if(res.success){
     if(!planCtx?.plan){props.onClose();setIsLoading(false);   return}
-planCtx?.plan?.budget[data.position].push(res.budget);
+    const position:'transportation'|'expenses'=data.position
+planCtx?.plan?.budget[position].push(res.budget);
 props.onClose()
 }
 

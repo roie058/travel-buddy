@@ -9,7 +9,7 @@ import moment from 'moment'
 import Image from 'next/image'
 import React from 'react'
 
-type Props = {open:boolean,onClose:()=>void,clickedLocation?:IPlace,type?:string,submitHandler:(index: number) => Promise<void>,isLoading:boolean,plans:Plan[]}
+type Props = {open:boolean,onClose:()=>void,clickedLocation?:IPlace,type?:'restaurants'|'hotels'|'attractions',submitHandler:(index: number) => Promise<void>,isLoading:boolean,plans:Plan[]}
 
 const AddToPlanModal = (props: Props) => {
 

@@ -7,6 +7,7 @@ import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 import { Plan } from './Schedule'
+import { NewSesstion } from '@/pages/api/auth/[...nextauth]'
 
 
 type Props = {}
@@ -18,13 +19,13 @@ const PlanFlights = (props: Props) => {
   const [list,setList ] =useState<Plan>()
 const [isLoading,setIsLoading]=useState(false)
   const {data:session}=useSession()
-const id= {userId:session?.user?.id} 
+const newSession:NewSesstion={...session}
   useEffect(() => {
     const getPlan=async ()=>{
      
      try {
        setIsLoading(true)
-     const {data} =await axios.get('/api/plan/getPlan',{params:{userId:id.userId,planId:query.planId}})
+     const {data} =await axios.get('/api/plan/getPlan',{params:{userId:newSession.user?.id,planId:query.planId}})
      if(data.success){
        setList(data.plan)
        console.log(data.plan);
@@ -42,7 +43,7 @@ const id= {userId:session?.user?.id}
       getPlan()
     }
 
-   }, [session,id.userId,query.planId])
+   }, [session,query.planId])
 
 
 

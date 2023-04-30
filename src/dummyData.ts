@@ -6,7 +6,7 @@ address:string
 ,awards:any[]
 ,bearing:string
 ,booking:{provider: string, url: string}
-,category:{key: string, name: string}
+,category:{key: 'hotel'|'attraction'|'restaurant', name: string}
 ,cuisine: any[]
 ,description:string
 ,dietary_restrictions:any[]

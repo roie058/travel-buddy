@@ -6,7 +6,7 @@ import{ Draggable, Droppable, resetServerContext } from 'react-beautiful-dnd'
 
 import AddStopModal from '@/components/form/AddStopModal'
 
-import UserAddedNote from './UserAddedNote'
+import UserAddedNote, { UserAddedItem } from './UserAddedNote'
 import { IPlace} from '@/dummyData'
 
 import { ListItems } from '../list/List'
@@ -17,13 +17,13 @@ import FlightCard from '@/components/flights/FlightCard'
 import { PlanContext } from '@/context/plan-context'
 type Props = {
 list:Array<RoutineItem>|any[],
-position:string
+position:'mainAttraction'|'breakfest'|'lunch'|'dinner'|'rutine'
 date:number,
 flights?:Flight[],
 lastLocation?:ListItems|undefined
 }
 
-export type RoutineItem={place:IPlace,dragId:string,budget:number,position?:string}
+export type RoutineItem={place:IPlace,dragId:string,budget:number,position?:'mainAttraction'|'breakfest'|'lunch'|'dinner',_id?:string}
 
 const DayList = (props: Props) => {
 
@@ -48,7 +48,7 @@ try {
 if(data.success){
   setList((list)=> filteredList)
   if(planCtx&&plan){
-      plan.days[props.date][props.position]=filteredList
+      plan.days[props.date].rutine=filteredList
   }
 }
 } catch (error) {
@@ -67,8 +67,12 @@ setOpen(true)
 
 
 
-const handleSubmit=async (selected:IPlace )=>{
-  if(selected?._id){  
+const handleSubmit=async (selected:IPlace|UserAddedItem )=>{
+  function isPlace(selected: IPlace|UserAddedItem): selected is IPlace {
+    return (selected as IPlace)._id !== undefined;
+  }
+  if(isPlace(selected)){  
+    if(!selected._id)return;
     const newIdListItem:RoutineItem={place:selected,budget:0,dragId:selected._id+Math.random()}
     try {
       const {data}=await axios.patch('/api/plan/days',{listItem:newIdListItem,index:props.date,planId:plan?._id})

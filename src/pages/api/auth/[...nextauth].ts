@@ -1,13 +1,21 @@
-import NextAuth,{NextAuthOptions} from "next-auth";
+import NextAuth,{DefaultSession, NextAuthOptions} from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import credentialsProvider from "next-auth/providers/credentials";
 import dbConnect from "lib/dbConnect";
 import User from "models/User";
 import { compare } from "bcryptjs";
 import { IUser } from "./signup";
-import { googleSignIn } from "@/util/authHelpars";
+
 
 const {GOOGLE_ID,GOOGLE_SECRET } = process.env
+
+export interface NewSesstion extends DefaultSession  {
+user?:DefaultSession['user']&{
+  id?:string
+}
+expires:DefaultSession["expires"]|undefined
+
+}
 
 
 export const authOptions:NextAuthOptions = {

@@ -1,6 +1,7 @@
 import FlightAdd from '@/components/flights/FlightAdd'
 import MyFlights from '@/components/flights/MyFlights'
 import SkyScanner from '@/components/flights/SkyScanner'
+import { NewSesstion } from '@/pages/api/auth/[...nextauth]'
 import { CircularProgress, Grid } from '@mui/material'
 import axios, { AxiosError } from 'axios'
 import { useSession } from 'next-auth/react'
@@ -16,13 +17,14 @@ const Flights = (props: Props) => {
   
   const {data:session,}=useSession()
   
-  const id= {userId:session?.user?.id} 
+ 
+ 
     useEffect(() => {
       const getPlans=async ()=>{
-       
+        const newSession:NewSesstion={...session}
        try {
          setIsLoading(true)
-       const {data} =await axios.get('/api/plan/getPlans',{params:{userId:id.userId}})
+       const {data} =await axios.get('/api/plan/getPlans',{params:{userId:newSession.user?.id}})
        if(data.success){
          setPlans(data.plans)
          
@@ -38,7 +40,7 @@ const Flights = (props: Props) => {
       }
       if(session){
         getPlans()
-      }},[session,id.userId])
+      }},[session])
   
   
   return (

@@ -13,6 +13,7 @@ import { useSession } from 'next-auth/react'
 
 import { useEffect, useState } from 'react'
 import { Plan } from './Schedule'
+import { NewSesstion } from '@/pages/api/auth/[...nextauth]'
 
 
 
@@ -28,13 +29,13 @@ export default function MapPage() {
   
   const [plans,setPlans]=useState<Plan[]|any[]>([])
 const {data:session}=useSession()
-const id= {userId:session?.user?.id} 
+const newSession:NewSesstion={...session}
   useEffect(() => {
     const getPlans=async ()=>{
      
      try {
        setIsLoading(true)
-     const {data} =await axios.get('/api/plan/getPlans',{params:{userId:id.userId,populate:true}})
+     const {data} =await axios.get('/api/plan/getPlans',{params:{userId:newSession.user?.id,populate:true}})
      if(data.success){
        setPlans(data.plans)
        console.log(data.plans);
@@ -52,7 +53,7 @@ const id= {userId:session?.user?.id}
       getPlans()
     }
 
-   }, [session,id.userId])
+   }, [session])
 
 
   useEffect(()=>{
@@ -89,7 +90,7 @@ return (
     rating,
     setRating
    }}>
-    <UserContext.Provider value={{plans,userId:id.userId}}>
+    <UserContext.Provider value={{plans,userId:newSession.user?.id??''}}>
      <Grid sx={{backgroundColor:'#FAFAFA',minHeight: "calc(100vh - 57px)",marginTop:'57px',marginLeft:'0'}}  container >
       <Grid    item xs={12}  lg={8} sm={isMobile?7:12} md={7}>
         <Map likedIds={likedIds}  likedList={allLikedList??[]} />

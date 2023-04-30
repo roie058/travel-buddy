@@ -16,6 +16,7 @@ import { FieldValues, SubmitHandler } from 'react-hook-form/dist/types'
 import axios, { AxiosError } from 'axios'
 import {useRouter} from 'next/router'
 import Image from 'next/image'
+import { NewSesstion } from '@/pages/api/auth/[...nextauth]'
 
  type Props = {}
 
@@ -43,23 +44,24 @@ import Image from 'next/image'
  {label:"Wildlife & Safaris 🐘",value:'Wildlife & Safaris'},
  
 ];
-
-
+const newCodes=JSON.parse(JSON.stringify(codes))
+const newStates=JSON.parse(JSON.stringify(states))
 const NewPlan = (props: Props) => {
   const countries=['Africa','East Asia',"Oceania","Middle East","South America","Central America","North America","Europe",...Object.keys(states)]
   const {data:session}=useSession()
   const [selectedCountry,setSelectedCountry]=useState<null|string>(null)
   const [isLoading, setIsLoading] = useState(false)
   const [submitError, setSubmitError] = useState<null|string>(null)
-  const [selectedCities,setSelectedCities]=useState<null|string[]>(null)
+  const [selectedCities,setSelectedCities]=useState<null|string[]|unknown[]>(null)
 const {register,handleSubmit,formState,setValue,control,setError,getValues }=useForm({defaultValues:{title:'',country:'',city:'',type:[],start:new Date(),end:new Date(),image:'',userId:"",budget:""},})
   const [startDate,setStartDate]=useState<null|Date>(new Date())
 const router=useRouter()
-
+const newSession:NewSesstion={...session}
 
  const onChange=(event: React.SyntheticEvent<Element, Event>, value: string | null, reason: AutocompleteChangeReason, details?: AutocompleteChangeDetails<string> | undefined)=>{
 setSelectedCountry(value)
-setValue('userId',session?.user?.id)
+if(!newSession.user?.id)return;
+setValue('userId',newSession.user?.id)
  }
 
  const onStartDateChange=(e:any)=>{
@@ -70,9 +72,9 @@ setValue('userId',session?.user?.id)
  useEffect(()=>{
   setError('start',{message:'Start Date is after end date'})
 if(selectedCountry===null)return;
-const cities=[...new Set(states[selectedCountry])]
-if(cities.length===0) {setSelectedCities(null); return};
-setSelectedCities(cities)
+const cities=new Set(newStates[selectedCountry])
+if(cities.size===0) {setSelectedCities(null); return};
+setSelectedCities([...cities])
  },[selectedCountry,setError])
  
  const submitHandler:SubmitHandler<FieldValues>=async(data)=>{
@@ -115,7 +117,7 @@ const isMobile=useMediaQuery("(max-width:800px)")
   options={countries}
   renderOption={(props, option) => 
     {
-      const code=Object.keys(codes).find(key => codes[key] === option);
+      const code=Object.keys(codes).find(key => newCodes[key] === option);
       
     return(
     <Box component="li" sx={{ '& > img': { mr: 2, flexShrink: 0 } }} {...props}>

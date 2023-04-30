@@ -7,6 +7,7 @@ import React, {  useEffect, useState } from 'react'
 import axios, { AxiosError } from 'axios'
 import { useSession } from 'next-auth/react'
 import { Plan } from './Schedule'
+import { NewSesstion } from '@/pages/api/auth/[...nextauth]'
 
 
 
@@ -21,14 +22,14 @@ const Hotels = (props: Props) => {
     const [isLoading,setIsLoading]=useState(false)
       const {data:session}=useSession()
 
-    const id= {userId:session?.user?.id} 
+    
 
       useEffect(() => {
         const getPlan=async ()=>{
-         
+          const newSession:NewSesstion={...session}
          try {
            setIsLoading(true)
-         const {data} =await axios.get('/api/plan/getPlan',{params:{userId:id.userId,planId:query.planId}})
+         const {data} =await axios.get('/api/plan/getPlan',{params:{userId:newSession.user?.id,planId:query.planId}})
          if(data.success){
            setPlan(data.plan)
            console.log(data.plan);
@@ -46,7 +47,7 @@ const Hotels = (props: Props) => {
           getPlan()
         }
     
-       }, [session,id.userId])
+       }, [session])
 
     return (
         <>

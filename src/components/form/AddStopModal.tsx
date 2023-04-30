@@ -9,7 +9,7 @@ import UserAddedNoteForm from './UserAddedNoteForm';
 
 
 type Props = { open: boolean;
-   onSubmit:(value:IPlace)=>void,
+   onSubmit:(value:UserAddedItem|IPlace)=>void
     onClose: () => void,
 likedList:Array<IPlace>
 }
