@@ -7,7 +7,8 @@ import { FieldValues, useForm } from 'react-hook-form';
 import UiButton from '../ui/buttons/UiButton';
 import DateInput from '../ui/inputs/DateInput';
 import styles from '../form/EditPlan.module.css'
-import { Plan } from '@/pages/plans/[planId]/schedule';
+import { Plan } from '../pageCompnents/Schedule';
+
 type Props = {onClose:()=>void,open:boolean,hotel:IPlace,plan:Plan}
 
 const AddReservationModal = (props: Props) => {

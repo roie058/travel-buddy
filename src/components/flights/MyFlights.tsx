@@ -7,7 +7,8 @@ import Image from 'next/image'
 
 import React, { useCallback,  useState } from 'react'
 import { Flight } from './AddFlightModal'
-import { Plan } from '@/pages/plans/[planId]/schedule'
+import { Plan } from '../pageCompnents/Schedule'
+
 
 type Props = {plan?:Plan,plans?:Plan[]}
 

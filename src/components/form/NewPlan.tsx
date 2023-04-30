@@ -15,6 +15,7 @@ import { useForm } from 'react-hook-form'
 import { FieldValues, SubmitHandler } from 'react-hook-form/dist/types'
 import axios, { AxiosError } from 'axios'
 import {useRouter} from 'next/router'
+import Image from 'next/image'
 
  type Props = {}
 
@@ -72,7 +73,7 @@ if(selectedCountry===null)return;
 const cities=[...new Set(states[selectedCountry])]
 if(cities.length===0) {setSelectedCities(null); return};
 setSelectedCities(cities)
- },[selectedCountry])
+ },[selectedCountry,setError])
  
  const submitHandler:SubmitHandler<FieldValues>=async(data)=>{
    if(data.type.length>3||data.start>data.end||getValues('image').length==0){return} 
@@ -118,11 +119,12 @@ const isMobile=useMediaQuery("(max-width:800px)")
       
     return(
     <Box component="li" sx={{ '& > img': { mr: 2, flexShrink: 0 } }} {...props}>
-      <img
+      <Image
         loading="lazy"
         width="20"
+        height={'20'}
         src={code?`https://flagcdn.com/w20/${code.toLowerCase()}.png`:`https://flagcdn.com/w20/un.png`}
-        srcSet={code?`https://flagcdn.com/w40/${code.toLowerCase()}.png 2x`:`https://flagcdn.com/w20/un.png`}
+        
         alt=""
       />
       {option}

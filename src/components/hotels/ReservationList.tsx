@@ -1,5 +1,5 @@
 
-import { Hotel, Plan } from '@/pages/plans/[planId]/schedule'
+
 
 import { Box, Card, CardContent, CardHeader, Divider, List, ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material'
 import axios from 'axios'
@@ -7,6 +7,7 @@ import moment from 'moment'
 import Image from 'next/image'
 
 import React, { useCallback, useState } from 'react'
+import { Hotel, Plan } from '../pageCompnents/Schedule'
 
 
 

@@ -1,4 +1,5 @@
-import { Plan } from "@/pages/plans/[planId]/schedule";
+
+import { Plan } from "@/components/pageCompnents/Schedule";
 import { createContext } from "react";
 
 type PlanContextType={

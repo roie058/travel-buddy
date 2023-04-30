@@ -1,5 +1,5 @@
 
-import { Plan } from '@/pages/plans/[planId]/schedule'
+
 import { CircularProgress, FormControl, FormHelperText, TextField } from '@mui/material'
 import { Box } from '@mui/system'
 import { Autocomplete } from '@react-google-maps/api'
@@ -12,6 +12,7 @@ import UiButton from '../ui/buttons/UiButton'
 import DateInput from '../ui/inputs/DateInput'
 import ImageInput from '../ui/inputs/ImageInput'
 import styles from './EditPlan.module.css'
+import { Plan } from '../pageCompnents/Schedule'
 type Props = {plan:Plan,setOpen:React.Dispatch<React.SetStateAction<boolean>>}
 
 const compereFormData:(data1:Plan,data2:Plan)=>boolean=(data1,data2)=>{

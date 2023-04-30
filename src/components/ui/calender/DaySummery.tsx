@@ -2,7 +2,7 @@
 import { Flight } from '@/components/flights/AddFlightModal'
 import { PlanContext } from '@/context/plan-context'
 import { IPlace } from '@/dummyData'
-import { Days } from '@/pages/plans/[planId]/schedule'
+
 import {  Paper, Table, TableBody, TableCell, TableHead, TableRow, Typography, useMediaQuery } from '@mui/material'
 import { Box } from '@mui/system'
 import axios from 'axios'
@@ -13,6 +13,7 @@ import Image from 'next/image'
 
 import React, { useContext, useEffect, useRef, useState } from 'react'
 import { RoutineItem } from './DayList'
+import { Days } from '@/components/pageCompnents/Schedule'
 
 type Props = {day:Days,index:number,start?:Flight["destination"]|IPlace,end?:Flight["origin"]|IPlace}
 
@@ -79,7 +80,7 @@ getDefaultLocation()
   cardRef.current?.scrollIntoView({ behavior:"smooth" })
 
 
-},[planCtx])
+},[planCtx,props])
 
 
      const apiIsLoaded = (map:any, maps:any) => {

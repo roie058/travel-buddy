@@ -25,7 +25,7 @@ const {city,country,type,title,start,end,image,userId,budget}=req.body
 
 const daysArr=enumerateDaysBetweenDates(start,end)
 
-const {data}=await axios.get(`https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${city+', '+country }/${moment(start).format('YYYY-MM-DD')+'/'+moment(end).format('YYYY-MM-DD')}?unitGroup=metric&elements=datetime%2Cname%2Caddress%2Clatitude%2Clongitude%2Ctemp%2Cprecipprob%2Cconditions%2Cdescription%2Cicon&include=days%2Calerts&key=9CURSN4X2KJN3YXU72YWRTVXQ&contentType=json`) 
+const {data}=await axios.get(`https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${city+', '+country }/${moment(start).format('YYYY-MM-DD')+'/'+moment(end).format('YYYY-MM-DD')}?unitGroup=metric&elements=datetime%2Cname%2Caddress%2Clatitude%2Clongitude%2Ctemp%2Cprecipprob%2Cconditions%2Cdescription%2Cicon&include=days%2Calerts&key=${process.env.WEATHER_KEY}&contentType=json`) 
 const weatherData= data.days
 const days=daysArr.map((date,i)=>{
 const dailyWeather=weatherData[i]

@@ -1,10 +1,11 @@
 
-import { Plan } from '@/pages/plans/[planId]/schedule'
+
 import { Box, Button, Card, CardHeader, Modal, Typography } from '@mui/material'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import React, {  useState } from 'react'
 import EditPlan from '../form/EditPlan'
+import { Plan } from '../pageCompnents/Schedule'
 
 type Props = {plan:Plan}
 

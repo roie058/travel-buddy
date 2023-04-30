@@ -1,6 +1,6 @@
 import { Button, ButtonGroup, InputBase, useMediaQuery } from '@mui/material'
 
-import React, { useCallback, useContext, useEffect, useState} from 'react'
+import React, { useContext, useEffect, useState} from 'react'
 import GoogleMapReact from 'google-map-react'
 import styles from './Map.module.css'
 import { MapContext } from '@/context/map-context'
@@ -34,7 +34,7 @@ if(props.likedList){
   setLikedList(props.likedList?.map((place,i)=><Marker liked place={place} key={i} lat={Number(place.latitude)} lng={Number(place.longitude)}/>))
 
 }
-}, [mapCtx?.placeList,props.likedList])
+}, [props.likedList,mapCtx,props.likedIds])
 
 
 const searchAreaHandler=(type:'restaurants'|'hotels'|'attractions')=>{

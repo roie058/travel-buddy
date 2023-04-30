@@ -1,5 +1,5 @@
 
-import { Plan } from '@/pages/plans/[planId]/schedule'
+
 import { Button, Card, CardActions, CardContent, CardHeader, CircularProgress, Rating, Typography } from '@mui/material'
 import { Box } from '@mui/system'
 import Image from 'next/image'
@@ -15,6 +15,7 @@ import { IPlace } from '@/dummyData'
 import axios from 'axios'
 
 import Link from 'next/link'
+import { Plan } from '../pageCompnents/Schedule'
 
 
 type Props = {plan:Plan}

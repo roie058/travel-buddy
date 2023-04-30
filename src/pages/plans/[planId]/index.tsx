@@ -1,73 +1,24 @@
-import BudgetBoard from '@/components/dash/BudgetBoard'
-import DashBtns from '@/components/dash/DashBtns'
-import { PlanContext } from '@/context/plan-context'
 
-import { CircularProgress, Grid } from '@mui/material'
-import axios, { AxiosError } from 'axios'
-import { useSession } from 'next-auth/react'
-import { useRouter } from 'next/router'
+import React from 'react'
 
-
-import React, { useEffect, useState } from 'react'
-import { Plan } from './schedule'
+import Head from 'next/head'
+import PlanPage from '@/components/pageCompnents/PlanPage'
 
 type Props = {}
 
 
 const dashboard = (props: Props) => {
-  const{ query}=useRouter()
-
-  const [list,setList ] =useState<Plan>()
-const [isLoading,setIsLoading]=useState(false)
-  const {data:session}=useSession()
-const id= {userId:session?.user?.id} 
-  useEffect(() => {
-    const getPlan=async ()=>{
-     
-     try {
-       setIsLoading(true)
-     const {data} =await axios.get('/api/plan/getPlan',{params:{userId:id.userId,planId:query.planId}})
-     if(data.success){
-       setList(data.plan)
-       console.log(data.plan);
-       
-     }
-     } catch (error) {
-       if(error instanceof AxiosError){
-         const errorMsg=error.response?.data?.error
-         console.log(errorMsg);
-       }
-     }
-   setIsLoading(false)
-    }
-    if(session){
-      getPlan()
-    }
-
-   }, [session])
-
-
-
 
 
   return (
     <>
-    {isLoading ? <CircularProgress sx={{padding:'20% 40%'}} size={'10vw'}/> :
-   <PlanContext.Provider value={{plan:list}}>
-    <main style={{justifyContent:'normal',height:'100%'}}>
-
-    <Grid justifyContent={"center"}    columnGap={1} rowGap={1}   container >
-        <Grid md={5.5} sm={10} xs={11} item>
-        { list&&<BudgetBoard plan={list} setList={setList}/> }
-</Grid>
-<Grid md={5.5} sm={10} xs={11} display="flex" sx={{minHeight:'100vh'}}   flexDirection={'column'} gap="10px" item>
-{ list&&<DashBtns plan={list}/>}
-</Grid>
-</Grid>
-
-    </main>
-    </PlanContext.Provider>}
- 
+   <Head>
+        <title>Travel Buddy</title>
+        <meta name="description" content="travel buddy plan dashboard and budget control" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+ <PlanPage/>
   </>
   )
 }

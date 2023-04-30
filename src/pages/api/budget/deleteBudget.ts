@@ -2,7 +2,8 @@ import dbConnect from "lib/dbConnect";
 import type { NextApiRequest, NextApiResponse } from 'next'
 import mongoose from "mongoose";
 import Plan from "models/Plan";
-import { Expense } from "@/pages/plans/[planId]/schedule";
+import { Expense } from "@/components/pageCompnents/Schedule";
+
 export interface IPlan{
     
 }

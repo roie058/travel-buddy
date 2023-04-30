@@ -11,7 +11,7 @@ type Props = {open:boolean,onClose:()=>void}
 const options=['car','public transport',"insurance","gifts","shopping","attractions","food","restaurants","other"]
 const AddExpenseModal = (props: Props) => {
     const {register,formState,getValues,handleSubmit}=useForm({defaultValues:{name:'',category:'other',price:0,position:''}})
-const [submitError, setSubmitError] = useState<undefined|string>()
+const [submitError, setSubmitError] = useState<undefined|string|unknown>()
 const [isLoading, setIsLoading] = useState<boolean>(false)
 
 
@@ -85,7 +85,7 @@ setIsLoading(false)
   
   
 {isLoading?<CircularProgress size={'5rem'}/>:<UiButton disabled={!formState.isValid} clickFn={()=>{}}  submit size='small'>Add</UiButton>}
-<FormHelperText sx={{color:'#d32f2f'}}>{submitError}</FormHelperText>
+<FormHelperText sx={{color:'#d32f2f'}}>{String(submitError)}</FormHelperText>
     </form>
     </Box></Modal>
   )

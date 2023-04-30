@@ -1,4 +1,4 @@
-import { Days, Hotel, Plan } from '@/pages/plans/[planId]/schedule'
+
 import React, { useEffect, useState } from 'react'
 import DayBar from './DayBar'
 import styles from './Day.module.css'
@@ -13,6 +13,7 @@ import FlightCard from '@/components/flights/FlightCard'
 import moment from 'moment'
 import { enumerateDaysBetweenDates } from '@/util/dateHandlers'
 import HotelCard from '@/components/hotels/HotelCard'
+import { Days, Hotel, Plan } from '@/components/pageCompnents/Schedule'
 
 type Props = {day:Days,index:number,plan:Plan}
 

@@ -1,6 +1,7 @@
 
+import { Plan } from '@/components/pageCompnents/Schedule'
 import { IPlace } from '@/dummyData'
-import { Plan } from '@/pages/plans/[planId]/schedule'
+
 import { Avatar, CircularProgress, Dialog, DialogTitle, List, ListItem, ListItemAvatar, ListItemButton, ListItemText } from '@mui/material'
 
 

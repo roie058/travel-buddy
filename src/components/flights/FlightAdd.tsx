@@ -10,7 +10,9 @@ import airports from '../../util/airports.json'
 import axios from 'axios'
 import AddFlightModal, { Flight } from './AddFlightModal'
 
-import { Plan } from '@/pages/plans/[planId]/schedule'
+
+import Image from 'next/image'
+import { Plan } from '../pageCompnents/Schedule'
 
 type Props = {plan?:Plan,plans?:Plan[]}
 
@@ -172,9 +174,10 @@ setError('origin',{message:'Origin Is Required'})
         {
         return(
         <Box key={option.name}    component="li" sx={{ '& > img': { mr: 2, flexShrink: 0 } }}  {...props}>
-           <img
+           <Image
         loading="lazy"
         width="30"
+        height={'30'}
        src={`https://daisycon.io/images/airline/?width=300&height=150&color=ffffff&iata=${option.iata}`}
         
         alt=""

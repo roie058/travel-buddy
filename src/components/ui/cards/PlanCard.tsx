@@ -1,4 +1,4 @@
-import { Plan } from '@/pages/plans/[planId]/schedule'
+
 import { Box } from '@mui/material'
 
 import moment from 'moment'
@@ -9,6 +9,7 @@ import React from 'react'
 import UiButton from '../buttons/UiButton'
 import Pill from '../Pill'
 import styles from './PlanCard.module.css'
+import { Plan } from '@/components/pageCompnents/Schedule'
 
 
 
@@ -16,7 +17,7 @@ type Props = {
 
 plan?:Plan
 new?:boolean
-deleteHandler:(id:string)=>void
+deleteHandler?:(id:string)=>void
 }
 
 
@@ -42,7 +43,7 @@ const dates= moment(props.plan?.start).format('DD/MM/YYYY')+'-'+ moment(props.pl
  <UiButton className={styles.btn}  size="small" clickFn={newtripHandler} >New Trip</UiButton>
  </div>
 
-if(!props.new&&props.plan){
+if(!props.new&&props.plan&&props.deleteHandler){
 card=<div className={styles.card}>
 
 <div className={styles.main_img}>

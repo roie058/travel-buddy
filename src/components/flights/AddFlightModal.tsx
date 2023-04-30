@@ -2,7 +2,8 @@
 import axios from 'axios'
 import React, {  useState } from 'react'
 import AddToPlanModal from '../ui/list/AddToPlanModal'
-import { Plan } from '@/pages/plans/[planId]/schedule'
+import { Plan } from '../pageCompnents/Schedule'
+
 
 export interface Flight {
     _id?:string,

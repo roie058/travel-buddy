@@ -1,5 +1,4 @@
 
-import { Expense, Plan } from '@/pages/plans/[planId]/schedule'
 import { Box, List, ListItem, ListItemButton, ListItemText, Paper, Typography, useMediaQuery } from '@mui/material'
 import axios from 'axios'
 import moment from 'moment'
@@ -10,6 +9,7 @@ import React, { useCallback, useEffect, useState } from 'react'
 import UiButton from '../ui/buttons/UiButton'
 import AddExpenseModal from './AddExpenseModal'
 import styles from './BudgetBoard.module.css'
+import { Expense, Plan } from '../pageCompnents/Schedule'
 
 type Props = {plan:Plan,setList:React.Dispatch<React.SetStateAction<Plan|undefined>>}
 

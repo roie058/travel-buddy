@@ -5,7 +5,8 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import Plan from "models/Plan";
 import Place from "models/Place";
 import { IPlace } from "@/dummyData";
-import { Hotel } from "@/pages/plans/[planId]/schedule";
+import { Hotel } from "@/components/pageCompnents/Schedule";
+
 
 
 

@@ -1,4 +1,6 @@
-import { Grid } from '@mui/material'
+
+import PlanFlights from '@/components/pageCompnents/PlanFlights'
+
 import Head from 'next/head'
 import React from 'react'
 
@@ -15,21 +17,8 @@ const weather = (props: Props) => {
         
       </Head>
       
-        <main style={{width:'100%',justifyContent:'normal',alignContent:"normal"}}>
-          <Grid width={'100%'} container  >
-            
-          <Grid item container xs={12} sm={12} md={6}  lg={8} >
-          
-            <Grid item  xs={12} > <FlightAdd/></Grid>
-            
-            </Grid>
-            <Grid item  xs={12} sm={12} md={6} lg={4} >
-            <MyFlights />
-            </Grid>
-            
-           
-       </Grid>
-        </main>
+       <PlanFlights/>
+
         </>
       )
 }

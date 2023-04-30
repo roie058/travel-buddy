@@ -7,7 +7,7 @@ import PlaceCard from '../cards/PlaceCard';
 import { Button, CircularProgress, FormControl, Grid, MenuItem, Rating, Select, SelectChangeEvent } from '@mui/material';
 import { MapContext } from '@/context/map-context';
 import { getPlaceData } from '@/hooks/data-hook';
-import { UserContext } from '@/context/auth-context';
+
 
 
 
@@ -111,7 +111,7 @@ useEffect(() => {
   if(!mapCtx.isLoading){
     setRefs((refs:any[]) => Array(mapCtx.placeList.length).fill("").map((_, i) => refs[i] || createRef()));
   }
-}, [mapCtx?.placeList])
+}, [mapCtx?.placeList,mapCtx?.isLoading])
 
 
 
