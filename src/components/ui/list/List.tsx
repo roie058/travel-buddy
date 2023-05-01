@@ -120,7 +120,7 @@ const loadHandler:MouseEventHandler =(e)=>{
  if (mapCtx===null)return;
   mapCtx?.setIsLoading(true)
   getPlaceData(mapCtx.bounds,mapCtx.type).then((values)=>{
-console.log(values);
+
 mapCtx?.setPlaceList(values)
 mapCtx?.setIsLoading(false)})
 }
@@ -143,7 +143,7 @@ mapCtx?.setIsLoading(false)
 
   return (
     <>
-    <Box overflow="scroll"  sx={{ width: '100%',padding:0,height:'calc(100vh - 60px)'}}> 
+    <Box overflow="scroll"  sx={{ width: '100%',padding:0,height:'calc(100vh - 54px)'}}> 
 
        <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
         <Tabs value={types.indexOf(mapCtx?.type??'hotels')?? value} onChange={handleChange} sx={{ '& .MuiTabs-indicator':{height:'100%'},'& .Mui-selected':{zIndex:1,color:'white !important'} ,'& .MuiTabs-flexContainer':{justifyContent:'center'}}} aria-label="basic tabs example">

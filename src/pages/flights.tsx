@@ -1,5 +1,7 @@
 
 import Flights from '@/components/pageCompnents/Flights'
+import { set } from 'mongoose'
+import { defaultCookies } from 'next-auth/core/lib/cookie'
 import Head from 'next/head'
 import Script from 'next/script'
 import React from 'react'
@@ -23,9 +25,10 @@ const flights = (props: Props) => {
   <Flights/>
     
     <Script onLoad={() => {
-          console.log('Script has loaded')
+
+          
         }} onError={(e)=>{console.log(e);
-        }}    src="https://widgets.skyscanner.net/widget-server/js/loader.js" defer={false} strategy="lazyOnload" async  ></Script>
+        }}    src="https://widgets.skyscanner.net/widget-server/js/loader.js"  defer={false} strategy="lazyOnload" async  ></Script>
     </>
   )
 }

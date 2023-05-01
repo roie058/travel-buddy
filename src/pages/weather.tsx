@@ -1,5 +1,6 @@
 
-import PlanFlights from '@/components/pageCompnents/PlanFlights'
+
+import WeatherPage from '@/components/pageCompnents/WeatherPage'
 
 import Head from 'next/head'
 import React from 'react'
@@ -17,7 +18,7 @@ const weather = (props: Props) => {
         
       </Head>
       
-       <PlanFlights/>
+       <WeatherPage/>
 
         </>
       )

@@ -1,5 +1,5 @@
 
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import DayBar from './DayBar'
 import styles from './Day.module.css'
 
@@ -24,7 +24,8 @@ const [startFlight, setStartFlight] = useState<Flight>()
 const [endFlight, setEndFlight] = useState<Flight>()
 const [hotel, setHotel] = useState<Hotel>()
 const [endHotel, setendHotel] = useState<boolean>(false)
-
+const [, updateState] = useState<any>();
+const forceUpdate = useCallback(() => updateState({}), []);
 const [middleFlight, setMiddleFlight] = useState<Flight[]>()
 
 
@@ -58,7 +59,7 @@ useEffect(() => {
     }
       setHotel(hotel)
      }else{
-      console.log('not '+props.day.date)
+
      }
      
 
@@ -75,11 +76,11 @@ useEffect(() => {
 
     
     <div  className={open? styles.dayOpen:styles.day}>
-      <DayBar date={day.date} day={day} />
+      <DayBar open={open} openHandler={openHandler} date={day.date} day={day} />
     {props.index!==0&&hotel &&<HotelCard    listItem={hotel?.place}  />}  
  {startFlight&&props.index===0 && <FlightCard flight={startFlight}/>}     
  
-<DayList position='rutine' date={props.index} flights={(middleFlight&&middleFlight.length>0)?middleFlight:undefined}  list={day.rutine}  /> 
+<DayList  position='rutine' date={props.index} flights={(middleFlight&&middleFlight.length>0)?middleFlight:undefined}  list={day.rutine}  /> 
 
 
 {endFlight&&props.index===props.plan.days.length-1 ? <FlightCard flight={endFlight}/> :<HotelCard listItem={endHotel? undefined  :hotel?.place}/>}
@@ -92,7 +93,6 @@ useEffect(() => {
   <DaySummery   index={props.index} start={props.index===0 &&startFlight? startFlight.destination : props.index!==0&&hotel?hotel.place:undefined } end={endFlight&&props.index===props.plan.days.length-1 ?endFlight.origin:endHotel?undefined:hotel?.place} day={props.day}/>
 
 }
-<div onClick={openHandler} className={open?styles.daySummeryFliped:styles.daySummery}/>
 
 
 </div> 

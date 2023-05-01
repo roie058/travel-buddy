@@ -54,11 +54,11 @@ const changeHandler=async(inputName:'origin'|'destination'|'airline',value: {
 } | null)=>{ 
     if(value){
     let newValue:any=value  
-    console.log(inputName);
+  
     
     if(inputName!=='airline'){
     const  airportLocation=getAirportLocation(value.iata);
-  console.log(airportLocation);
+
   
 newValue={...value,...airportLocation}
     }
@@ -73,7 +73,7 @@ const onClose=()=>{
 }
 
 const submitHandler=async (data:any)=>{
-    console.log(data);
+
     
     
     if(!data.origin?.lat){

@@ -18,15 +18,15 @@ if(!req.body)return res.status(400).json({error:'data is missing'})
 const {flight,planId}=req.body
 
 try {
-    console.log('here1');
+
     // @ts-ignore
 const plan=await Plan.findById(planId)
-console.log(plan);
+
 
  plan.flights.push(flight)
- console.log('here2');
+
  await plan.save()
- console.log('here3');
+
          return res.status(201).json({success:true,flight:plan.flights[plan.flights.length-1]})
 
 } catch (error) {

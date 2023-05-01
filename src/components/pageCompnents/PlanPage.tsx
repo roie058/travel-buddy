@@ -12,11 +12,12 @@ import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 import { Plan } from './Schedule'
 import { NewSesstion } from '@/pages/api/auth/signup'
+import { LoadScript, LoadScriptNext } from '@react-google-maps/api'
 
 
 type Props = {}
 
-
+const libraries:("geometry" | "drawing" | "places" | "localContext" | "visualization")[] =['geometry', 'drawing', 'places']
 const PlanPage = (props: Props) => {
   const{ query}=useRouter()
 
@@ -32,7 +33,7 @@ const [isLoading,setIsLoading]=useState(false)
      const {data} =await axios.get('/api/plan/getPlan',{params:{userId:newSession.user?.id,planId:query.planId}})
      if(data.success){
        setList(data.plan)
-       console.log(data.plan);
+  
        
      }
      } catch (error) {
@@ -55,6 +56,8 @@ const [isLoading,setIsLoading]=useState(false)
 
   return (
     <>
+      <LoadScriptNext googleMapsApiKey={`${process.env.MAPS_API_KEY}`}
+  libraries={libraries}>
     {isLoading ? <CircularProgress sx={{padding:'20% 40%'}} size={'10vw'}/> :
     <>
   {list&& <PlanContext.Provider value={{plan:list}}>
@@ -71,10 +74,13 @@ const [isLoading,setIsLoading]=useState(false)
 
     </main>
     </PlanContext.Provider>
+    
   }
+
+
   </>
     }
- 
+   </LoadScriptNext>
   </>
   )
 }

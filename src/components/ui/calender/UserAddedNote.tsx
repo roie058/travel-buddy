@@ -55,7 +55,7 @@ setOpen(false)
         <Card     >
 
         {props.position&&Number(props.position)!==0&& <CardHeader  sx={{width:'100%',height:'10px',background:'linear-gradient(60deg, rgba(35,58,102,1) 0%, rgba(36,53,98,1) 100%)',color:'white'}}  titleTypographyProps={{variant:'body1'}}  title={props.position==='mainAttraction'?'Main Attraction':props.position}/>}
-           <Box  sx={{backgroundColor:"#fdf3bd",borderRadius:0 , fontFamily: "Heebo, sans-serif",display:'flex',padding:'1% 1%',justifyContent:"flex-start",alignItems:'center',flexDirection:'column'}}>
+           <Box  sx={{backgroundColor:"white",borderRadius:0 ,border:'0.5px dashed rgba(35,58,102,1) ' ,fontFamily: "Heebo, sans-serif",display:'flex',padding:'1% 1%',justifyContent:"flex-start",alignItems:'center',flexDirection:'column'}}>
 
            
             <CardContent  sx={{margin: '3%', marginRight:'0',padding:'0', paddingBottom:'0 !important'}}>

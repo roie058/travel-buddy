@@ -1,11 +1,12 @@
 
 
-import { Box, Button, Card, CardHeader, Modal, Typography } from '@mui/material'
+import { Box, Button, Card, CardHeader, CardMedia, Modal, Typography } from '@mui/material'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import React, {  useState } from 'react'
 import EditPlan from '../form/EditPlan'
 import { Plan } from '../pageCompnents/Schedule'
+import Image from 'next/image'
 
 type Props = {plan:Plan}
 
@@ -25,8 +26,9 @@ const DashBtns = (props: Props) => {
   return (
     <>
     <Link href={`/plans/${query.planId}/schedule`}>
-<Card    sx={{flexGrow:'3',minHeight:'16vh',position:'relative',backgroundImage:'url(/images/schedule.webp)',backgroundPosition:'center',backgroundRepeat:"no-repeat",backgroundSize:"cover",}} >
-<CardHeader   titleTypographyProps={{textAlign:'center',color:'white'}} title="Schedule"></CardHeader>
+<Card    sx={{flexGrow:'3',minHeight:'20vh',position:'relative'}} >
+<Image src={"/images/schedule.webp"} priority fill sizes='800x' alt="" style={{objectFit:'cover',zIndex:'1'}}   />
+<CardHeader sx={{position:'absolute',zIndex:'2',width:'100%',padding:'5% 0'}} titleTypographyProps={{textAlign:'center',color:'white',textTransform:'capitalize'}} title="Schedule"></CardHeader>
 
     </Card>
     </Link>
@@ -38,29 +40,24 @@ const DashBtns = (props: Props) => {
         onClick={handleClickModal}
         sx={{padding:'0'}}
       >
-    <Card sx={{flexGrow:'3',minHeight:'16vh' ,position:'relative',backgroundImage:'url(/images/editplan.webp)',backgroundPosition:'center',backgroundRepeat:"no-repeat",backgroundSize:"cover",}} >
-      
-<CardHeader titleTypographyProps={{textAlign:'center',color:'white'}} title="Edit Plan"></CardHeader>
+    <Card sx={{flexGrow:'3',minHeight:'20vh' ,position:'relative'}} >
+      <Image src={"/images/editplan.webp"} priority fill sizes='800x' alt="" style={{objectFit:'cover',zIndex:'1'}}   />
+<CardHeader sx={{position:'absolute',zIndex:'2',width:'100%',padding:'5% 0'}} titleTypographyProps={{textAlign:'center',color:'white',textTransform:'capitalize'}} title="Edit Plan"></CardHeader>
     </Card>
     </Button> 
     <Link href={`/plans/${query.planId}/flights`}>
-    <Card sx={{flexGrow:'3',minHeight:'16vh',position:'relative',backgroundImage:'url(/images/flights.webp)',backgroundPosition:'center',backgroundRepeat:"no-repeat",backgroundSize:"cover"}}>
-    
-<CardHeader titleTypographyProps={{textAlign:'center',color:'white'}} title="Flights"></CardHeader>
+    <Card    sx={{flexGrow:'3',minHeight:'20vh',position:'relative'}} >
+    <Image src={"/images/flights.webp"}  priority  fill sizes='800x' alt="" style={{objectFit:'cover',zIndex:'1'}}   />
+    <CardHeader sx={{position:'absolute',zIndex:'2',width:'100%',padding:'5% 0'}} titleTypographyProps={{textAlign:'center',color:'white',textTransform:'capitalize'}} title="Flights"></CardHeader>
     </Card>
     </Link>
     <Link href={`/plans/${query.planId}/hotels`}>
-    <Card sx={{flexGrow:'3',minHeight:'16vh',position:'relative',backgroundImage:'url(/images/hotels.webp)',backgroundPosition:'center',backgroundRepeat:"no-repeat",backgroundSize:"cover"}}>
-    
-<CardHeader titleTypographyProps={{textAlign:'center',color:'white'}} title="Hotels"></CardHeader>
+    <Card sx={{flexGrow:'3',minHeight:'20vh',position:'relative'}}>
+    <Image src={"/images/hotels.webp"} priority  fill sizes='1000px' alt="" style={{objectFit:'cover',zIndex:'1'}}   />
+<CardHeader sx={{position:'absolute',zIndex:'2',width:'100%',padding:'5% 0'}} titleTypographyProps={{textAlign:'center',color:'white',textTransform:'capitalize'}} title="Hotels"></CardHeader>
     </Card>
     </Link>
-    <Link href={`/plans/${query.planId}/hotels`}>
-    <Card sx={{flexGrow:'3',minHeight:'16vh',position:'relative',backgroundImage:'url(/images/weather.webp)',backgroundPosition:'center',backgroundRepeat:"no-repeat",backgroundSize:"cover"}}>
-    
-<CardHeader titleTypographyProps={{textAlign:'center',color:'white'}} title="Weather"></CardHeader>
-    </Card>
-    </Link>
+   
     <Modal  open={isModal} sx={{zIndex:'10'}} onClose={handleCloseModal}><Box sx={ {position: 'absolute' as 'absolute',
   top: '50%',
   left: '50%',

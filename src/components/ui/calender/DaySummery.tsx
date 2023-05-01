@@ -132,7 +132,7 @@ getDefaultLocation()
            (result, status) => {
              if (status === google.maps.DirectionsStatus.OK) {
                directionsRenderer.setDirections(result);
-               console.log(result);
+  
               setDiractionsArr(result?.routes[0])
              } else {
                console.error(`error fetching directions ${result}`);
@@ -145,7 +145,7 @@ getDefaultLocation()
 
   return (
     <Paper ref={cardRef}   elevation={3} sx={{width:'100%',minHeight:'min-content'}}>
-{weather&&<Box   display={'flex'} justifyContent="space-evenly" >
+{weather&&<Box   display={'flex'} justifyContent="space-evenly" flexWrap={"wrap"} >
  <Box display={'flex'} alignItems={'center'} justifyContent="center" gap={1}>
   <Image width={35} height={35} alt={'weather'} src={`/images/weatherIcons/${weather.icon}.svg`}/>
 <Typography  >{weather.temp}c°, {weather.rainProb}%💧, {weather.weatherType} </Typography>
@@ -163,7 +163,7 @@ getDefaultLocation()
         <Box   sx={{width:'100%',height:"30vh"}}>
 
        
-{defaultLocation&&
+{defaultLocation&& props.day&&
 <GoogleMapReact    bootstrapURLKeys={{key:'AIzaSyB_5RyNMBak3lrK10q9-dyPHWbOM8XKaKw'}}
       defaultZoom={6} center={defaultLocation??{lat:31.8943,lng:-81.7198}} yesIWantToUseGoogleMapApiInternals
       onGoogleApiLoaded={({ map, maps }) =>   apiIsLoaded(map, maps)}>

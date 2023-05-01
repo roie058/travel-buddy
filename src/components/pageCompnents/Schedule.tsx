@@ -7,6 +7,7 @@ import { PlanContext } from '@/context/plan-context'
 import { IPlace } from '@/dummyData'
 import { NewSesstion } from '@/pages/api/auth/signup'
 import {  Grid} from '@mui/material'
+import { LoadScript, LoadScriptNext } from '@react-google-maps/api'
 
 import axios, { AxiosError } from 'axios'
 import { useSession } from 'next-auth/react'
@@ -61,7 +62,7 @@ hotels:Hotel[]
 }
 
 
-
+const libraries:("geometry" | "drawing" | "places" | "localContext" | "visualization")[] =['geometry', 'drawing', 'places']
 
 const Schedule = (props: Props) => {
   const router=useRouter()
@@ -80,7 +81,7 @@ const newSession:NewSesstion={...session}
      const {data} =await axios.get('/api/plan/getPlan',{params:{userId:newSession.user?.id,planId:planId}})
      if(data.success){
        setList(data.plan)
-       console.log(data.plan);
+
        
      }
      } catch (error) {
@@ -144,12 +145,14 @@ setList((list)=> list )
 
 
   return (<>
+   <LoadScriptNext  googleMapsApiKey={`${process.env.MAPS_API_KEY}`}
+  libraries={libraries}> 
     {list&&  <PlanContext.Provider value={{plan:list}}>
      <main style={{alignContent:"flex-start",display:"block",padding:'0 10%'}}>
     
      <DragDropContext onDragEnd={handleDragEnd} >
      
-        <Grid sx={{justifyContent:'center'}} paddingTop={'5%'} gap={3}   container  >
+        <Grid sx={{justifyContent:'center'}} paddingTop={'5%'}    container  >
         {list&& list.days.map((date:Days,i)=>{
        
       return  <Day key={i} plan={list}  index={i} day={date} />
@@ -161,6 +164,7 @@ setList((list)=> list )
         
         </main>
         </PlanContext.Provider>}
+         </LoadScriptNext> 
       </>
   )
 }

@@ -33,7 +33,7 @@ try {
   setIsLoading(true)
   
   const {data} = await axios.post('/api/place/newPlace',{place:props.clickedLocation,category:`${props.clickedLocation?.category?.key??'hotel'}s`,planId:userCtx?.plans[index]._id})
-  console.log(data);
+
   
 } catch (error) {
     console.log(error);

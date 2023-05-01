@@ -15,12 +15,14 @@ import axios from 'axios'
 import { Flight } from '@/components/flights/AddFlightModal'
 import FlightCard from '@/components/flights/FlightCard'
 import { PlanContext } from '@/context/plan-context'
+import { Box } from '@mui/material'
 type Props = {
 list:Array<RoutineItem>|any[],
 position:'mainAttraction'|'breakfest'|'lunch'|'dinner'|'rutine'
 date:number,
 flights?:Flight[],
 lastLocation?:ListItems|undefined
+
 }
 
 export type RoutineItem={place:IPlace,dragId:string,budget:number,position?:'mainAttraction'|'breakfest'|'lunch'|'dinner',_id?:string}
@@ -77,7 +79,7 @@ const handleSubmit=async (selected:IPlace|UserAddedItem )=>{
     try {
       const {data}=await axios.patch('/api/plan/days',{listItem:newIdListItem,index:props.date,planId:plan?._id})
       if(data.success){
-        console.log(data.plan);
+
       }
     } catch (error) {
       throw new Error('Bad Request')
@@ -106,7 +108,7 @@ const handleClose=()=>{
    
     <Droppable  droppableId={props.date+'/'+props.position}  >
         {(provided)=>(
-        <div className={styles.daylist} {...provided.droppableProps}  ref={provided.innerRef} >
+        <Box className={styles.daylist} sx={{overflowY:list.length>3?'scroll':"auto"}}  {...provided.droppableProps}  ref={provided.innerRef} >
         { list.map((listItem,index)=>{
         return  !listItem.place.location_id ?
          <Draggable  key={listItem.dragId} draggableId={listItem.dragId} index={index} >
@@ -130,7 +132,7 @@ const handleClose=()=>{
 {list.length<=0 && <div onClick={handleOpenAdd} className={styles.firstNewBtn}>+Add next stop</div>}
 
 {provided.placeholder}
-</div>
+</Box>
 )}
 </Droppable>
 

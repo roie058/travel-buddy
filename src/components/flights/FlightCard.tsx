@@ -11,7 +11,7 @@ type Props = {flight:Flight}
 const FlightCard = (props: Props) => {
   return (
     <>
-    <Card sx={{position:'relative',width:'100%',borderRadius:'0',borderTopLeftRadius:'10px',borderTopRightRadius:'10px' }}     >
+    <Card sx={{border:'1px solid lightGray',position:'relative',width:'100%',borderRadius:'0',overflow:'visible' }}     >
     <ListItemIcon  sx={{flexGrow:'0',display:'flex',justifyContent:'left',position:"absolute",left:'12px',top:'0',height:'100%',width:'20%'}}  ><Image fill sizes='150px' alt='AirLine' style={{objectFit:"contain",opacity:'30%',objectPosition:'left',}}   src={`https://daisycon.io/images/airline/?width=300&height=150&color=ffffff&iata=${props.flight?.airline.iata}`} /> </ListItemIcon>
     <Box display={'flex'} paddingLeft="15%" justifyContent="center" textAlign={'center'} flexGrow={3} flexWrap="wrap">
     

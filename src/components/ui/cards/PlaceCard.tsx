@@ -9,6 +9,7 @@ import {useSession,signIn} from 'next-auth/react'
 import React, { MouseEventHandler, useContext, useState } from 'react'
 import HeartBtn from '../buttons/HeartBtn'
 import LikeModal from '../list/LikeModal'
+import { log } from 'console'
 
 
 type Props = {
@@ -75,8 +76,7 @@ const type:"restaurants" | "hotels" | "attractions"|string=(props.place?.categor
       <Box onClick={coordinatesHandler} sx={{cursor:'pointer'}} display={"flex"} justifyContent="space-between">
       <Typography  fontSize={'1.3rem'} fontWeight={'bold'}>{props.place.name} </Typography>
       <Badge  anchorOrigin={{vertical:'top',horizontal:'right'}} badgeContent={userCtx?.plans.map((plan)=>{
-        const placeArr=plan.liked[props.place?.category?.key+'s'??'hotels']
-        
+        const placeArr=plan.liked[(props.place?.category?.key??'hotel')+'s']
         const place=placeArr.find((place:IPlace)=>place.location_id===props.place.location_id)
         if(place){
           return 1

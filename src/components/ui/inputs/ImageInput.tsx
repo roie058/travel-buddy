@@ -1,5 +1,5 @@
 import { tripImages } from '@/util/tripsImages'
-import {  Button, Dialog, DialogTitle, Grid, ImageList, ImageListItem, ListItemButton, Typography } from '@mui/material'
+import {  Button, Dialog, DialogTitle, Grid, ImageList, ImageListItem, ListItemButton, Typography, useMediaQuery } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import Image from 'next/image'
 import { Box } from '@mui/system'
@@ -33,6 +33,7 @@ const handleClose = (value: string) => {
 
 };
 
+const isMobile=useMediaQuery("(max-width:600px)")
   return (
     <>
     
@@ -44,13 +45,13 @@ const handleClose = (value: string) => {
     {!selectedValue&&  <Button  onClick={handleClickOpen} variant="contained" >
   Pick Image
 </Button>}
-<Dialog maxWidth={false}  onClose={handleClose}  open={open}>
+<Dialog maxWidth={'md'} fullWidth  onClose={handleClose}  open={open}>
       <DialogTitle>Image Selector</DialogTitle>
-      <ImageList sx={{width:'max-content'}} gap={0}  cols={3}>
+      <ImageList sx={{width:'100%'}} gap={2} cols={isMobile?1:3} >
       {tripImages.map((image) => (
-<ImageListItem  key={image.url} >
+<ImageListItem   key={image.url} sx={{position:'relative',width:'100%',minHeight:'200px'}} >
   <ListItemButton  onClick={() => handleClose(image.url)}>
-<Image  loading="lazy" style={{objectFit:"cover"}} width={200} height={200} alt={image.type} src={image.url}/>
+<Image  loading="lazy" style={{objectFit:"cover"}} fill sizes='300px' alt={image.type} src={image.url}/>
 </ListItemButton>
 </ImageListItem>
       ))}

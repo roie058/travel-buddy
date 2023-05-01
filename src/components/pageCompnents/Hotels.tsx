@@ -32,7 +32,7 @@ const Hotels = (props: Props) => {
          const {data} =await axios.get('/api/plan/getPlan',{params:{userId:newSession.user?.id,planId:query.planId}})
          if(data.success){
            setPlan(data.plan)
-           console.log(data.plan);
+
            
          }
          } catch (error) {

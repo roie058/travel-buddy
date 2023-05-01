@@ -45,6 +45,11 @@ const nextConfig = {
         hostname: "daisycon.io",
         pathname: "/**",
       },
+      {
+        protocol: "https",
+        hostname: "flagcdn.com",
+        pathname: "/**",
+      },
     ],
     domains: [
       "media-cdn.tripadvisor.com",
@@ -53,6 +58,7 @@ const nextConfig = {
       "lh3.googleusercontent.com",
       "res.cloudinary.com",
       "daisycon.io",
+      "flagcdn.com",
     ],
   },
 };

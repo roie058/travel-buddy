@@ -26,7 +26,7 @@ const newSession:NewSesstion={...session}
      const {data} =await axios.get('/api/plan/getPlans',{params:{userId:newSession.user?.id}})
      if(data.success){
        setPlans(data.plans)
-       console.log(data.plans);
+
        
      }
      } catch (error) {

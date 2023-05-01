@@ -17,7 +17,7 @@ const HotelCard = (props: Props) => {
   return (
     <>
     
-   {props.listItem? <Card sx={{width:'100%'}}     >
+   {props.listItem? <Card sx={{width:'100%',overflow:'visible'}}     >
  
        <Box sx={{margin:'20px 0',borderRadius:0 , fontFamily: "Heebo, sans-serif",display:'flex',padding:'1% 1%',justifyContent:'space-evenly',alignItems:'center'}}>
         <Image style={{objectFit:"cover",borderRadius:'10px'}} width={100} height={100}  src={props.listItem?.photo ? props.listItem.photo.images.small.url:'/images/placeholder.png'} alt={""}/>

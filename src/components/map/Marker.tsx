@@ -8,13 +8,9 @@ import { useSession,signIn } from 'next-auth/react'
 import LikeModal from '../ui/list/LikeModal'
 type Props = {lat:number,lng:number,place:IPlace,liked?:boolean}
 
-declare module 'react' {
-  interface HTMLAttributes<T> {
-    lat?:number,
-    lng?:number
- }
 
-}
+
+
 
 function isType(selected:string| "restaurants" | "hotels" | "attractions" ): selected is "restaurants" | "hotels" | "attractions"{
   return (selected as "restaurants" | "hotels" | "attractions") !== undefined;
@@ -29,7 +25,7 @@ const [location, setLocation] = useState<{lat:number,lng:number}>()
 
 useEffect(() => {
   setLocation({lat:props.lat,lng:props.lng})
-console.log('cahnge');
+
 
   
 }, [props.lat,props.lng])
@@ -54,7 +50,7 @@ console.log('cahnge');
     <>
     
      <LikeModal likeHandler={closeHandler} clickedLocation={props.place} type={isType(type)?type:'hotels'} onClose={closeHandler} open={open} />
-    {location&& <div  onClick={!isMobile? ()=>{setHover(!hover)}:()=>{}}  className={styles.marker}  lat={location?.lat} lng={location?.lng}>
+    {location&& <div  onClick={!isMobile? ()=>{setHover(!hover)}:()=>{}}  className={styles.marker}  >
       <Image  width={50} height={50} src={props.liked?'/images/likedMarker.svg':'/images/marker.png'} className={styles.markerImg} alt={props.place.name} />
         
      {isMobile ? <Card   elevation={3}   className={styles.paper} >

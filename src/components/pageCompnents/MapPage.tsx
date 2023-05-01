@@ -14,8 +14,10 @@ import { useSession } from 'next-auth/react'
 import { useEffect, useState } from 'react'
 import { Plan } from './Schedule'
 import { NewSesstion } from '@/pages/api/auth/signup'
+import { LoadScriptNext } from '@react-google-maps/api'
 
 
+const libraries:("geometry" | "drawing" | "places" | "localContext" | "visualization")[] =['places']
 
 export default function MapPage() {
   const [placeList ,setPlaceList] = useState<any[]|IPlace[]>([])
@@ -38,7 +40,7 @@ const newSession:NewSesstion={...session}
      const {data} =await axios.get('/api/plan/getPlans',{params:{userId:newSession.user?.id,populate:true}})
      if(data.success){
        setPlans(data.plans)
-       console.log(data.plans);
+
        
      }
      } catch (error) {
@@ -76,10 +78,13 @@ if(plans){
 
 
 const isMobile=useMediaQuery('(min-width:800px)')
+const isSm=useMediaQuery('(min-width:600px)')
 
   
 return (
     <>  
+      <LoadScriptNext  googleMapsApiKey={`${process.env.MAPS_API_KEY}`}
+  libraries={libraries}> 
       <MapContext.Provider value={{
     setPlaceList,placeList:filteredPlaces.length?filteredPlaces:placeList,
     setBounds,bounds,
@@ -91,7 +96,7 @@ return (
     setRating
    }}>
     <UserContext.Provider value={{plans,userId:newSession.user?.id??''}}>
-     <Grid sx={{backgroundColor:'#FAFAFA',minHeight: "calc(100vh - 57px)",marginTop:'57px',marginLeft:'0'}}  container >
+     <Grid sx={{backgroundColor:'#FAFAFA',minHeight:isSm?"calc(100vh - 54px)":"calc(100vh - 36.5px)",marginTop:isSm?'54px':'36.5px',marginLeft:'0'}}  container >
       <Grid    item xs={12}  lg={8} sm={isMobile?7:12} md={7}>
         <Map likedIds={likedIds}  likedList={allLikedList??[]} />
         </Grid>
@@ -101,6 +106,7 @@ return (
       </Grid>
       </UserContext.Provider>
       </MapContext.Provider>
+       </LoadScriptNext> 
     </>
   )
 }

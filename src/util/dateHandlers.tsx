@@ -17,7 +17,6 @@ const startDate=new Date(start)
 const endDate=new Date(end)
 
 const daysNum=(endDate.getTime()-startDate.getTime())/86400000;
-console.log({end,start,daysNum});
 
 for(let i=0;i<=daysNum; i++){
 dateArray.push( addDays(startDate,i))

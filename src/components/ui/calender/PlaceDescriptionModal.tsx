@@ -51,7 +51,7 @@ forceUpdate()
 } catch (error) {
   throw new Error('bad request')
 }
-console.log(`to ${formData.dayType}`);
+
 
 
 

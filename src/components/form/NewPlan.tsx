@@ -93,7 +93,7 @@ setSelectedCities([...cities])
      }
    }
   
-  console.log(data);
+
 
  }
 
@@ -121,14 +121,14 @@ const isMobile=useMediaQuery("(max-width:800px)")
       const code=Object.keys(codes).find(key => newCodes[key] === option);
       
     return(
-    <Box component="li" sx={{ '& > img': { mr: 2, flexShrink: 0 } }} {...props}>
-      <Image
+    <Box component="li" sx={{ '& > img': { mr: 2, flexShrink: 0 } }} position={"relative"} {...props}>
+      
+      <img
         loading="lazy"
         width="20"
-        height={'20'}
-        src={code?`https://flagcdn.com/w20/${code.toLowerCase()}.png`:`https://flagcdn.com/w20/un.png`}
-        
-        alt=""
+        src={code?`https://flagcdn.com/w20/${code.toLowerCase()}.webp`:`https://flagcdn.com/w20/un.webp`}
+        srcSet={code?`https://flagcdn.com/w40/${code.toLowerCase()}.webp 2x`  :`https://flagcdn.com/w40/un.webp 2x`}
+        alt={option}
       />
       {option}
     </Box>
@@ -169,7 +169,7 @@ const isMobile=useMediaQuery("(max-width:800px)")
 
 
 {isLoading?<CircularProgress size={'5rem'}/>: <UiButton disabled={!formState.isValid} submit className={styles.submitBtn} clickFn={()=>{}} size='large' color='blue'>Create Trip</UiButton>}
-<FormHelperText>{submitError}</FormHelperText>
+<FormHelperText>{typeof submitError === 'string'? submitError:''}</FormHelperText>
 </form>
       </Card>
     </div>

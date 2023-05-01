@@ -86,7 +86,7 @@ setIsLoading(false)
   
   
 {isLoading?<CircularProgress size={'5rem'}/>:<UiButton disabled={!formState.isValid} clickFn={()=>{}}  submit size='small'>Add</UiButton>}
-<FormHelperText sx={{color:'#d32f2f'}}>{String(submitError)}</FormHelperText>
+<FormHelperText sx={{color:'#d32f2f'}}>{typeof submitError === 'string'? submitError:'' }</FormHelperText>
     </form>
     </Box></Modal>
   )
