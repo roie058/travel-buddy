@@ -68,7 +68,7 @@ const router=useRouter()
   
     </ul>}
     
-   {session?
+   {session.user.name?
           <Button
         id="button"
         aria-controls={open ? 'menu' : undefined}
@@ -77,7 +77,7 @@ const router=useRouter()
         onClick={handleClickMenu }
         sx={{justifySelf:'flex-end'}}
       >
-       <Image src={session.user?.image??'/images/account.png'} alt='profile' style={{borderRadius:'45px'}} height={45} width={45}></Image>
+       <Image priority src={session.user?.image??'/images/account.png'} alt='profile' style={{borderRadius:'45px'}} height={45} width={45}></Image>
       </Button>:
       <Button
       onClick={()=>{router.push('/auth') } }

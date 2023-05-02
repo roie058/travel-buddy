@@ -72,19 +72,19 @@ setError('address',{message:'please write a real address'})
             <form onSubmit={handleSubmit((data)=>submitHandler(data))} style={{display:'flex',gap:'10px',flexDirection:'column' }}>
             <FormControl fullWidth >
                 <TextField  {...register('name',{required:'Title is required'})}  label="Title" id='header'/>
-                <FormHelperText sx={{color:'red'}}>{String(formState.errors.name?.message)}</FormHelperText>
+                <FormHelperText sx={{color:'red'}}>{typeof formState.errors.name?.message === "string"&&formState.errors.name?.message}</FormHelperText>
             </FormControl>
             <FormControl fullWidth >
                 <Autocomplete className='googleAuto' onLoad={onLoad} onPlaceChanged={onPlaceChanged}  >
                 <TextField onKeyDown={(e) => { e.key === 'Enter' && e.preventDefault() }}  {...register('address',{required:'address is required'})} label="address"  id='address' name='address'/>
                 </Autocomplete>
-                <FormHelperText sx={{color:'red'}}>{String(formState.errors.address?.message)}</FormHelperText>
+                <FormHelperText sx={{color:'red'}}>{typeof formState.errors.address?.message === "string"&&formState.errors.address?.message}</FormHelperText>
             </FormControl>
             <FormControl fullWidth>
                 
               <TextField  multiline {...register('description',{maxLength:{value:250,message:'body must be less then 250 characters'}})} label="Note body"  id='description' name='description'/>
               <FormHelperText>250 characters max</FormHelperText>
-              <FormHelperText sx={{color:'red'}}>{String(formState.errors.description?.message)}</FormHelperText>
+              <FormHelperText sx={{color:'red'}}>{typeof formState.errors.description?.message === "string"&&formState.errors.description?.message}</FormHelperText>
             </FormControl>
 
           { isLoading? <CircularProgress/> : <Button   type="submit">Add</Button>}
