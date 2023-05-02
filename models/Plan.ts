@@ -23,7 +23,7 @@ budget:Number,
   weather:{temp:String,rainProb:String,weatherType:String,icon:String}
 }],required:true},
 tags:[String],
-budget:{budget:Number,transportation:[{name:String,category:String,price:Number}],expenses:[{name:String,category:String,price:Number}]},
+budget:{budget:Number,currency:String,transportation:[{name:String,category:String,price:Number}],expenses:[{name:String,category:String,price:Number}]},
 hotels:[{place:{type:Schema.Types.ObjectId,ref:'Place'},nightPrice:Number,start:Date,end:Date}],
 flights:[{flightNumber:String,start:Date,end:Date,airline:{name:String,iata:String,country:String},origin:{lat:Number,lng:Number,iata:String,name:String},destination:{lat:Number,lng:Number,iata:String,name:String},position:String,price:Number}],
 liked:{restaurants:[{type:Schema.Types.ObjectId,ref:'Place'}],hotels:[{type:Schema.Types.ObjectId,ref:'Place'}],attractions:[{type:Schema.Types.ObjectId,ref:'Place'}]}

@@ -68,7 +68,7 @@ const router=useRouter()
   
     </ul>}
     
-   {session?.user.name?
+   {session?.user?
           <Button
         id="button"
         aria-controls={open ? 'menu' : undefined}
