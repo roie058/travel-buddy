@@ -32,6 +32,7 @@ mapRef.current=map
        yesIWantToUseGoogleMapApiInternals
         >
 {props.likedMarkers&& props.likedMarkers.map((marker)=>marker)}
+{props.placesMarkers&& props.placesMarkers.map((marker)=>marker)}
 
         </GoogleMapReact>
     
