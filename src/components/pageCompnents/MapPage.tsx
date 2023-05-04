@@ -11,7 +11,7 @@ import axios, { AxiosError } from 'axios'
 import { useSession } from 'next-auth/react'
 
 
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Plan } from './Schedule'
 import { NewSesstion } from '@/pages/api/auth/signup'
 import { LoadScriptNext } from '@react-google-maps/api'
@@ -25,6 +25,7 @@ export default function MapPage() {
   const [coordinates ,setCoordinates] = useState<{lat:number,lng:number}|undefined>()
   const [bounds ,setBounds] = useState<any>({})
   const [childClicked, setChildClicked] = useState(null)
+  const mapRef = useRef<any>()
   const [rating, setRating] = useState("0")
   const [type, setType] = useState<'hotels'|'restaurants'|'attractions'>("hotels")
   const [isLoading, setIsLoading] = useState(false)
@@ -68,7 +69,7 @@ const newSession:NewSesstion={...session}
   const filteredPlaces = placeList.filter((place)=>(Number(place.rating)>=Number(rating)))
   setFilteredPlaces(filteredPlaces)
   },[rating,placeList])
-  let allLikedList;
+  let allLikedList:IPlace[];
   let likedIds=new Set(['']);
 if(plans){
    allLikedList=plans.flatMap((plan:Plan)=> [...plan.liked.restaurants,...plan.liked.attractions,...plan.liked.hotels])
@@ -93,7 +94,8 @@ return (
     setIsLoading,isLoading,
     type,setType,
     rating,
-    setRating
+    setRating,
+    mapRef:mapRef,
    }}>
     <UserContext.Provider value={{plans,userId:newSession.user?.id??''}}>
      <Grid sx={{backgroundColor:'#FAFAFA',minHeight:isSm?"calc(100vh - 54px)":"calc(100vh - 36.5px)",marginTop:isSm?'54px':'36.5px',marginLeft:'0'}}  container >

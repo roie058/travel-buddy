@@ -1,12 +1,14 @@
 import { IPlace } from '@/dummyData'
 import { Box, Button, Card, CardActions, Rating, Typography, useMediaQuery } from '@mui/material'
 import Image from 'next/image'
-import React, { DetailedHTMLProps, HTMLAttributes, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import HeartBtn from '../ui/buttons/HeartBtn'
 import styles from './Marker.module.css'
 import { useSession,signIn } from 'next-auth/react'
 import LikeModal from '../ui/list/LikeModal'
-type Props = {lat:number,lng:number,place:IPlace,liked?:boolean}
+
+import { MapContext } from '@/context/map-context'
+type Props = {lat:number,lng:number,place:IPlace,liked?:boolean,onClick:(i:number,lat:number,lng:number)=>void}
 
 
 
@@ -16,18 +18,24 @@ function isType(selected:string| "restaurants" | "hotels" | "attractions" ): sel
   return (selected as "restaurants" | "hotels" | "attractions") !== undefined;
 }
 
+export const ClusterMarker=(props)=>{
+  return <div onClick={props.onClick} style={{width:`${10+(props.pointCount/props.length)*20}px`, height:`${10+(props.pointCount/props.length)*20}px`,maxHeight:'100px',maxWidth:'100px',justifyContent:'center',alignItems:'center',display:'flex',color:'white',backgroundColor:'blueviolet',borderRadius:'100%'}} className={styles.marker}>
+     {props.children}
+  </div>
+}
+
 const Marker = (props: Props) => {
   const {data:session}=useSession()
 const [open, setOpen] = useState(false)
 const [liked, setLiked] = useState(false)
 const [hover, setHover] = useState(false)
 const [location, setLocation] = useState<{lat:number,lng:number}>()
+const mapCtx=useContext(MapContext)
+const index= mapCtx.placeList.findIndex((place:IPlace)=>place.location_id===props.place.location_id)
 
 useEffect(() => {
   setLocation({lat:props.lat,lng:props.lng})
 
-
-  
 }, [props.lat,props.lng])
 
 
@@ -53,7 +61,7 @@ useEffect(() => {
     {location&& <div  onClick={!isMobile? ()=>{setHover(!hover)}:()=>{}}  className={styles.marker}  >
       <Image  width={50} height={50} src={props.liked?'/images/likedMarker.svg':'/images/marker.png'} className={styles.markerImg} alt={props.place.name} />
         
-     {isMobile ? <Card   elevation={3}   className={styles.paper} >
+     {isMobile ? <Card   elevation={3} onClick={()=>{props.onClick(index,props.lat,props.lng)}}   className={styles.paper} >
             <Image width={200} height={100} style={{objectFit:'cover'}} src={props.place.photo?.images.large.url??'/images/placeholder.png'} alt={props.place.name}/>
             <Box alignItems={'center'} height={'100%'} display={'flex'} flexDirection={'column'} justifyContent={'space-evenly'} >
                 <Typography sx={{padding:'1%'}} variant="body1" fontWeight={'bold'} className={styles.typography} >

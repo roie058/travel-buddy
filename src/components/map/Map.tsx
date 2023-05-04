@@ -1,7 +1,6 @@
 import { Button, ButtonGroup, CircularProgress, InputBase, useMediaQuery } from '@mui/material'
 
 import React, { useContext, useEffect, useState} from 'react'
-import GoogleMapReact from 'google-map-react'
 import styles from './Map.module.css'
 import { MapContext } from '@/context/map-context'
 import { getPlaceData } from '@/hooks/data-hook'
@@ -10,6 +9,7 @@ import Image from 'next/image'
 import { Box } from '@mui/system'
 import { Autocomplete } from '@react-google-maps/api'
 import MapComponent from './MapComponent'
+import { IPlace } from '@/dummyData'
 
 
 
@@ -17,25 +17,15 @@ import MapComponent from './MapComponent'
 
 
 type Props = {
-  likedList:any[],
+  likedList:IPlace[]|[],
   likedIds:Set<string>
 }
 
 const Map = (props: Props) => {
-const [placeList, setPlaceList] = useState<JSX.Element[]>()
-const [likedList, setLikedList] = useState<JSX.Element[]>()
+
+
 const [autocomplete,setAutocomplete]=useState<google.maps.places.Autocomplete|null>(null)
 const mapCtx = useContext(MapContext)
-
-useEffect(() => {
-  if(mapCtx){
-    setPlaceList(mapCtx?.placeList?.filter((place)=>place.name&& !props.likedIds.has(place.name+place.location_id)).map((place,i)=><Marker place={place} key={i+place.name} lat={Number(place.latitude)} lng={Number(place.longitude)}/>))
-  }
-if(props.likedList){
-  setLikedList(props.likedList?.map((place,i)=><Marker liked place={place} key={i+place.name} lat={Number(place.latitude)} lng={Number(place.longitude)}/>))
-
-}
-}, [props.likedList,mapCtx,props.likedIds])
 
 
 const searchAreaHandler=(type:'restaurants'|'hotels'|'attractions')=>{
@@ -85,7 +75,7 @@ if(lat&&lng)mapCtx?.setCoordinates((coordinates)=> {return {lat:lat,lng:lng}})
     </ButtonGroup>}
     </Box>
   
- <MapComponent placesMarkers={placeList} likedMarkers={likedList}/>
+ <MapComponent likedMarkers={props.likedList}/>
 
  
     

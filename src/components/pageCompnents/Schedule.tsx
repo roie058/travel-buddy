@@ -54,7 +54,7 @@ header:string,
 start:Date,
 end:Date,
 days:DayObj,
-budget:{budget:number,transportation:Expense[],expenses:Expense[]}
+budget:{currency?:string,budget:number,transportation:Expense[],expenses:Expense[]}
 tags:string[],
 liked:{restaurants:Array<IPlace>,hotels:Array<IPlace>,attractions:Array<IPlace>},
 flights:Flight[]

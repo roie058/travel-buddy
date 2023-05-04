@@ -75,7 +75,7 @@ const AddReservationModal = (props: Props) => {
 </Box>}
 
       <FormControl fullWidth>
-<TextField   label="Price per Night $"  error={typeof formState.errors.nightPrice?.message  === 'string'||Number(getValues('nightPrice'))<=0} type={'number'} {...register('nightPrice',{valueAsNumber:true,min:{value:1,message:'We can not help you manage price if you travel for free!'}})} />
+<TextField   label={`Price per Night ${props.plan.budget.currency??'$'}`}  error={typeof formState.errors.nightPrice?.message  === 'string'||Number(getValues('nightPrice'))<=0} type={'number'} {...register('nightPrice',{valueAsNumber:true,min:{value:1,message:'We can not help you manage price if you travel for free!'}})} />
     <FormHelperText sx={{color:'#d32f2f'}} >{formState.errors.nightPrice?.message}</FormHelperText>
 </FormControl>
 

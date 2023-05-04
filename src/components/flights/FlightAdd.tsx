@@ -197,7 +197,7 @@ setError('origin',{message:'Origin Is Required'})
 <TextField label="Flight Number" {...register('flightNumber',{required:'Flight Number Is Required'})} />
 </FormControl>
 <FormControl fullWidth>
-<TextField label="Flight Price $" type={'number'} {...register('price',{valueAsNumber:true})} />
+<TextField label="Flight Price" type={'number'} {...register('price',{valueAsNumber:true})} />
 </FormControl>
 
 </Box>

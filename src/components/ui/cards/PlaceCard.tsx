@@ -38,8 +38,6 @@ const {data:session}=useSession()
    
     setOpen(true)
 
- 
-  
   }
 
  const closeHandler=()=>{
@@ -60,9 +58,15 @@ const coordinatesHandler:MouseEventHandler=(e)=>{
 e.preventDefault();
 if(mapCtx===null) return;
 
-mapCtx?.setCoordinates({lat:Number(props.place.latitude),lng:Number(props.place.longitude)})
 
+mapCtx?.setCoordinates({lat:Number(props.place.latitude),lng:Number(props.place.longitude)})
 mapCtx.setChildClicked(props.index)
+if(!mapCtx.mapRef.current)return;
+  mapCtx.mapRef?.current?.setZoom(20);
+  mapCtx.mapRef.current?.panTo({lat:Number(props.place.latitude),lng:Number(props.place.longitude)});
+
+
+
 }
 
 const type:"restaurants" | "hotels" | "attractions"|string=(props.place?.category?.key??'hotel')+'s'

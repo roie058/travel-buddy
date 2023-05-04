@@ -1,4 +1,4 @@
-import { Autocomplete, AutocompleteChangeDetails, AutocompleteChangeReason,  Card, CardHeader, CardMedia,  CircularProgress,  FormControl, FormHelperText, TextField, useMediaQuery } from '@mui/material'
+import { Autocomplete, AutocompleteChangeDetails, AutocompleteChangeReason,  Card, CardHeader, CardMedia,  CircularProgress,  FormControl, FormHelperText, MenuItem, Select, TextField, useMediaQuery } from '@mui/material'
 import React, {  useEffect, useState } from 'react'
 import UiButton from '../ui/buttons/UiButton'
 
@@ -54,7 +54,7 @@ const NewPlan = (props: Props) => {
   const [isLoading, setIsLoading] = useState(false)
   const [submitError, setSubmitError] = useState<null|string>(null)
   const [selectedCities,setSelectedCities]=useState<null|string[]|unknown[]>(null)
-const {register,handleSubmit,formState,setValue,control,setError,getValues }=useForm({defaultValues:{title:'',country:'',city:'',type:[],start:new Date(),end:new Date(),image:'',userId:"",budget:""},})
+const {register,handleSubmit,formState,setValue,control,setError,getValues }=useForm({defaultValues:{title:'',currency:'$',country:'',city:'',type:[],start:new Date(),end:new Date(),image:'',userId:"",budget:""},})
   const [startDate,setStartDate]=useState<null|Date>(new Date())
 const router=useRouter()
 const newSession:NewSesstion={...session}
@@ -147,11 +147,26 @@ const isMobile=useMediaQuery("(max-width:800px)")
   </Box>
 
 <SelectInput setValue={setValue}  inputRef={register}  data={names} />
-<FormControl fullWidth>
-    <TextField   label="Budget $"  error={typeof formState.errors.budget?.message  === 'string'||Number(getValues('budget'))<=0} type={'number'} {...register('budget',{valueAsNumber:true,min:{value:1,message:'We can not help you manage budget if you travel for free!'}})} />
+<Box display={"flex"} width={"100%"}>
+<FormControl fullWidth sx={{flexBasis:'80%'}}>
+    <TextField   label="Budget"  error={typeof formState.errors.budget?.message  === 'string'||Number(getValues('budget'))<=0} type={'number'} {...register('budget',{valueAsNumber:true,min:{value:1,message:'We can not help you manage budget if you travel for free!'}})} />
     <FormHelperText sx={{color:'#d32f2f'}} >{formState.errors.budget?.message}</FormHelperText>
 </FormControl>
-
+<FormControl sx={{flexBasis:'20%'}} >
+    <Select {...register('currency',{required:true})} renderValue={(value)=>value} defaultValue='$'>
+      <MenuItem value="$">$ USD</MenuItem>
+      <MenuItem value="£">£ GBP</MenuItem>
+      <MenuItem value="€">€ EUR</MenuItem>
+      <MenuItem value="₪">₪ ILS</MenuItem>
+      <MenuItem value="¥">¥ JPY</MenuItem>
+      <MenuItem value="₹">₹ INR</MenuItem>
+      <MenuItem value="₽">₽ RUB</MenuItem>
+      <MenuItem value="₩">₩ KRW</MenuItem>
+     
+    </Select>
+    <FormHelperText sx={{color:'#d32f2f'}} >{formState.errors.budget?.message}</FormHelperText>
+</FormControl>
+</Box>
 <Box width={'100%'} gap="10px" display={'flex'}  >
   <FormControl fullWidth>
 <DateInput control={control}   onChange={onStartDateChange}  name='start' label='*Start Date' />

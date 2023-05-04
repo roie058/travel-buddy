@@ -21,7 +21,7 @@ dbConnect().catch(err=>res.json(err))
 if(method==='POST'){
 if(!req.body)return res.status(400).json({error:'data is missing'})
 
-const {city,country,type,title,start,end,image,userId,budget}=req.body
+const {city,country,type,title,start,end,image,userId,budget,currency}=req.body
 
 const daysArr=enumerateDaysBetweenDates(start,end)
 
@@ -44,7 +44,7 @@ try {
 
 //const DayDocArr=await Day.create({})
 // @ts-ignore
-    const data=await Plan.create({country:city.length>=1?city+', '+country :country,tags:type,header:title,start,end,image,author:userId,days,budget:{transportation:[],expenses:[],budget},hotels:[],flights:[]}) 
+    const data=await Plan.create({country:city.length>=1?city+', '+country :country,tags:type,header:title,start,end,image,author:userId,days,budget:{transportation:[],expenses:[],budget,currency},hotels:[],flights:[]}) 
 
     
 

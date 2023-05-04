@@ -72,7 +72,7 @@ if(data.success){
         
         <ListItemText sx={{flexGrow:"100%",flexBasis:"50%"}}>{moment(reservation.start).format('DD/MM/YYYY')=== moment(reservation.end).format('DD/MM/YYYY')?moment(reservation.start).format('DD/MM/YYYY'):moment(reservation.start).format('DD/MM/YYYY')}</ListItemText>
         <ListItemText sx={{flexGrow:"100%",flexBasis:"50%"}}>{ moment(reservation.end).format('DD/MM/YYYY')}</ListItemText>
-        <ListItemText sx={{flexGrow:"100%",flexBasis:"50%"}} >{reservation.nightPrice}$ Night</ListItemText>
+        <ListItemText sx={{flexGrow:"100%",flexBasis:"50%"}} >{reservation.nightPrice+props.plan.budget.currency??'$'} Night</ListItemText>
         <ListItemText sx={{flexGrow:"100%",flexBasis:"50%"}} >{moment(reservation.end).diff(moment(reservation.start),'days') } Nights</ListItemText>
         </Box>
         <ListItemButton onClick={()=>{deleteHotelHandler(reservation,index)}} sx={{flexGrow:'0',width:"30px",height:'30px',padding:'0',textAlign:'center',justifyContent:'center'}}><Image alt='delete' width={12} height={12} src={'/images/delete.svg'}/></ListItemButton>

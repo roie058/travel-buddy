@@ -36,9 +36,8 @@ const DaySummery = (props: Props) => {
   const [weather,setWeather]=useState<{rainProb:string,icon:string,temp:string,weatherType:string}>(props.day.weather)
   const [liveWeather,setLiveWeather]=useState<{rainProb:string,icon:string,temp:string,weatherType:string}>()
   const cardRef=useRef<HTMLDivElement | null>(null)
-
 const planCtx=useContext(PlanContext)
-
+const currency=planCtx.plan?.budget?.currency??"$"
 
 useEffect(()=>{
 const getDefaultLocation=async ()=>{
@@ -204,9 +203,9 @@ getDefaultLocation()
         <TableBody>
             <TableRow>
                 <TableCell>Budget</TableCell>
-                <TableCell>{String(budget)}$</TableCell>
-                <TableCell>{String(dailyBudget)}$</TableCell>
-                <TableCell sx={{color:Number(dailyBudget) < Number(budget)?'red':'green'}} >{String(Number(dailyBudget)-Number(budget))}$</TableCell>
+                <TableCell>{String(budget)+currency}</TableCell>
+                <TableCell>{String(dailyBudget)+currency}</TableCell>
+                <TableCell sx={{color:Number(dailyBudget) < Number(budget)?'red':'green'}} >{String(Number(dailyBudget)-Number(budget))+currency}</TableCell>
             </TableRow>
         </TableBody>
     </Table>
