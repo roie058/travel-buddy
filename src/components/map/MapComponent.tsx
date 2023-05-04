@@ -1,6 +1,6 @@
 
 import { MapContext } from '@/context/map-context'
-import React, {  useContext, useRef, useState } from 'react'
+import React, {  useContext, useEffect, useRef, useState } from 'react'
 import GoogleMapReact from 'google-map-react'
 import useSupercluster from '../../hooks/useCluster'
 import { IPlace } from '@/dummyData'
@@ -21,6 +21,7 @@ const MapComponent = (props: Props) => {
    const [open,setOpen]=useState<boolean>(false)
    const [bounds,setBounds]=useState<BBox>()
    const [selectedPlace,setSelectedPlace]=useState<IPlace>()
+   const [filteredLiked,setFilteredLiked]=useState<IPlace[]>([])
     const mapRef=useRef<any>()
     const mapCtx = useContext(MapContext)
 
@@ -36,11 +37,21 @@ const MapComponent = (props: Props) => {
      }
 
 
-     const isMobile=useMediaQuery('(max-width:800px)')     
-const filteredLiked=[...props.likedIds].map((id)=>{
- const array =props.likedMarkers.find((place)=>place.name+place?.location_id===id)
- return array
-})
+     const isMobile=useMediaQuery('(max-width:800px)')  
+     useEffect(()=>{
+      if(props.likedIds&&props.likedMarkers.length>0){
+         setFilteredLiked([...props.likedIds].map((id)=>{  
+
+            const array=props.likedMarkers.find((place)=>(place?.name+place?.location_id===id))
+            return array
+        }) )
+      }
+      
+      },[props.likedMarkers,props.likedIds])
+     
+   
+     
+    
 
 
     const points:Array<Supercluster.PointFeature<GeoJsonProperties>>=[...filteredLiked,...mapCtx.placeList].map((point:IPlace)=>{
