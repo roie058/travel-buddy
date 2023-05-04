@@ -7,7 +7,7 @@ import axios from 'axios'
 import moment from 'moment'
 import { useRouter } from 'next/router'
 import React, {  useState } from 'react'
-import { useForm } from 'react-hook-form'
+import { FieldValues, useForm } from 'react-hook-form'
 import UiButton from '../ui/buttons/UiButton'
 import DateInput from '../ui/inputs/DateInput'
 import ImageInput from '../ui/inputs/ImageInput'
@@ -15,7 +15,7 @@ import styles from './EditPlan.module.css'
 import { Plan } from '../pageCompnents/Schedule'
 type Props = {plan:Plan,setOpen:React.Dispatch<React.SetStateAction<boolean>>}
 
-const compereFormData:(data1:Plan,data2:Plan)=>boolean=(data1,data2)=>{
+const compereFormData:(data1:FieldValues,data2:Plan)=>boolean=(data1,data2)=>{
   
 if (data1.header !== data2.header)return false
 
@@ -26,7 +26,7 @@ if (data1.country !== data2.country)return false
 if (data1.start.getTime() !== data2.start.getTime())return false
 
 if (data1.end.getTime() !== data2.end.getTime())return false
-if (data1.budget !== data2.budget)return false
+if (data1.budget !== data2.budget.budget)return false
 return true
 }
 
