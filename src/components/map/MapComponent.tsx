@@ -7,7 +7,10 @@ import { IPlace } from '@/dummyData'
 import Marker, { ClusterMarker } from './Marker'
 import Supercluster from 'supercluster'
 import { GeoJsonProperties,BBox } from "geojson";
-type Props = {likedMarkers?:IPlace[]|[]}
+import MobileDrawer from './MobileDrawer'
+import { useMediaQuery } from '@mui/material'
+import { log } from 'console'
+type Props = {likedMarkers?:IPlace[]|[],likedIds:Set<string>}
 
 
 
@@ -15,22 +18,32 @@ type Props = {likedMarkers?:IPlace[]|[]}
 
 const MapComponent = (props: Props) => {
    const [zoom,setZoom]=useState<number>(14)
+   const [open,setOpen]=useState<boolean>(false)
    const [bounds,setBounds]=useState<BBox>()
+   const [selectedPlace,setSelectedPlace]=useState<IPlace>()
     const mapRef=useRef<any>()
     const mapCtx = useContext(MapContext)
 
 
-    const markerClick=(i:number,lat:number,lng:number)=>{
+    const markerClick=(i:number,lat:number,lng:number,place)=>{
         mapCtx?.setChildClicked(i)
         mapRef?.current.setZoom(17);
         mapRef.current.panTo({lat,lng});
+        if(isMobile){
+         setOpen(true)
+   setSelectedPlace(place)
+      }
      }
 
 
+     const isMobile=useMediaQuery('(max-width:800px)')     
+const filteredLiked=[...props.likedIds].map((id)=>{
+ const array =props.likedMarkers.find((place)=>place.name+place?.location_id===id)
+ return array
+})
 
 
-
-    const likedPoints:Array<Supercluster.PointFeature<GeoJsonProperties>>=[...props.likedMarkers,...mapCtx.placeList].map((point:IPlace)=>{
+    const points:Array<Supercluster.PointFeature<GeoJsonProperties>>=[...filteredLiked,...mapCtx.placeList].map((point:IPlace)=>{
 return{ 
    type: "Feature",
    properties: {
@@ -42,7 +55,7 @@ return{
    geometry: { type: "Point", coordinates: [Number(point.longitude),Number(point.latitude)] }
  }})
 const {clusters,supercluster}=useSupercluster({
-points:likedPoints,
+points:points,
 bounds:bounds,
 zoom:zoom,
 options:{radius:75,maxZoom:20}
@@ -62,6 +75,7 @@ options:{radius:75,maxZoom:20}
         setZoom(e.zoom);
          
        }} 
+      
        onGoogleApiLoaded={({map})=>{
 mapRef.current=map;
 mapCtx.mapRef.current=map;
@@ -92,7 +106,7 @@ return <Marker onClick={markerClick} liked={cluster.properties.liked} place={clu
          })}
 
         </GoogleMapReact>
-    
+        {isMobile&&<MobileDrawer selectedPlace={selectedPlace} open={open} setOpen={setOpen}/>}
      </>
   )
 }

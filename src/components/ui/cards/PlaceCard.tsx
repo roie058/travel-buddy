@@ -9,15 +9,15 @@ import {useSession,signIn} from 'next-auth/react'
 import React, { MouseEventHandler, useContext, useState } from 'react'
 import HeartBtn from '../buttons/HeartBtn'
 import LikeModal from '../list/LikeModal'
-import { log } from 'console'
+
 
 
 type Props = {
   place:IPlace,
   type:string,
-  refEl:any,
-  selected:boolean,
-  index:number,
+  refEl?:any,
+  selected?:boolean,
+  index?:number,
   liked?:boolean
 }
 

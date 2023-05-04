@@ -1,15 +1,16 @@
 import { Button, ButtonGroup, CircularProgress, InputBase, useMediaQuery } from '@mui/material'
 
-import React, { useContext, useEffect, useState} from 'react'
+import React, { useContext, useState} from 'react'
 import styles from './Map.module.css'
 import { MapContext } from '@/context/map-context'
 import { getPlaceData } from '@/hooks/data-hook'
-import Marker from './Marker'
+
 import Image from 'next/image'
 import { Box } from '@mui/system'
 import { Autocomplete } from '@react-google-maps/api'
 import MapComponent from './MapComponent'
 import { IPlace } from '@/dummyData'
+import MobileDrawer from './MobileDrawer'
 
 
 
@@ -75,7 +76,7 @@ if(lat&&lng)mapCtx?.setCoordinates((coordinates)=> {return {lat:lat,lng:lng}})
     </ButtonGroup>}
     </Box>
   
- <MapComponent likedMarkers={props.likedList}/>
+ <MapComponent likedMarkers={props.likedList} likedIds={props.likedIds}/>
 
  
     

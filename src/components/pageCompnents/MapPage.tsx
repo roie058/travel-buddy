@@ -98,7 +98,7 @@ return (
     mapRef:mapRef,
    }}>
     <UserContext.Provider value={{plans,userId:newSession.user?.id??''}}>
-     <Grid sx={{backgroundColor:'#FAFAFA',minHeight:isSm?"calc(100vh - 54px)":"calc(100vh - 36.5px)",marginTop:isSm?'54px':'36.5px',marginLeft:'0'}}  container >
+     <Grid sx={{backgroundColor:'#FAFAFA',minHeight:isSm?"calc(100vh - 54px)":"calc(100vh - 36.5px)",marginTop:isSm?'54px':'54px',marginLeft:'0'}}  container >
       <Grid    item xs={12}  lg={8} sm={isMobile?7:12} md={7}>
         <Map likedIds={likedIds}  likedList={allLikedList??[]} />
         </Grid>
