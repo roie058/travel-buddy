@@ -41,20 +41,15 @@ const mapCtx=React.useContext(MapContext)
   const toggleDrawer = (newOpen: boolean) => () => {
     setOpen(newOpen);
   };
-
+const anchor='bottom'
 
   return (
    <>
-      <CssBaseline />
-      <Global
-        styles={{
-          '.MuiDrawer-root > .MuiPaper-root': {
-            height: `calc(70% - ${drawerBleeding}px)`,
-            overflow: 'visible',
-          },
-        }}
-      />
+      <CssBaseline />    
       <SwipeableDrawer
+      disablePortal 
+    
+      sx={{overflow:'visible'}}
         anchor="bottom"
         open={open}
         onClose={toggleDrawer(false)}
@@ -63,6 +58,12 @@ const mapCtx=React.useContext(MapContext)
         disableSwipeToOpen={false}
         ModalProps={{
           keepMounted: true,
+          sx:{...{
+            '& > .MuiPaper-root': {
+              height:`calc(70% - ${drawerBleeding}px)`,
+              overflow: 'visible',
+            },
+          }}
         }}
       >
         <StyledBox
