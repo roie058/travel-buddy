@@ -99,6 +99,7 @@ const router=useRouter()
         disableScrollLock
         >
         <MenuItem onClick={()=>{ router.push('/plans'),handleCloseMenu()}}>All Trips</MenuItem>
+        <MenuItem onClick={()=>{ router.push('/newPlan'),handleCloseMenu()}}>New Plan</MenuItem>
         <MenuItem onClick={()=>{signOut() ;handleCloseMenu()}}>Logout</MenuItem>
       </Menu>
     
