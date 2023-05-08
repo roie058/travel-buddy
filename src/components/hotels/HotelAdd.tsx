@@ -16,7 +16,8 @@ import axios from 'axios'
 
 import Link from 'next/link'
 import { Plan } from '../pageCompnents/Schedule'
-
+import DeleteIcon from '../../../public/images/delete.svg'
+import { Pin } from '../svgComponents'
 
 type Props = {plan:Plan}
 
@@ -65,7 +66,7 @@ const HotelAdd = (props: Props) => {
  {hotel.ranking}
 </Typography>)}
 {hotel?.address && (<Typography gutterBottom fontSize={"0.8rem"}  variant='subtitle2' color="InfoText">
-<Image alt='' width={7} height={7}  src={'/images/pin.svg'}/> {hotel.address}
+<Pin  width={10} height={10}  /> {hotel.address}
 </Typography>)}
 {hotel?.phone && (<Typography gutterBottom variant='subtitle2' fontSize={"0.8rem"} color="InfoText">
 {hotel.phone}
@@ -86,7 +87,8 @@ const HotelAdd = (props: Props) => {
 </Box>
 
                  <div className={styles.heartBtn}>
-                 {isLoading? <CircularProgress size={'1rem'} />  : <Button onClick={()=>{deletetHandler(hotel)}}   />}
+
+                 {isLoading? <CircularProgress size={'1rem'} />  : <Button sx={{width:'30px',height:'30px'}}  onClick={()=>{deletetHandler(hotel)}}   ><Image alt='delete' fill sizes='30px' src={DeleteIcon}/></Button>}
                     </div>
                    {openIndex===i&& <AddReservationModal plan={props.plan} hotel={hotel} open={open} onClose={()=>{setOpen(false)}}/>}
                       </Card>)}

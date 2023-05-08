@@ -1,14 +1,32 @@
 
 
-import { Box, Button, Card, CardHeader, CardMedia, Modal, Typography } from '@mui/material'
+import { Box, Button, Card, CardContent, Modal, Typography } from '@mui/material'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import React, {  useState } from 'react'
+import React, {  ReactElement, useState } from 'react'
 import EditPlan from '../form/EditPlan'
 import { Plan } from '../pageCompnents/Schedule'
-import Image from 'next/image'
+import styles from './DashBtns.module.css'
+import { EditIcon, FlightIcon, HotelIcon, ScheduleIcon, WeatherIcon } from '../svgComponents'
+
 
 type Props = {plan:Plan}
+
+const DashBtn:React.FC<{image:ReactElement,title:string,link:string}>=({image,title,link})=>{
+
+ return <Link href={link} style={{textDecoration:'none'}}>
+  <Card className={styles.btn} elevation={5}    sx={{flexGrow:'3',minHeight:'10vh',display:'flex',alignItems:'center',backgroundColor:'#fefefe'}} >
+  
+  <CardContent   sx={{display:'flex',alignItems:'center',gap:'15px',marginLeft:'10%'}}>
+  {image}
+  <Typography  variant="h2" fontSize={'2rem'}  textTransform={"capitalize"} sx={{textDecorationLine:'none'}}>{ title}</Typography>
+
+  </CardContent>
+ 
+  </Card>
+  </Link>
+}
+
 
 const DashBtns = (props: Props) => {
     const{ query}=useRouter()
@@ -25,14 +43,10 @@ const DashBtns = (props: Props) => {
 
   return (
     <>
-    <Link href={`/plans/${query.planId}/schedule`}>
-<Card    sx={{flexGrow:'3',minHeight:'20vh',position:'relative'}} >
-<Image src={"/images/schedule.webp"} priority fill sizes='800x' alt="" style={{objectFit:'cover',zIndex:'1'}}   />
-<CardHeader sx={{position:'absolute',zIndex:'2',width:'100%',padding:'5% 0'}} titleTypographyProps={{textAlign:'center',color:'white',textTransform:'capitalize'}} title="Schedule"></CardHeader>
-
-    </Card>
-    </Link>
+   
+    <DashBtn title='Schedule' link={`/plans/${query.planId}/schedule`} image={ <ScheduleIcon width={40} height={40} />}/>
     <Button
+    className={styles.btn}
         id="button"
         aria-controls={isModal ? 'menu' : undefined}
         aria-haspopup="true"
@@ -40,23 +54,18 @@ const DashBtns = (props: Props) => {
         onClick={handleClickModal}
         sx={{padding:'0'}}
       >
-    <Card sx={{flexGrow:'3',minHeight:'20vh' ,position:'relative'}} >
-      <Image src={"/images/editplan.webp"} priority fill sizes='800x' alt="" style={{objectFit:'cover',zIndex:'1'}}   />
-<CardHeader sx={{position:'absolute',zIndex:'2',width:'100%',padding:'5% 0'}} titleTypographyProps={{textAlign:'center',color:'white',textTransform:'capitalize'}} title="Edit Plan"></CardHeader>
+    <Card elevation={5}    sx={{flexGrow:'3',minHeight:'10vh',display:'flex',alignItems:'center',backgroundColor:'#fefefe'}} >
+    <CardContent sx={{display:'flex',alignItems:'center',gap:'15px',marginLeft:'10%'}}>
+  <EditIcon width={40} height={40}/>
+  <Typography variant="h2" fontSize={'2rem'} textTransform={"capitalize"} >Edit Plan</Typography>
+
+  </CardContent>
     </Card>
     </Button> 
-    <Link href={`/plans/${query.planId}/flights`}>
-    <Card    sx={{flexGrow:'3',minHeight:'20vh',position:'relative'}} >
-    <Image src={"/images/flights.webp"}  priority  fill sizes='800x' alt="" style={{objectFit:'cover',zIndex:'1'}}   />
-    <CardHeader sx={{position:'absolute',zIndex:'2',width:'100%',padding:'5% 0'}} titleTypographyProps={{textAlign:'center',color:'white',textTransform:'capitalize'}} title="Flights"></CardHeader>
-    </Card>
-    </Link>
-    <Link href={`/plans/${query.planId}/hotels`}>
-    <Card sx={{flexGrow:'3',minHeight:'20vh',position:'relative'}}>
-    <Image src={"/images/hotels.webp"} priority  fill sizes='1000px' alt="" style={{objectFit:'cover',zIndex:'1'}}   />
-<CardHeader sx={{position:'absolute',zIndex:'2',width:'100%',padding:'5% 0'}} titleTypographyProps={{textAlign:'center',color:'white',textTransform:'capitalize'}} title="Hotels"></CardHeader>
-    </Card>
-    </Link>
+    <DashBtn title='flights' link={`/plans/${query.planId}/flights`} image={<FlightIcon width={40} height={40}/>}/>
+    <DashBtn title='Hotels' link={`/plans/${query.planId}/hotels`} image={<HotelIcon width={40} height={40}/>}/>
+    <DashBtn title='weather' link={`/weather`} image={<WeatherIcon width={40} height={40}/>}/>
+   
    
     <Modal  open={isModal} sx={{zIndex:'10'}} onClose={handleCloseModal}><Box sx={ {position: 'absolute' as 'absolute',
   top: '50%',

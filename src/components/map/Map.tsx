@@ -10,7 +10,7 @@ import { Box } from '@mui/system'
 import { Autocomplete } from '@react-google-maps/api'
 import MapComponent from './MapComponent'
 import { IPlace } from '@/dummyData'
-import MobileDrawer from './MobileDrawer'
+import  SearchIcon  from '../../../public/images/search.svg'
 
 
 
@@ -64,15 +64,15 @@ if(lat&&lng)mapCtx?.setCoordinates((coordinates)=> {return {lat:lat,lng:lng}})
     <Autocomplete className={styles.searchContainer} onLoad={onLoad} onPlaceChanged={onPlaceChanged}>
 <div className={styles.search} >
 <div className={styles.searchIcon}>
-<Image src={'/images/search.svg'} width={20} height={20} alt=""/>
+<Image src={SearchIcon} alt='search' width={20} height={20} />
 </div>
 <InputBase placeholder='Search...' />
 </div>
 </Autocomplete> 
   { mapCtx.isLoading?<CircularProgress size={'1.5rem'} />: <ButtonGroup orientation={isMobile?'horizontal':'vertical'} >
     <Button  onClick={()=>searchAreaHandler('attractions')}  sx={{width:'35px',minWidth:'0',textTransform:'capitalize',backgroundColor:"white",color:'#3c4043',border:'1px solid #3c404355'}} ><Image alt='atractions' width={20} height={20} src={'/images/amusment.gif'}/></Button>
-    <Button onClick={()=>searchAreaHandler('hotels')}  sx={{minWidth:'0',width:'35px',textTransform:'capitalize',backgroundColor:"white",color:'#3c4043',border:'1px solid #3c404355'}} ><Image alt='atractions' width={20} height={20} src={'/images/bed.png'}/></Button>
-    <Button onClick={()=>searchAreaHandler('restaurants')}  sx={{minWidth:'0',width:'35px',textTransform:'capitalize',backgroundColor:"white",color:'#3c4043',border:'1px solid #3c404355'}} ><Image alt='atractions' width={20} height={20} src={'/images/restaurant.png'}/></Button>
+    <Button onClick={()=>searchAreaHandler('hotels')}  sx={{minWidth:'0',width:'35px',textTransform:'capitalize',backgroundColor:"white",color:'#3c4043',border:'1px solid #3c404355'}} ><Image alt='Hotels' width={20} height={20} src={'/images/bed.png'}/></Button>
+    <Button onClick={()=>searchAreaHandler('restaurants')}  sx={{minWidth:'0',width:'35px',textTransform:'capitalize',backgroundColor:"white",color:'#3c4043',border:'1px solid #3c404355'}} ><Image alt='restaurants' width={20} height={20} src={'/images/restaurant.png'}/></Button>
     </ButtonGroup>}
     </Box>
   

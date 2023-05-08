@@ -6,7 +6,7 @@ import HeartBtn from '../ui/buttons/HeartBtn'
 import styles from './Marker.module.css'
 import { useSession,signIn } from 'next-auth/react'
 import LikeModal from '../ui/list/LikeModal'
-
+import { LikedMarker, MarkerIcon, Pin } from '../svgComponents'
 import { MapContext } from '@/context/map-context'
 type Props = {lat:number,lng:number,place:IPlace,liked?:boolean,onClick:(i:number,lat:number,lng:number,place:IPlace)=>void}
 
@@ -57,7 +57,8 @@ useEffect(() => {
     
      <LikeModal likeHandler={closeHandler} clickedLocation={props.place} type={isType(type)?type:'hotels'} onClose={closeHandler} open={open} />
     {location&& <div  onClick={isSwipe?()=> props.onClick(index,props.lat,props.lng,props.place):()=>{}}  className={styles.marker}  >
-      <Image  width={50} height={50} src={props.liked?'/images/likedMarker.svg':'/images/marker.png'} className={styles.markerImg} alt={props.place.name} />
+      {props.liked?<LikedMarker width={50} height={50} className={styles.markerImg} />:
+       <MarkerIcon  width={50} height={50}  /> }
         
      {!isSwipe ? <Card   elevation={3} onClick={()=>{props.onClick(index,props.lat,props.lng,props.place)}}   className={styles.paper} >
             <Image width={200} height={100} style={{objectFit:'cover'}} src={props.place.photo?.images.large.url??'/images/placeholder.png'} alt={props.place.name}/>
@@ -70,7 +71,7 @@ useEffect(() => {
                     {props.place?.rating&&<Box  display={'flex'}><Rating  value={Number(props.place?.rating)} precision={0.1} readOnly size="small"/><Typography  variant="subtitle2" color="GrayText">{props.place.price_level}</Typography> </Box> }
                     {props.place?.price&& <Typography  variant="subtitle2" color="GrayText">Price Range: {props.place?.price}</Typography>}
 {props.place?.address && (<Typography gutterBottom fontSize={"0.7rem"}  variant='subtitle2' color="InfoText">
-<Image alt='' width={7} height={7}  src={'/images/pin.svg'}/> {props.place.address}
+<Pin width={10} height={10}  /> {props.place.address}
 </Typography>)}
 {props.place?.phone && (<Typography gutterBottom variant='subtitle2' fontSize={"0.7rem"} color="InfoText">
 {props.place.phone}

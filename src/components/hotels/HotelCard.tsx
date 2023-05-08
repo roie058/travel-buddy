@@ -4,6 +4,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import React from 'react'
+import { Pin } from '../svgComponents'
 
 
 
@@ -23,7 +24,7 @@ const HotelCard = (props: Props) => {
         <Image style={{objectFit:"cover",borderRadius:'10px'}} width={100} height={100}  src={props.listItem?.photo ? props.listItem.photo.images.small.url:'/images/placeholder.png'} alt={""}/>
         <CardContent sx={{margin: '3%', marginRight:'0',padding:'0', paddingBottom:'0 !important'}}>
             <Typography variant='h5' fontSize={"1rem"} fontWeight="bold">{props.listItem.name} </Typography>
-           {props.listItem.address&& <p className={"styles.address"}><Image alt='pin' height={10} width={6} src={'/images/pin.svg'}></Image> {props.listItem.address}</p>}
+           {props.listItem.address&& <p className={"styles.address"}><Pin  height={10} width={10} />{props.listItem.address}</p>}
            <Link href={`/plans/${query.planId}/hotels`}><Typography color={'blue'}  >Booking Details</Typography> </Link>
         </CardContent>
         </Box>

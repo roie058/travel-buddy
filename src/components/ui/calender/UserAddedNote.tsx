@@ -9,6 +9,7 @@ import styles from './DayItemCard.module.css'
 import { RoutineItem } from './DayList'
 import PlaceDescriptionModal from './PlaceDescriptionModal'
 import { Box } from '@mui/system'
+import { Pin } from '@/components/svgComponents'
 
 export type UserAddedItem={
   id:string,
@@ -60,7 +61,7 @@ setOpen(false)
            
             <CardContent  sx={{margin: '3%', marginRight:'0',padding:'0', paddingBottom:'0 !important'}}>
                 <Typography variant='h5' fontSize={"1rem"} fontWeight="bold">{props.listItem.place.name} </Typography>
-                <Typography variant="subtitle1" className={styles.address}><Image alt='pin' height={10} width={6} src={'/images/pin.svg'}></Image> {props.listItem.place.address}</Typography>
+                <Typography variant="subtitle1" className={styles.address}><Pin height={10} width={10} /> {props.listItem.place.address}</Typography>
                <ListButton onClick={clickHandler} liked={true} noIcon={true}>{props.btnText} </ListButton>
                <Button sx={{textTransform:'capitalize'}} onClick={openHandler}>More Info</Button>
             </CardContent>

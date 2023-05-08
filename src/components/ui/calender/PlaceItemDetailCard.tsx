@@ -1,3 +1,4 @@
+import { Pin } from '@/components/svgComponents'
 import { IPlace } from '@/dummyData'
 import { Button, Card, CardActions, CardContent, CardMedia, Chip, Rating, Typography } from '@mui/material'
 import { Box } from '@mui/system'
@@ -18,7 +19,7 @@ const PlaceItemDetailCard = (props: Props) => {
 {props.place?.rating&&<Box  display={'flex'}><Rating value={Number(props.place?.rating)} precision={0.1} readOnly size="small"/> <Typography color={'primary'}   variant='body2' sx={{marginLeft:'5px'}}>{props.place?.num_reviews} reviews</Typography></Box> }
 <Typography gutterBottom variant="subtitle2" color="GrayText">{props.place.price_level}</Typography>
 {props.place?.address && (<Typography gutterBottom variant='subtitle2' color="InfoText">
-<Image alt='' width={12} height={10}  src={'/images/pin.svg'}/> {props.place.address}
+<Pin width={12} height={10} /> {props.place.address}
 </Typography>)}
 {props.place?.phone && (<Typography gutterBottom variant='subtitle2' color="InfoText">
 {props.place.phone}

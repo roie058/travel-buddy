@@ -10,6 +10,7 @@ import React, { useState } from 'react'
 import styles from './NewNavBar.module.css'
 import Link from 'next/link'
 import { Box } from '@mui/system'
+import { AccountIcon, LogoIcon } from '../svgComponents'
 
 
 type Props = {}
@@ -44,9 +45,9 @@ const router=useRouter()
 <div></div>
 </Button>}
 {isMobile&& <ul className={(router.pathname!=='/plans/[planId]'&&router.pathname!=='/map')? styles.profile  :styles.navigation }>
-        <li>
-            <Link href={'/'}>
-        <Image src={'/images/logo.png'} width={50} priority height={50} alt={'logo'} />
+        <li style={{borderRadius:'100%',overflow:"hidden",width:'50px',height:'50px'}}>
+            <Link href={'/'}  >
+        <LogoIcon width={50} height={50}   />
         </Link>
         </li>
     
@@ -77,7 +78,8 @@ const router=useRouter()
         onClick={handleClickMenu }
         sx={{justifySelf:'flex-end'}}
       >
-       <Image priority src={session.user?.image??'/images/account.png'} alt='profile' style={{borderRadius:'45px'}} height={45} width={45}></Image>
+        {session.user?.image? <Image priority src={session.user?.image} alt='profile' style={{borderRadius:'45px'}} height={45} width={45}/>:<AccountIcon fillOpacity={0.4} height={45} width={45}/>}
+      
       </Button>:
       <Button
       onClick={()=>{router.push('/auth') } }
@@ -99,7 +101,7 @@ const router=useRouter()
         disableScrollLock
         >
         <MenuItem onClick={()=>{ router.push('/plans'),handleCloseMenu()}}>All Trips</MenuItem>
-        <MenuItem onClick={()=>{ router.push('/newPlan'),handleCloseMenu()}}>New Plan</MenuItem>
+        <MenuItem onClick={()=>{ router.push('/newplan'),handleCloseMenu()}}>New Plan</MenuItem>
         <MenuItem onClick={()=>{signOut() ;handleCloseMenu()}}>Logout</MenuItem>
       </Menu>
     
@@ -108,8 +110,8 @@ const router=useRouter()
         &times;
             </Button>
         <List sx={{display:'flex',flexDirection:'column',justifyItems:'center',alignItems:'center',gap:'30px',marginTop:'20%'}}>
-            <ListItem sx={{justifyContent:'center'}} onClick={()=>setOpenNav(false)}><Link href={'/'}>
-        <Image src={'/images/logo.png'} width={70} height={70} alt={'logo'} />
+            <ListItem   sx={{justifyContent:'center',borderRadius:'50%',overflow:"hidden",width:'70px',height:'70px'}} onClick={()=>setOpenNav(false)}><Link href={'/'}>
+        <LogoIcon  width={80} height={80}  />
         </Link></ListItem>
 <ListItem sx={{justifyContent:'center'}} onClick={()=>setOpenNav(false)}  ><Link className={(router.pathname ==='/plans')? styles.selected_link : styles.link} href={'/plans'}> My Trips </Link></ListItem>
 <ListItem sx={{justifyContent:'center'}} onClick={()=>setOpenNav(false)}><Link className={(router.pathname ==='/map')? styles.selected_link : styles.link} href={'/map'}> Discover Places</Link> </ListItem>

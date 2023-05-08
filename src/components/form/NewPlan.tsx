@@ -16,7 +16,7 @@ import { FieldValues, SubmitHandler } from 'react-hook-form/dist/types'
 import axios, { AxiosError } from 'axios'
 import {useRouter} from 'next/router'
 import Image from 'next/image'
-
+import TravelBg from '../../../public/images/travelBg.webp'
 import { NewSesstion } from '@/pages/api/auth/signup'
 
  type Props = {}
@@ -102,8 +102,9 @@ const isMobile=useMediaQuery("(max-width:800px)")
  
  return (
     <div className={styles.background}>
+      <Image  priority src={TravelBg} alt='bg' style={{width:'100%',height:'100%',position:'absolute',objectFit:'cover'}}   sizes='150vh'/>
       <Card  sx={{minWidth:'70%',width:'100%',backgroundColor:'white',justifyContent:'center',alignItems:'center',display:'flex',flexDirection:"column",position:'relative',overflow:'visible' }}>
-      <CardMedia      image='/images/roundlogo.png' sx={{backgroundSize:isMobile?"contain":"cover",position:isMobile?'static':'absolute',top:'70%',left:"80%",width:isMobile? 150:230,height:isMobile?150:230}} />
+      <CardMedia      image='/images/roundlogo.svg' sx={{backgroundSize:isMobile?"contain":"cover",position:isMobile?'static':'absolute',top:'70%',left:"80%",width:isMobile? 150:230,height:isMobile?150:230}} />
         <CardHeader  title="Create Trip" sx={{textAlign:'center',textDecoration:'underline',marginTop:'3%',fontWeight:'bolder'}} />
 <form className={styles.form}  onSubmit={handleSubmit(submitHandler)}>
   <FormControl fullWidth>

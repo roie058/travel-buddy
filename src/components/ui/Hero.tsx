@@ -2,7 +2,7 @@ import Image from 'next/image'
 import React from 'react'
 import styles from './Hero.module.css'
 
-import logo from '../../../public/images/roundlogo.png'
+import logo from '../../../public/images/roundlogo.svg'
 type Props = {}
 
 const Hero = (props: Props) => {

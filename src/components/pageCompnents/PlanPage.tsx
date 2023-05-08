@@ -3,7 +3,7 @@ import DashBtns from '@/components/dash/DashBtns'
 import { PlanContext } from '@/context/plan-context'
 
 
-import { CircularProgress, Grid } from '@mui/material'
+import { CircularProgress, Grid, useMediaQuery } from '@mui/material'
 import axios, { AxiosError } from 'axios'
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/router'
@@ -12,7 +12,7 @@ import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 import { Plan } from './Schedule'
 import { NewSesstion } from '@/pages/api/auth/signup'
-import { LoadScript, LoadScriptNext } from '@react-google-maps/api'
+import { LoadScriptNext } from '@react-google-maps/api'
 
 
 type Props = {}
@@ -51,7 +51,7 @@ const [isLoading,setIsLoading]=useState(false)
    }, [session,query.planId])
 
 
-
+   const isMobile=useMediaQuery("(max-width:900px)")
 
 
   return (
@@ -64,10 +64,10 @@ const [isLoading,setIsLoading]=useState(false)
     <main style={{justifyContent:'normal',height:'100%'}}>
 
     <Grid justifyContent={"center"}    columnGap={1} rowGap={1}   container >
-        <Grid md={5.5} sm={10} xs={11} item>
+        <Grid md={5.5} sm={10} xs={11} item order={isMobile?2:1} >
         { list&&<BudgetBoard plan={list} setList={setList}/> }
 </Grid>
-<Grid md={5.5} sm={10} xs={11} display="flex" sx={{minHeight:'100vh'}}   flexDirection={'column'} gap="10px" item>
+<Grid md={5.5} sm={10} xs={11} display="flex"  order={isMobile?1:2}   flexDirection={'column'} gap="10px" item>
 { list&&<DashBtns plan={list}/>}
 </Grid>
 </Grid>

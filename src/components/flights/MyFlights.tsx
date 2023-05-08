@@ -9,6 +9,7 @@ import React, { useCallback,  useState } from 'react'
 import { Flight } from './AddFlightModal'
 import { Plan } from '../pageCompnents/Schedule'
 
+import DeleteIcon from '../../../public/images/delete.svg'
 
 type Props = {plan?:Plan,plans?:Plan[]}
 
@@ -81,7 +82,7 @@ if(data.success){
     <ListItemText sx={{flexGrow:"50%",flexBasis:"50%"}}>{moment(flight.start).format('DD/MM/YYYY')=== moment(flight.end).format('DD/MM/YYYY')?moment(flight.start).format('DD/MM/YYYY'):moment(flight.start).format('DD/MM/YYYY')+':'+ moment(flight.end).format('DD/MM/YYYY')}</ListItemText>
     <ListItemText sx={{flexGrow:"50%",flexBasis:"50%"}}>{moment(flight.start).format('HH:mm')+'-'+moment(flight.end).format('HH:mm')}</ListItemText>
     </Box>
-    <ListItemButton onClick={()=>{deleteFlightHandler(flight,index)}} sx={{flexGrow:'0',width:"30px",height:'30px',padding:'0',textAlign:'center',justifyContent:'center'}}><Image alt='delete' width={12} height={12} src={'/images/delete.svg'}/></ListItemButton>
+    <ListItemButton onClick={()=>{deleteFlightHandler(flight,index)}} sx={{flexGrow:'0',width:"30px",height:'30px',padding:'0',textAlign:'center',justifyContent:'center'}}><Image alt='delete' fill sizes='30px' src={DeleteIcon}/></ListItemButton>
     
 
 </ListItem>    

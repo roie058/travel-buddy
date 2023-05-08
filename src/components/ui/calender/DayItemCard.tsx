@@ -12,6 +12,7 @@ import ListButton from '../buttons/ListButton'
 import styles from './DayItemCard.module.css'
 import { RoutineItem } from './DayList'
 import PlaceDescriptionModal from './PlaceDescriptionModal'
+import { Pin } from '@/components/svgComponents'
 type Props = { 
     btnText:string,
     withDiractions?:IPlace|null,
@@ -52,7 +53,7 @@ props.onClick(props.listItem.dragId)
         <Image style={{objectFit:"cover",borderRadius:'10px'}} width={100} height={100}  src={props.listItem.place.photo?props.listItem.place.photo.images.large.url:'/images/placeholder.png'} alt={""}/>
         <CardContent sx={{margin: '3%', marginRight:'0',padding:'0', paddingBottom:'0 !important'}}>
             <Typography variant='h5' fontSize={"1rem"} fontWeight="bold">{props.listItem.place.name} </Typography>
-            <p className={styles.address}><Image alt='pin' height={10} width={6} src={'/images/pin.svg'}></Image> {props.listItem.place.address}</p>
+            <p className={styles.address}><Pin height={10} width={10} /> {props.listItem.place.address}</p>
         
            <ListButton onClick={clickHandler} liked={true} noIcon={true}  >{props.btnText} </ListButton>
     <Button sx={{textTransform:'capitalize'}} onClick={openHandler}>More Info</Button>

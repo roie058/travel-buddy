@@ -7,8 +7,10 @@ import React, {  FormEventHandler, MouseEventHandler, useRef, useState } from 'r
 import UiButton from '../ui/buttons/UiButton'
 import {useSession,signIn} from 'next-auth/react'
 import styles from './Auth.module.css'
+import { Box } from '@mui/system'
+import { GoolgeIcon } from '../svgComponents'
 import Image from 'next/image'
-import { Box, color } from '@mui/system'
+import RoundLogo from '../../../public/images/roundlogo.svg'
 type Props = {}
 
 const Auth = (props: Props) => {
@@ -75,7 +77,7 @@ router.push('/')
   return (
     <div className={styles.background}>
     <Card sx={{marginTop:'57px', minWidth:'300px',maxWidth:'500px',width:"100%",height:'100%',display:'flex',justifyContent:'center',flexDirection:'column',alignItems:'center'}}>
-      <CardMedia  image='/images/roundlogo.png' sx={{width:'200px',height:'200px'}} />
+      <Image width={200} height={200} alt='travel buddy' src={RoundLogo}/>
       <CardHeader titleTypographyProps={{color:'#00c2cb',}} title="Travel Buddy" sx={{height:'min-content',padding:'0 0 7% 0'}}  />
 <form onSubmit={submitHandler} className={styles.form}>
 {!isLogin && 
@@ -102,7 +104,7 @@ router.push('/')
   <div>
   <Divider ><Chip label="Or"/></Divider>
   </div>
-<Button variant="outlined"   sx={{textTransform:'capitalize', color:'#7b7e84',borderColor:'#7b7e8430'}} startIcon={<Image alt='google' width={25} height={25} src={'/images/google-icon.svg'}/>} onClick={()=>signIn('google',{callbackUrl:'/'})} >Continue with Google</Button>
+<Button variant="outlined"   sx={{textTransform:'capitalize', color:'#7b7e84',borderColor:'#7b7e8430'}} startIcon={<GoolgeIcon width={25} height={25}/>} onClick={()=>signIn('google',{callbackUrl:'/'})} >Continue with Google</Button>
 </Box>
 
     </Card>

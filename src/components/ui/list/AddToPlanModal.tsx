@@ -1,5 +1,6 @@
 
 import { Plan } from '@/components/pageCompnents/Schedule'
+import { AddedIcon } from '@/components/svgComponents'
 import { IPlace } from '@/dummyData'
 
 import { Avatar, CircularProgress, Dialog, DialogTitle, List, ListItem, ListItemAvatar, ListItemButton, ListItemText } from '@mui/material'
@@ -30,8 +31,10 @@ const AddToPlanModal = (props: Props) => {
             <ListItemText sx={{width:'100%'}}  primary={plan.header} secondary={`${plan.country} ${moment(new Date(plan.start)).format('DD.MM')} - ${moment(new Date(plan.end)).format('DD.MM')}` }  />
           
           {props.clickedLocation&&props.type&&  <ListItemButton  sx={{justifyContent:'flex-end',width:'40px',height:'40px',padding:'0'}} onClick={()=>props.submitHandler(i)} key={plan._id}>
-              <Image width={30} height={30} src={plan.liked[props.type].find((place)=>(props?.clickedLocation?.location_id==place.location_id))?'/images/added.png':'/images/add.png'} alt='add to list button' />
-          </ListItemButton>}
+            {plan.liked[props.type].find((place)=>(props?.clickedLocation?.location_id==place.location_id))?<AddedIcon width={30} height={30} />:
+              <Image width={30} height={30} src={'/images/add.png'} alt='add to list button' /> 
+    }
+         </ListItemButton>}
           {!props.clickedLocation && (props.isLoading ?<CircularProgress/>:
             <ListItemButton  sx={{justifyContent:'flex-end',width:'40px',height:'40px',padding:'0'}} onClick={()=>props.submitHandler(i)} key={plan._id}>
               <Image width={30} height={30} src={'/images/add.png'} alt='add to list button' />

@@ -11,7 +11,7 @@ import AddExpenseModal from './AddExpenseModal'
 import styles from './BudgetBoard.module.css'
 import { Expense, Plan } from '../pageCompnents/Schedule'
 import { Flight } from '../flights/AddFlightModal'
-
+import DeleteIcon from '../../../public/images/delete.svg'
 type Props = {plan:Plan,setList:React.Dispatch<React.SetStateAction<Plan|undefined>>}
 
 
@@ -114,7 +114,7 @@ const isMobile=useMediaQuery('(max-width:600px)')
           <ListItemText sx={{flex:'none'}} primaryTypographyProps={{color:"#959595",fontSize:isMobile?'0.8rem':'1rem',fontWeight:'bold'}}  >{transport.name}</ListItemText>
           <ListItemText sx={{flex:'none'}} primaryTypographyProps={{color:"#959595",fontSize:isMobile?'0.8rem':'1rem',fontWeight:'bold'}}  >{transport.category}</ListItemText>
           <ListItemText sx={{flex:'none'}} primaryTypographyProps={{color:"#959595",fontSize:isMobile?'0.8rem':'1rem',fontWeight:'bold'}}  >{transport.price+currency}</ListItemText>
-          <ListItemButton onClick={()=>{deleteExpenseHandler(transport._id,'transportation')}} className={styles.removeBtn} sx={{display:isMobile?'flex':'none',right:'100%',position:'absolute',flex:"none",color:"#959595",fontSize:isMobile?'0.8rem':'1rem',fontWeight:'bold'}} ><Image alt='delete expense' src={'/images/delete.svg' } width={15} height={15} /></ListItemButton>
+          <ListItemButton onClick={()=>{deleteExpenseHandler(transport._id,'transportation')}} className={styles.removeBtn} sx={{display:isMobile?'flex':'none',right:'100%',position:'absolute',flex:"none",color:"#959595",fontSize:isMobile?'0.8rem':'1rem',fontWeight:'bold'}} ><Image  alt='delete expense' src={DeleteIcon } fill sizes='15px' /></ListItemButton>
           </ListItem>
           )}
           
@@ -132,7 +132,7 @@ const isMobile=useMediaQuery('(max-width:600px)')
           <ListItemText sx={{flex:'none'}} primaryTypographyProps={{color:"#959595",fontSize:isMobile?'0.8rem':'1rem',fontWeight:'bold'}}  >{expense.name}</ListItemText>
           <ListItemText sx={{flex:'none'}} primaryTypographyProps={{color:"#959595",fontSize:isMobile?'0.8rem':'1rem',fontWeight:'bold'}}  >{expense.category??'other'}</ListItemText>
           <ListItemText sx={{flex:'none'}} primaryTypographyProps={{color:"#959595",fontSize:isMobile?'0.8rem':'1rem',fontWeight:'bold'}}  >{expense.price+currency}</ListItemText>
-          <ListItemButton  onClick={()=>{deleteExpenseHandler(expense._id,'expenses')}} className={styles.removeBtn} sx={{display:isMobile?'flex':'none',right:'100%',padding:'3%',position:'absolute',flex:"none",color:"#959595",fontSize:isMobile?'0.8rem':'1rem',fontWeight:'bold'}} ><Image alt='delete expense' src={'/images/delete.svg' } width={ 15} height={15} /></ListItemButton>
+          <ListItemButton  onClick={()=>{deleteExpenseHandler(expense._id,'expenses')}} className={styles.removeBtn} sx={{display:isMobile?'flex':'none',right:'100%',position:'absolute',flex:"none",color:"#959595",fontSize:isMobile?'0.8rem':'1rem',fontWeight:'bold',width:'15px',height:'15px'}} ><Image alt='delete expense' fill src={DeleteIcon } sizes='15px'  /></ListItemButton>
           </ListItem>
           )}
           {stopsBudget&&stopsBudget.map((expense,i)=>

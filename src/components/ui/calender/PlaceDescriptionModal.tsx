@@ -10,6 +10,7 @@ import { FieldValues, useForm } from 'react-hook-form'
 import { RoutineItem } from './DayList'
 import PlaceItemDetailCard from './PlaceItemDetailCard'
 import { PlanContext } from '@/context/plan-context'
+import { Pin } from '@/components/svgComponents'
 
 
 type Props = {open:boolean,close:()=>void,place:IPlace,static?:boolean,index?:number,listItem?:RoutineItem,}
@@ -70,7 +71,7 @@ forceUpdate()
     <Typography  fontSize={'1.3rem'} fontWeight={'bold'}>{props.place.name} </Typography>
     </Box>
 {props.place?.address && (<Typography gutterBottom variant='subtitle2' color="InfoText">
-<Image alt='' width={12} height={10}  src={'/images/pin.svg'}/> {props.place.address}
+<Pin width={12} height={10}  /> {props.place.address}
 </Typography>)}
 {props.place?.description&&
 <Typography gutterBottom fontFamily={"cursive"}> {props.place.description} </Typography>}

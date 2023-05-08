@@ -1,5 +1,7 @@
 
 .listItem:hover .removeBtn{
-    display: flex !important;
-
+    display: flex ;
+width: 15px;
+height: 15px;
 }
+

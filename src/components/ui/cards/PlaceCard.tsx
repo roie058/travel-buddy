@@ -9,6 +9,7 @@ import {useSession,signIn} from 'next-auth/react'
 import React, { MouseEventHandler, useContext, useState } from 'react'
 import HeartBtn from '../buttons/HeartBtn'
 import LikeModal from '../list/LikeModal'
+import { Pin } from '@/components/svgComponents'
 
 
 
@@ -98,7 +99,7 @@ const type:"restaurants" | "hotels" | "attractions"|string=(props.place?.categor
 <Typography gutterBottom variant="subtitle2" color="GrayText">{props.place.price_level}</Typography>
 {props.place?.price&& <Typography  variant="subtitle2" gutterBottom>Price Range: {props.place?.price}</Typography>}
 {props.place?.address && (<Typography gutterBottom variant='subtitle2' color="InfoText">
-<Image alt='' width={12} height={10}  src={'/images/pin.svg'}/> {props.place.address}
+<Pin width={12} height={10}  /> {props.place.address}
 </Typography>)}
 {props.place?.phone && (<Typography gutterBottom variant='subtitle2' color="InfoText">
 {props.place.phone}
