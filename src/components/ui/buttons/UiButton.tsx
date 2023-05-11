@@ -16,12 +16,17 @@ type Props = {
 
 
 const UiButton = (props: Props) => {
-  const [color,setColor]=useState({background: "linear-gradient(51deg, rgba(0,194,202,1) 0%, rgba(55,193,199,1) 100%)"})
+  const [color,setColor]=useState({})
   
   useEffect(() => {
     if (props.color==='blue'){
       setColor({background: "linear-gradient(51deg, rgba(3,59,136,1) 0%, rgba(0,109,209,1) 100%)"})
+      }else{
+setColor({background: "linear-gradient(51deg, rgba(0,194,202,1) 0%, rgba(55,193,199,1) 100%)"})
+
       }
+
+
   }, [props])
   
 
