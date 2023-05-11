@@ -11,7 +11,7 @@ export default function HomePage() {
 
   return (
     <>
-      <main >
+      <main style={{minHeight:'100vh',marginTop:"34px"}} >
         <NewHero/>
         <Features/>
          </main>
