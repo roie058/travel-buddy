@@ -10,7 +10,7 @@ const Feature =({children,icon,subText}) => {
     return  <Grid  xs={6} md={3} lg={2}  item>
         <Box padding={'10%'} display={"flex"} flexDirection={"column"} alignItems={"center"}  textAlign={"center"}>
           {icon}
-    <Typography pt={"5%"} variant="h3" fontSize={'2rem'} > {children}</Typography>      
+    <Typography pt={"5%"}  fontSize={'2rem'} > {children}</Typography>      
     <Typography pt={"5%"} variant="body1" fontSize={'1rem'} > {subText}</Typography>      
         </Box>
    </Grid>
