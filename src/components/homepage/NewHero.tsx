@@ -42,7 +42,7 @@ const isSmall=useMediaQuery("(max-width:600px)")
 <Image priority sizes='250px' width={isXl?  200 :260}  alt='travel buddy'  src={RoundLogo}   />
 </Box>
 <Typography pt={isLg? "3%" : "0"} maxWidth={isLg?'530px':"100%"} className={heebo.className} color={"#666666"} fontWeight={"bold"} fontSize={isXl? isSmall? "1rem" :'1.3rem':"1.5rem"}>Travel Buddy offers an all in one travel tool packed with everything 
-so you can plan your trip with  <span style={{color:"#0BA4A4"}}>Efficiency</span> and <span style={{color:"#0B7FA4"}}>Simplicity.</span></Typography>
+so you can plan your trip with  <span style={{color:"#238080"}}>Efficiency</span> and <span style={{color:"#0B799D"}}>Simplicity.</span></Typography>
 </Box>
 
 <Box  paddingY={isSmall?"15%":"5%"}  display={'flex'} alignItems={'center'} flexWrap={"wrap"} justifyContent={"center"} gap={"15px"} maxWidth={'1000px'} >
