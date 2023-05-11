@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Glory&family=Kavoon&display=swap');
+
 
 
 .box{
@@ -23,12 +23,12 @@ padding: 2% 0;
 }
 
 .header{
-    font-family: 'Kavoon', cursive;
+
 font-size: 2rem;
 
 }
 .peragraph{
-    font-family: 'Glory', sans-serif;
+  
 padding:0 5%;
 font-size: 1.2rem;
 margin-bottom: 10%;
@@ -36,7 +36,6 @@ margin-bottom: 10%;
 }
 
 .bottom_text{
-    font-family: 'Glory', sans-serif;
     padding:0 10%;
     font-weight: bold;
     font-size: 1.4rem;

@@ -9,6 +9,8 @@ import { useEffect, useState } from 'react'
 import {useSession} from 'next-auth/react'
 import axios, { AxiosError } from 'axios'
 import { NewSesstion } from '@/pages/api/auth/signup'
+import Features from '../homepage/Features'
+import NewHero from '../homepage/NewHero'
 
 
 
@@ -39,8 +41,11 @@ export default function HomePage() {
   }
   setIsLoading(false)
   }
-  getPlans()
-  },[])
+  if(session){
+    getPlans()
+  }
+ 
+  },[session])
   
 
 const router=useRouter()
@@ -54,13 +59,14 @@ router.push("/newplan")
   return (
     <>
       <main >
-        <Hero />
+        {/* <Hero />
        { !isLoading&& <div className={styles.btngroup}>
      <UiButton className={styles.btn} color='blue' count={plans} clickFn={alltripHandler}  size='large'> All Trips</UiButton>
         <UiButton className={styles.btn}  clickFn={newtripHandler} size='large'>New Trip+</UiButton>
-        </div>
-        }
-        
+        </div> 
+        } */}
+        <NewHero/>
+        <Features/>
          </main>
     </>
   )

@@ -29,7 +29,7 @@ const UiButton = (props: Props) => {
 
   return (
     
-    <Button  disabled={props.disabled} type={props.submit?"submit":'button'} className={`${props.className} btn`} size={props.size} onClick={props.clickFn} variant="contained" sx={{boxShadow: "0px 10px 15px rgba(0, 0, 0, 0.25)",fontWeight:'bold',fontSize:'1.5rem' ,padding:'3% 15%',textTransform:'capitalize', ...color,borderRadius:'12px'}}>
+    <Button  disabled={props.disabled} type={props.submit?"submit":'button'} className={`${props.className} btn`} size={props.size} onClick={props.clickFn} variant="contained" sx={{boxShadow: "0px 10px 15px rgba(0, 0, 0, 0.25)",fontWeight:'bold',fontSize:'1.5rem' ,padding:'3% 15%',textTransform:'capitalize', ...color,borderRadius:'12px',...props.style}}>
 <Badge   showZero invisible={!props.count} badgeContent={props.count} sx={{'& .MuiBadge-badge':{
 
 backgroundColor:'white',
