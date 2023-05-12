@@ -172,7 +172,7 @@ flex-direction: row;
 }
 
 .header{
-    font-size: 5rem;
+    font-size: 5rem !important; 
 }
 
 .sub{
@@ -180,7 +180,7 @@ padding-top: 0;
 max-width: 100%;
 color: #666666;
 font-weight: bold;
-font-size: 1.5rem;
+font-size: 1.5rem !important;
 }
 
 .logo{
@@ -194,10 +194,10 @@ height: 260px;
     }
 
     .header{
-        font-size: 4rem;
+        font-size: 4rem !important;
             }
             .sub{
-                font-size: 1.3rem;
+                font-size: 1.3rem !important;
             }
             .logo{
                 width: 200px;
@@ -236,11 +236,11 @@ text-align: center;
         gap: 0;
     }
     .header{
-font-size: 2rem;
+font-size: 2rem !important;
     }
 
     .sub{
-        font-size: 1rem;
+        font-size: 1rem !important ;
     }
     
 
