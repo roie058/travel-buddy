@@ -185,6 +185,7 @@ font-size: 1.5rem;
 
 .logo{
 width: 260px;
+height: 260px;
 }
 
 @media screen and (max-width:1350px)  {
@@ -200,6 +201,7 @@ width: 260px;
             }
             .logo{
                 width: 200px;
+                height: 200px;
             }
   }
 
@@ -234,13 +236,13 @@ text-align: center;
         gap: 0;
     }
     .header{
-font-size: 3.5rem;
+font-size: 2rem;
     }
 
     .sub{
         font-size: 1rem;
     }
-
+    
 
   }
 
