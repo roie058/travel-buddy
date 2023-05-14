@@ -1,6 +1,6 @@
-import { Box, Card, CardContent, Grid, List, ListItem, ListItemButton, ListItemText, Typography } from '@mui/material'
+import { Box, Card, Grid, Typography } from '@mui/material'
 import React from 'react'
-import { AddedIcon, BudgetIcon, EditIcon, HeartIcon, HotelIcon, LikedIcon, LikedMarker, ScheduleIcon, WeatherIcon } from '../svgComponents'
+import { BudgetIcon, EditIcon,  HotelIcon, LikedMarker, ScheduleIcon, WeatherIcon } from '../svgComponents'
 
 
 type Props = {}
