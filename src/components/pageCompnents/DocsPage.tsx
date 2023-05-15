@@ -31,11 +31,11 @@ const isSm=useMediaQuery("(max-width:600px)")
     <CardHeader sx={{paddingTop:'3%'}} titleTypographyProps={{textAlign:'center',fontWeight:"bold",className:styles.subHeader}} title={"Create your plan"}/>
     <CardContent>
         <List  >
-   <ListItem > <ListItemText primaryTypographyProps={{className:styles.text}} >1. Navigate to <span ><Link href={'/newplan'} style={{fontWeight:'bold'}}>New Plan</Link></span> page or press the "New plan" button on the profile menu to your top right.</ListItemText></ListItem>
+   <ListItem > <ListItemText primaryTypographyProps={{className:styles.text}} >1. Navigate to <span ><Link href={'/newplan'} style={{fontWeight:'bold'}}>New Plan</Link></span> page or press the &quot;New plan&quot; button on the profile menu to your top right.</ListItemText></ListItem>
    <ListItem > <ListItemText primaryTypographyProps={{className:styles.text}} >2. Fill the form with all the relevant data.</ListItemText></ListItem>
    <ListItem > <ListItemText primaryTypographyProps={{className:styles.text}}>3. Submit the form by clicking the {<UiButton style={{height:'30px', width:'100px',padding:"2% 7%",fontSize:'1rem'}} color='blue' clickFn={()=>{}}>Create trip</UiButton>} button.</ListItemText></ListItem>
    <ListItem > <ListItemText primaryTypographyProps={{className:styles.text}} >4. 🎉You have successfully created your plan!🎉</ListItemText></ListItem>
-   <ListItem > <ListItemText primaryTypographyProps={{className:styles.text}} >You can view all your plans on <span ><Link href={'/plans'} style={{fontWeight:'bold'}}>Plans</Link></span> page or by clicking "My Trips" on the Navbar</ListItemText></ListItem>
+   <ListItem > <ListItemText primaryTypographyProps={{className:styles.text}} >You can view all your plans on <span ><Link href={'/plans'} style={{fontWeight:'bold'}}>Plans</Link></span> page or by clicking &quot;My Trips&quot; on the Navbar</ListItemText></ListItem>
         </List>
     </CardContent>
    </Card>
@@ -45,7 +45,7 @@ const isSm=useMediaQuery("(max-width:600px)")
     <CardHeader sx={{paddingTop:'3%'}} titleTypographyProps={{className:styles.subHeader,textAlign:'center',fontWeight:"bold"}} title={"Add Places"}/>
     <CardContent>
         <List >
-   <ListItem > <ListItemText primaryTypographyProps={{className:styles.text}} >1. Navigate to the <span ><Link href={'/map'} style={{fontWeight:'bold'}}>Map</Link></span> page or by clicking "Discover Places" on the Navbar.</ListItemText></ListItem>
+   <ListItem > <ListItemText primaryTypographyProps={{className:styles.text}} >1. Navigate to the <span ><Link href={'/map'} style={{fontWeight:'bold'}}>Map</Link></span> page or by clicking &quot;Discover Places&quot; on the Navbar.</ListItemText></ListItem>
    <ListItem > <ListItemText primaryTypographyProps={{className:styles.text}} >2. On the map view the area that you want to search for places.</ListItemText></ListItem>
    <ListItem > <ListItemText primaryTypographyProps={{className:styles.text}} >3. Click one of the category icons on the top left <ButtonGroup orientation={"horizontal"} >
     <Button  onClick={()=>{}}  sx={{width:'35px',minWidth:'0',textTransform:'capitalize',backgroundColor:"white",color:'#3c4043',border:'1px solid #3c404355'}} ><Image alt='atractions' width={20} height={20} src={'/images/amusment.gif'}/></Button>
@@ -89,11 +89,11 @@ const isSm=useMediaQuery("(max-width:600px)")
         <List >
    <ListItem > <ListItemText primaryTypographyProps={{className:styles.text}} >1. To view the schedule go to your plan page and then press schedule</ListItemText></ListItem>
    <ListItem > <ListItemText primaryTypographyProps={{className:styles.text}} >2. The schedule is divided into days inside each day there is a list.</ListItemText></ListItem>
-   <ListItem > <ListItemText primaryTypographyProps={{className:styles.text}}>3. Pressing the "add next stop" button will show you all possible attractions and restaurants that you added</ListItemText></ListItem>
+   <ListItem > <ListItemText primaryTypographyProps={{className:styles.text}}>3. Pressing the &quot;add next stop&quot; button will show you all possible attractions and restaurants that you added</ListItemText></ListItem>
    <ListItem > <ListItemText primaryTypographyProps={{className:styles.text}} >4. Adding an item will add it to the itinerary of that day.</ListItemText></ListItem>
    <ListItem > <ListItemText primaryTypographyProps={{className:styles.text}} >5. You can change the order of places by dragging them.</ListItemText></ListItem>
    <ListItem > <ListItemText primaryTypographyProps={{className:styles.text}} >6. Top right of the day you view the day summary which calculates the daily route by car and show you the current daily budget.</ListItemText></ListItem>
-   <ListItem > <ListItemText primaryTypographyProps={{className:styles.text}} >7. You can press on the "place info"  button to view the place info</ListItemText></ListItem>
+   <ListItem > <ListItemText primaryTypographyProps={{className:styles.text}} >7. You can press on the &quot;place info&quot;  button to view the place info</ListItemText></ListItem>
    <ListItem > <ListItemText primaryTypographyProps={{className:styles.text}} >8. In the place info you can set the budget or the type of place (main attraction or a specific meal)</ListItemText></ListItem>
         </List>
     </CardContent>
