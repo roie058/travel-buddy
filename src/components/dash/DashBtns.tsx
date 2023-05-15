@@ -7,7 +7,7 @@ import React, {  ReactElement, useState } from 'react'
 import EditPlan from '../form/EditPlan'
 import { Plan } from '../pageCompnents/Schedule'
 import styles from './DashBtns.module.css'
-import { EditIcon, FlightIcon, HotelIcon, ScheduleIcon, WeatherIcon } from '../svgComponents'
+import { AddedIcon, EditIcon, FlightIcon, HotelIcon, ScheduleIcon, WeatherIcon } from '../svgComponents'
 
 
 type Props = {plan:Plan}
@@ -62,6 +62,7 @@ const DashBtns = (props: Props) => {
   </CardContent>
     </Card>
     </Button> 
+    <DashBtn title='All Places' link={`/plans/${query.planId}/likedPlaces`} image={<AddedIcon width={40} height={40}/>}/>
     <DashBtn title='flights' link={`/plans/${query.planId}/flights`} image={<FlightIcon width={40} height={40}/>}/>
     <DashBtn title='Hotels' link={`/plans/${query.planId}/hotels`} image={<HotelIcon width={40} height={40}/>}/>
     <DashBtn title='weather' link={`/weather`} image={<WeatherIcon width={40} height={40}/>}/>

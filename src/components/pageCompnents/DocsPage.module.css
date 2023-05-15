@@ -9,10 +9,6 @@ font-size: 1.3rem !important ;
 .mainHeader{
     font-size:3rem !important;
 }
-/* isSm?"2rem" */
-/* 
-const isLg=useMediaQuery("(max-width:1000px)")
-const isSm=useMediaQuery("(max-width:600px)") */
 
 @media screen and (max-width:1000px) {
     .text{

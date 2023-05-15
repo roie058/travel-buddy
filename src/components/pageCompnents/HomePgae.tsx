@@ -1,5 +1,6 @@
 
 import Features from '../homepage/Features'
+import GuideLink from '../homepage/GuideLink'
 import NewHero from '../homepage/NewHero'
 
 
@@ -14,6 +15,7 @@ export default function HomePage() {
       <main style={{minHeight:'100vh'}} >
         <NewHero/>
         <Features/>
+        <GuideLink/>
          </main>
     </>
   )
