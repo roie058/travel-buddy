@@ -93,7 +93,7 @@ setIsLoading(false)
 
 </Box>
 <FormHelperText sx={{color:'#d32f2f'}} >{formState.errors.start?.message}</FormHelperText>
-  <ImageInput value={getValues('image')} setValue={setValue}/>
+  <ImageInput value={getValues('image')} setValue={setValue} country={getValues('country')} types={getValues("tags")} />
   {getValues('image').length<=0&&formState.isSubmitted&& <FormHelperText sx={{color:'#d32f2f'}}>Image is Required</FormHelperText>}
 {isLoading?<CircularProgress size={'5rem'}/>:<UiButton disabled={!formState.isValid} clickFn={()=>{}}  submit size='small'>Change Plan</UiButton>}
 <FormHelperText sx={{color:'#d32f2f'}}>{typeof submitError === 'string'? submitError:''}</FormHelperText>

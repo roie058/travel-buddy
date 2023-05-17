@@ -6,7 +6,7 @@ justify-content: center;
 flex-direction: column;
 position: relative;
 background-color: #FAFAFA;
-min-height:calc(100vh) ;
+min-height:calc(100vh - 57px) ;
 }
 
 .submitBtn{
@@ -40,8 +40,8 @@ margin-bottom: 5%;
         flex-direction: column;
         position: relative;
         background-color: #FAFAFA;
-        min-height:calc(100vh) ;
-        margin-top: 60px;
+        min-height:calc(100vh - 57px) ;
+
         }
 
         .form{

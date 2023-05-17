@@ -1,4 +1,4 @@
-import { Autocomplete, AutocompleteChangeDetails, AutocompleteChangeReason,  Card, CardHeader, CardMedia,  CircularProgress,  FormControl, FormHelperText, MenuItem, Select, TextField, useMediaQuery } from '@mui/material'
+import { Autocomplete, AutocompleteChangeDetails, AutocompleteChangeReason,  Button,  ButtonGroup,  Card, CardHeader, CardMedia,  CircularProgress,  FormControl, FormHelperText, MenuItem, Select, TextField, useMediaQuery } from '@mui/material'
 import React, {  useEffect, useState } from 'react'
 import UiButton from '../ui/buttons/UiButton'
 
@@ -20,7 +20,6 @@ import TravelBg from '../../../public/images/travelBg.webp'
 import { NewSesstion } from '@/pages/api/auth/signup'
 
  type Props = {}
-
 
  const names = [
  {label:"Adventure 🧭",value:'Adventure'},
@@ -47,17 +46,25 @@ import { NewSesstion } from '@/pages/api/auth/signup'
 ];
 const newCodes=JSON.parse(JSON.stringify(codes))
 const newStates=JSON.parse(JSON.stringify(states))
-const NewPlan = (props: Props) => {
+
+const NewCreatePlan = (props: Props) => {
   const countries=['Africa','East Asia',"Oceania","Middle East","South America","Central America","North America","Europe",...Object.keys(states)]
   const {data:session}=useSession()
   const [selectedCountry,setSelectedCountry]=useState<null|string>(null)
   const [isLoading, setIsLoading] = useState(false)
   const [submitError, setSubmitError] = useState<null|string>(null)
   const [selectedCities,setSelectedCities]=useState<null|string[]|unknown[]>(null)
-const {register,handleSubmit,formState,setValue,control,setError,getValues }=useForm({defaultValues:{title:'',currency:'$',country:'',city:'',type:[],start:new Date(),end:new Date(),image:'',userId:"",budget:""},})
+  const [step, setStep] = useState(0)
   const [startDate,setStartDate]=useState<null|Date>(new Date())
+const {register,handleSubmit,formState,setValue,control,setError,getValues }=useForm({mode:"all",defaultValues:{title:'',currency:'$',country:'',city:'',type:[],start:new Date(),end:new Date(),image:'',userId:"",budget:""},})
 const router=useRouter()
 const newSession:NewSesstion={...session}
+
+
+const onStartDateChange=(e:any)=>{
+    setStartDate(e._d)
+  
+   }
 
  const onChange=(event: React.SyntheticEvent<Element, Event>, value: string | null, reason: AutocompleteChangeReason, details?: AutocompleteChangeDetails<string> | undefined)=>{
 setSelectedCountry(value)
@@ -65,13 +72,9 @@ if(!newSession.user?.id)return;
 setValue('userId',newSession.user?.id)
  }
 
- const onStartDateChange=(e:any)=>{
-  setStartDate(e._d)
 
- }
- 
  useEffect(()=>{
-  setError('start',{message:'Start Date is after end date'})
+
 if(selectedCountry===null)return;
 const cities=new Set(newStates[selectedCountry])
 if(cities.size===0) {setSelectedCities(null); return};
@@ -92,8 +95,6 @@ setSelectedCities([...cities])
        setSubmitError(errorMsg)
      }
    }
-  
-
 
  }
 
@@ -102,11 +103,13 @@ const isMobile=useMediaQuery("(max-width:800px)")
  
  return (
     <div className={styles.background}>
-      <Image  priority src={TravelBg} alt='bg' style={{width:'100%',height:'100%',position:'absolute',objectFit:'cover'}}   sizes='150vh'/>
+      <Image  priority src={TravelBg} alt='bg' style={{width:'100%',height:'100%',position:'absolute',objectFit:"cover"}}   sizes='150vh'/>
       <Card  sx={{minWidth:'70%',width:'100%',backgroundColor:'white',justifyContent:'center',alignItems:'center',display:'flex',flexDirection:"column",position:'relative',overflow:'visible' }}>
       <CardMedia      image='/images/roundlogo.svg' sx={{backgroundSize:isMobile?"contain":"cover",position:isMobile?'static':'absolute',top:'70%',left:"80%",width:isMobile? 150:230,height:isMobile?150:230}} />
         <CardHeader  title="Create Trip" sx={{textAlign:'center',textDecoration:'underline',marginTop:'3%',fontWeight:'bolder'}} />
 <form className={styles.form}  onSubmit={handleSubmit(submitHandler)}>
+
+    <Box  width={"600px"} maxWidth={"100%"} minWidth={"100%"} minHeight={"25vh"} height={"100%"} display={step===0? 'flex' : 'none'} flexDirection={"column"} justifyContent={"center"} rowGap={"25px"}>
   <FormControl fullWidth>
     <TextField   label="*Trip Name"  error={ typeof formState.errors.title?.message  === 'string'} {...register('title',{required:'Trip name is required',maxLength:{value:25,message:'Name must be max 25 cheracters'}})}  variant="outlined" fullWidth />
  <FormHelperText sx={{color:'#d32f2f'}} >{formState.errors.title?.message}</FormHelperText>
@@ -134,7 +137,7 @@ const isMobile=useMediaQuery("(max-width:800px)")
       {option}
     </Box>
   )}
-}
+    }
   renderInput={(params) => <TextField  error={typeof formState.errors.country?.message  === 'string'}  {...register('country',{required:'Country is required'})}      {...params}  label="*Country name here" />}/>
    <FormHelperText sx={{color:'#d32f2f'}} >{formState.errors.country?.message}</FormHelperText>
   </FormControl>
@@ -146,8 +149,26 @@ const isMobile=useMediaQuery("(max-width:800px)")
   renderInput={(params) => <TextField {...register('city')}       {...params}   label="City Name here" />}/>
   </FormControl>}
   </Box>
+  
+  </Box>
 
-<SelectInput setValue={setValue}  inputRef={register}  data={names} />
+
+
+<Box  width={"600px"} maxWidth={"100%"} minWidth={"100%"} minHeight={"25vh"} height={"100%"} display={step===1? 'flex' : 'none'} flexDirection={"column"} justifyContent={"center"} rowGap={"25px"}>
+
+<Box width={'100%'} gap="10px" display={'flex'}  >
+  <FormControl fullWidth>
+<DateInput control={control}   onChange={onStartDateChange}  name='start' label='*Start Date' />
+
+</FormControl>
+{startDate && <FormControl fullWidth>
+<DateInput control={control}    start={startDate} name='end' label='*End Date' />
+</FormControl>
+}
+
+</Box>
+<FormHelperText sx={{color:'#d32f2f'}} >{formState.errors.start?.message}</FormHelperText>
+
 <Box display={"flex"} width={"100%"}>
 <FormControl fullWidth sx={{flexBasis:'80%'}}>
     <TextField   label="Budget"  error={typeof formState.errors.budget?.message  === 'string'||Number(getValues('budget'))<=0} type={'number'} {...register('budget',{valueAsNumber:true,min:{value:1,message:'We can not help you manage budget if you travel for free!'}})} />
@@ -168,28 +189,37 @@ const isMobile=useMediaQuery("(max-width:800px)")
     <FormHelperText sx={{color:'#d32f2f'}} >{formState.errors.budget?.message}</FormHelperText>
 </FormControl>
 </Box>
-<Box width={'100%'} gap="10px" display={'flex'}  >
-  <FormControl fullWidth>
-<DateInput control={control}   onChange={onStartDateChange}  name='start' label='*Start Date' />
-
-</FormControl>
-{startDate && <FormControl fullWidth>
-<DateInput control={control}    start={startDate} name='end' label='*End Date' />
-</FormControl>
-}
 
 </Box>
-<FormHelperText sx={{color:'#d32f2f'}} >{formState.errors.start?.message}</FormHelperText>
-<ImageInput setValue={setValue} />
+
+<Box width={"600px"} maxWidth={"100%"} minWidth={"100%"} minHeight={"25vh"} height={"100%"} display={step===2? 'flex' : 'none'} flexDirection={"column"} justifyContent={"center"} rowGap={"25px"}>
+<SelectInput setValue={setValue}  inputRef={register}  data={names} />
+</Box>
+
+
+<Box width={"600px"} maxWidth={"100%"} minWidth={"100%"} minHeight={"25vh"} height={"100%"} display={step===3? 'flex' : 'none'} flexDirection={"column"} justifyContent={"space-evenly"} alignItems={"center"} rowGap={"25px"}>
+<ImageInput setValue={setValue} country={`${getValues('city')},${getValues('country')}`} types={getValues('type')} />
 {getValues('image').length<=0&&formState.isSubmitted&& <FormHelperText sx={{color:'#d32f2f'}}>Image is Required</FormHelperText>}
-
-
+<>
 {isLoading?<CircularProgress size={'5rem'}/>: <UiButton disabled={!formState.isValid} submit className={styles.submitBtn} clickFn={()=>{}} size='large' color='blue'>Create Trip</UiButton>}
-<FormHelperText>{typeof submitError === 'string'? submitError:''}</FormHelperText>
+{submitError&& <FormHelperText>{typeof submitError === 'string'? submitError:''}</FormHelperText>}
+</>
+
+</Box>
+
+
+
+
+
+
+<ButtonGroup>
+<Button disabled={step===0} onClick={()=>{setStep((step)=>step-1)}}>Back</Button>
+<Button disabled={step===3} onClick={()=>{setStep((step)=>step+1)}}>Next</Button>
+</ButtonGroup>
 </form>
       </Card>
     </div>
   )
 }
 
-export default NewPlan
+export default NewCreatePlan

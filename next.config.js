@@ -50,6 +50,11 @@ const nextConfig = {
         hostname: "flagcdn.com",
         pathname: "/**",
       },
+      {
+        protocol: "https",
+        hostname: "source.unsplash.com",
+        pathname: "/**",
+      },
     ],
     domains: [
       "media-cdn.tripadvisor.com",
@@ -59,6 +64,7 @@ const nextConfig = {
       "res.cloudinary.com",
       "daisycon.io",
       "flagcdn.com",
+      "source.unsplash.com",
     ],
   },
 };

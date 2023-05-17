@@ -105,6 +105,14 @@ const isSm=useMediaQuery("(max-width:600px)")
         <Typography textAlign={"center"} fontSize={isSm?"1.5rem": "2.5rem"} fontWeight={"bold"} variant='h2'>Common questions</Typography>
        <Question id={'question1'} summary={"Where can i see my budget and expenses?"}>The budget management can be seen in the plan dashboard go to <span ><Link href={'/plans'} style={{fontWeight:'bold'}}>My Trips</Link></span>  then select the plan that you want to view the budget will be on the left of the screen</Question>
 
+       <Question id={'question2'} summary={"how to add an expense?"}>expenses can be added manually by pressing the add expense button in the bottom of the budget fill in the title of the expense and amount that spent and the type of expense it will be added to the budget
+Other then that your flight tickets and hotel reservation will be added automatically as well if you define a price in a place detail in the schedule page.</Question>
+<Question id={'question3'} summary={"how do I add my flight tickets to the schedule?"}>the flight tickets can be added in the <span ><Link href={'/plans'} style={{fontWeight:'bold'}}>Flights page</Link></span> where you can see all your flights and add new ones fill in the flight details and select a flight type Start will attach to the start of the plan end will attach to the end and other will be added to
+the specified date.</Question>
+<Question id={'question4'} summary={"where can I check the  weather in specific date?"}>the weather is automatically calculated by the First place of each day and can be seen on the top bar of the day and in the day summery in the top part on the left is the expected weather and on the right is the current weather
+You can also check the weather for anywhere in the world on the <span ><Link href={'/plans'} style={{fontWeight:'bold'}}>Weather page</Link></span>.</Question>
+       <Question id={'question5'} summary={"Where can I see my added locations?"}>All your added locations can be seen in the liked page and on the <span ><Link href={'/plans'} style={{fontWeight:'bold'}}>Map</Link></span>.</Question>
+       <Question id={'question6'} summary={"Is there a way to share my plan?"}>currently no, but this feature is on the way.</Question>
        </Box>
     </Box>
   )
