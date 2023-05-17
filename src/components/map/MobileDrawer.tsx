@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { Global } from '@emotion/react';
 import { styled } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import { grey } from '@mui/material/colors';
@@ -10,7 +9,7 @@ import Typography from '@mui/material/Typography';
 import SwipeableDrawer from '@mui/material/SwipeableDrawer';
 import { IPlace } from '@/dummyData';
 import PlaceCard from '../ui/cards/PlaceCard';
-import { MapContext } from '@/context/map-context';
+
 
 const drawerBleeding = 56;
 
@@ -37,11 +36,10 @@ const Puller = styled(Box)(({ theme }) => ({
 }));
 
 export default function MobileDrawer({open,setOpen,selectedPlace}: Props) {
-const mapCtx=React.useContext(MapContext)
   const toggleDrawer = (newOpen: boolean) => () => {
     setOpen(newOpen);
   };
-const anchor='bottom'
+
 
   return (
    <>
@@ -88,7 +86,7 @@ const anchor='bottom'
             overflow: 'auto',
           }}
         >
-         {selectedPlace? <PlaceCard place={selectedPlace} type={(selectedPlace.category.key??'hotel')+'s'}/>:<Skeleton variant="rectangular"/>}
+         {selectedPlace? <PlaceCard place={selectedPlace} type={(selectedPlace?.category?.key??'hotel')+'s'}/>:<Skeleton variant="rectangular"/>}
         </StyledBox>
       </SwipeableDrawer>
     

@@ -36,7 +36,7 @@ const router=useRouter()
  
   const isMobile=useMediaQuery('(min-width:600px)')
   return (
-    <div style={{display:'flex',flexDirection:'column',position:"fixed",
+    <div style={{display:'flex',flexDirection:'column',position:"sticky",top:'0',
     zIndex: 3,width:'100%'}}>
   <nav className={styles.nav}>
   {!isMobile&& <Button onClick={()=>{setOpenNav(true)}} className={styles.mobile_navBtn} >

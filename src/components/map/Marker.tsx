@@ -19,7 +19,7 @@ function isType(selected:string| "restaurants" | "hotels" | "attractions" ): sel
 }
 
 export const ClusterMarker=(props)=>{
-  return <div onClick={props.onClick} style={{width:`${10+(props.pointCount/props.length)*20}px`, height:`${10+(props.pointCount/props.length)*20}px`,maxHeight:'100px',maxWidth:'100px',justifyContent:'center',alignItems:'center',display:'flex',color:'white',backgroundColor:'blueviolet',borderRadius:'100%'}} className={styles.marker}>
+  return <div onClick={props.onClick} style={{width:`${10+(props.pointCount/props.length)*20}px`, height:`${10+(props.pointCount/props.length)*20}px`,maxHeight:'50px',maxWidth:'50px',minHeight:'30px',minWidth:'30px',justifyContent:'center',color:'white',alignItems:'center',display:'flex',fontWeight:'bold',border:'3px solid white',background:"linear-gradient(90deg, #36d1dc 0%, #5b86e5 100%)",borderRadius:'100%',}} className={styles.marker}>
      {props.children}
   </div>
 }

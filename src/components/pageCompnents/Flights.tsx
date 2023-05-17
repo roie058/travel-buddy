@@ -53,7 +53,7 @@ const Flights = (props: Props) => {
       
         
        <Grid item  xs={12} > <FlightAdd plans={plans} /></Grid>
-        <Grid item xs={12} ><SkyScanner/></Grid>
+        <Grid item xs={12} > <SkyScanner/></Grid>
         </Grid>
         <Grid item xs={12} sm={12} md={6} lg={4} >
         <MyFlights plans={plans} />

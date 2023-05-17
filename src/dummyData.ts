@@ -1,5 +1,6 @@
 
 export type IPlace= {
+    likedId?:string[],
 address:string
 ,address_obj:{street1: string, street2: string|null, city: string, state: string|null, country: string}
 ,ancestors:any[]

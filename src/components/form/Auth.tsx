@@ -76,7 +76,7 @@ router.push('/')
 
   return (
     <div className={styles.background}>
-    <Card sx={{marginTop:'57px', minWidth:'300px',maxWidth:'500px',width:"100%",height:'100%',display:'flex',justifyContent:'center',flexDirection:'column',alignItems:'center'}}>
+    <Card sx={{ minWidth:'300px',maxWidth:'500px',width:"100%",height:'100%',display:'flex',justifyContent:'center',flexDirection:'column',alignItems:'center'}}>
       <Image width={200} height={200} alt='travel buddy' src={RoundLogo}/>
       <CardHeader titleTypographyProps={{color:'#00c2cb',}} title="Travel Buddy" sx={{height:'min-content',padding:'0 0 7% 0'}}  />
 <form onSubmit={submitHandler} className={styles.form}>

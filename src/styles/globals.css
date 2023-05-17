@@ -9,7 +9,7 @@ main{
     align-content: center;
     justify-content: center;
     flex-direction: column;
-    margin-top: 57px;
+
     background-color: #FAFAFA;
     min-height:calc(100vh - 57px) ;
     }

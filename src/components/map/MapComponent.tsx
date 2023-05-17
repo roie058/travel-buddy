@@ -9,7 +9,6 @@ import Supercluster from 'supercluster'
 import { GeoJsonProperties,BBox } from "geojson";
 import MobileDrawer from './MobileDrawer'
 import { useMediaQuery } from '@mui/material'
-import { log } from 'console'
 type Props = {likedMarkers?:IPlace[]|[],likedIds:Set<string>}
 
 
@@ -45,7 +44,10 @@ const MapComponent = (props: Props) => {
             const array=props.likedMarkers.find((place)=>(place?.name+place?.location_id===id))
             return array
         }) )
+      }else if (props.likedIds&&props.likedMarkers.length<=0){
+setFilteredLiked([])
       }
+      console.log(props.likedMarkers);
       
       },[props.likedMarkers,props.likedIds])
      
@@ -59,11 +61,11 @@ return{
    type: "Feature",
    properties: {
      cluster: false,
-     placeId: point?._id??point.location_id,
+     placeId: point?._id??point?.location_id,
      place:point ,
-     liked:point._id?true:false
+     liked:point?._id?true:false
    },
-   geometry: { type: "Point", coordinates: [Number(point.longitude),Number(point.latitude)] }
+   geometry: { type: "Point", coordinates: [Number(point?.longitude),Number(point?.latitude)] }
  }})
 const {clusters,supercluster}=useSupercluster({
 points:points,

@@ -71,10 +71,14 @@ const newSession:NewSesstion={...session}
   },[rating,placeList])
   let allLikedList:IPlace[];
   let likedIds=new Set(['']);
-if(plans){
-   allLikedList=plans.flatMap((plan:Plan)=> [...plan.liked.restaurants,...plan.liked.attractions,...plan.liked.hotels])
-   likedIds=new Set(allLikedList?.map((place:IPlace)=>place.name+place.location_id));
-}
+
+    if(plans){
+      allLikedList=plans.flatMap((plan:Plan)=> [...plan.liked.restaurants,...plan.liked.attractions,...plan.liked.hotels])
+      likedIds=new Set(allLikedList?.map((place:IPlace)=>place.name+place.location_id));
+   }
+
+
+
 
 
 
@@ -98,9 +102,9 @@ return (
     mapRef:mapRef,
    }}>
     <UserContext.Provider value={{plans,userId:newSession.user?.id??''}}>
-     <Grid sx={{backgroundColor:'#FAFAFA',minHeight:isSm?"calc(100vh - 54px)":"calc(100vh - 36.5px)",marginTop:isSm?'54px':'54px',marginLeft:'0'}}  container >
+     <Grid sx={{backgroundColor:'#FAFAFA',minHeight:"calc(100vh - 54px)",marginLeft:'0'}}  container >
       <Grid    item xs={12}  lg={8} sm={isMobile?7:12} md={7}>
-        <Map likedIds={likedIds}  likedList={allLikedList??[]} />
+        <Map plans={plans} likedIds={likedIds}  likedList={allLikedList} />
         </Grid>
       <Grid display={isMobile?'block':"none"}  item lg={4} md={5} sm={isMobile?5:12} xs={12}>
         <List likedIds={likedIds}  />

@@ -1,16 +1,15 @@
 
 import Flights from '@/components/pageCompnents/Flights'
-import { set } from 'mongoose'
-import { defaultCookies } from 'next-auth/core/lib/cookie'
+
 import Head from 'next/head'
 import Script from 'next/script'
-import React from 'react'
+import React, { useState } from 'react'
 
 type Props = {}
 
 
 const flights = (props: Props) => {
- 
+
   
   
   return (
@@ -22,13 +21,10 @@ const flights = (props: Props) => {
     <link rel="icon" href="/favicon.ico" />
   </Head>
   
-  <Flights/>
+  <Flights  />
     
-    <Script onLoad={() => {
-
-          
-        }} onError={(e)=>{console.log(e);
-        }}    src="https://widgets.skyscanner.net/widget-server/js/loader.js"  defer={false} strategy="lazyOnload" async  ></Script>
+  <Script  onError={(e)=>{console.log(e);
+  }}   src="https://widgets.skyscanner.net/widget-server/js/loader.js" defer={false}  strategy="lazyOnload" async />
     </>
   )
 }
