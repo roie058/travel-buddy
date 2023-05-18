@@ -55,6 +55,7 @@ return {...plan.days.find((day:Days)=>day.date===date),weather:dailyWeather.temp
 
 plan.days=days;
 plan.budget.budget=data.budget;
+plan.budget.currency=data.currency
 plan.header=data.header;
 plan.image=data.image;
 plan.country=data.country;

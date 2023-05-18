@@ -1,6 +1,6 @@
 
 
-import { CircularProgress, FormControl, FormHelperText, TextField } from '@mui/material'
+import { CircularProgress, FormControl, FormHelperText, MenuItem, Select, TextField } from '@mui/material'
 import { Box } from '@mui/system'
 import { Autocomplete } from '@react-google-maps/api'
 import axios from 'axios'
@@ -22,6 +22,7 @@ if (data1.header !== data2.header)return false
 
 if (data1.image !== data2.image)return false
 if (data1.country !== data2.country)return false
+if (data1.currency !== data2.budget.currency)return false
 
 if (data1.start.getTime() !== data2.start.getTime())return false
 
@@ -32,7 +33,7 @@ return true
 
 
 const EditPlan = (props: Props) => {
-const {register,control,setValue,formState,getValues,handleSubmit}=useForm({defaultValues:{ ...props.plan,start:new Date(props.plan.start),end:new Date(props.plan.end),budget:props.plan.budget.budget}})
+const {register,control,setValue,formState,getValues,handleSubmit}=useForm({defaultValues:{ ...props.plan,currency:props.plan.budget.currency,start:new Date(props.plan.start),end:new Date(props.plan.end),budget:props.plan.budget.budget}})
 const [submitError, setSubmitError] = useState<undefined|string>()
 const [isLoading, setIsLoading] = useState<boolean>(false)
 const router=useRouter();
@@ -77,10 +78,26 @@ setIsLoading(false)
   </Autocomplete>
   <FormHelperText sx={{color:'#d32f2f'}} >{formState.errors.country?.message}</FormHelperText>
 </FormControl>
-<FormControl fullWidth>
-<TextField   label="Change Budget"  error={typeof formState.errors.budget?.message  === 'string'||Number(getValues('budget'))<=0} type={'number'} {...register('budget',{valueAsNumber:true,min:{value:1,message:'We can not help you manage budget if you travel for free!'}})} />
+<Box display={"flex"} width={"100%"}>
+<FormControl fullWidth sx={{flexBasis:'80%'}}>
+    <TextField   label="Budget"  error={typeof formState.errors.budget?.message  === 'string'||Number(getValues('budget'))<=0} type={'number'} {...register('budget',{valueAsNumber:true,min:{value:1,message:'We can not help you manage budget if you travel for free!'}})} />
     <FormHelperText sx={{color:'#d32f2f'}} >{formState.errors.budget?.message}</FormHelperText>
 </FormControl>
+<FormControl sx={{flexBasis:'20%'}} >
+    <Select {...register('currency',{required:true})} renderValue={(value)=>value} defaultValue={props.plan.budget.currency}>
+      <MenuItem value="$">$ USD</MenuItem>
+      <MenuItem value="£">£ GBP</MenuItem>
+      <MenuItem value="€">€ EUR</MenuItem>
+      <MenuItem value="₪">₪ ILS</MenuItem>
+      <MenuItem value="¥">¥ JPY</MenuItem>
+      <MenuItem value="₹">₹ INR</MenuItem>
+      <MenuItem value="₽">₽ RUB</MenuItem>
+      <MenuItem value="₩">₩ KRW</MenuItem>
+     
+    </Select>
+    <FormHelperText sx={{color:'#d32f2f'}} >{formState.errors.budget?.message}</FormHelperText>
+</FormControl>
+</Box>
 <Box width={'100%'} gap="10px" display={'flex'}  >
   <FormControl fullWidth>
 <DateInput control={control} value={getValues('start')}   onChange={onStartDateChange}  name='start' label='*Start Date' />

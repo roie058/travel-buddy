@@ -2,7 +2,7 @@ import { Box,Typography } from '@mui/material'
 import React from 'react'
 
 type Props = {}
-import {Heebo} from '@next/font/google'
+import {Heebo} from 'next/font/google'
 
 
 import Link from 'next/link'

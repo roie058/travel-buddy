@@ -51,7 +51,7 @@ setAllLikedList(allLikedList)
     setLikedList(allLikedList)
 
 
-},[props.plans])
+},[props.plans,props.likedList])
 
 const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
   setAnchorEl(event.currentTarget);
@@ -71,7 +71,7 @@ switch (selected) {
       setLikedList([])
       }else{
         setMapFliter((mapFilter)=>({...mapFilter,restaurants:true,hotels:true,attractions:true}))
-        setLikedList(allLikedList)
+        setLikedList(allLikedList.filter((place:IPlace)=>(mapFliter.plans.some(planId=>place.likedId.includes(planId)))))
       }
     break;
     case "all-plans":
@@ -132,7 +132,7 @@ if(mapFliter[key]){
 
     
     mapFliter.plans.push(selected)
-    setLikedList((likedList)=> [...likedList, ...allLikedList.filter((place)=> place.likedId.includes(selected) && filtersOn.includes((place?.category?.key??'hotel')+'s'))] )
+    setLikedList((likedList)=> [...likedList, ...allLikedList.filter((place)=> place.likedId.includes(selected) && filtersOn.includes((place?.category?.key??'hotel')+'s') )] )
   }
     break;
 }

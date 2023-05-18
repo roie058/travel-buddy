@@ -5,7 +5,7 @@ import styles from './Layout.module.css'
 
 
 import NewNavBar from './NewNavBar'
-import {Heebo} from '@next/font/google'
+import {Heebo} from 'next/font/google'
 
 
 const heebo = Heebo({subsets:["latin",'hebrew']})

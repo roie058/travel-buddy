@@ -21,6 +21,7 @@ const MapComponent = (props: Props) => {
    const [bounds,setBounds]=useState<BBox>()
    const [selectedPlace,setSelectedPlace]=useState<IPlace>()
    const [filteredLiked,setFilteredLiked]=useState<IPlace[]>([])
+   const [filteredPlaceList,setFilteredPlaceList]=useState<IPlace[]>([])
     const mapRef=useRef<any>()
     const mapCtx = useContext(MapContext)
 
@@ -47,8 +48,9 @@ const MapComponent = (props: Props) => {
       }else if (props.likedIds&&props.likedMarkers.length<=0){
 setFilteredLiked([])
       }
-      console.log(props.likedMarkers);
-      
+     
+      setFilteredPlaceList(mapCtx.placeList.filter((place:IPlace)=> !props.likedIds.has(place?.name+place?.location_id)))
+
       },[props.likedMarkers,props.likedIds])
      
    
@@ -56,14 +58,14 @@ setFilteredLiked([])
     
 
 
-    const points:Array<Supercluster.PointFeature<GeoJsonProperties>>=[...filteredLiked,...mapCtx.placeList].map((point:IPlace)=>{
+    const points:Array<Supercluster.PointFeature<GeoJsonProperties>>=[...filteredLiked,...filteredPlaceList].map((point:IPlace)=>{
 return{ 
    type: "Feature",
    properties: {
      cluster: false,
      placeId: point?._id??point?.location_id,
      place:point ,
-     liked:point?._id?true:false
+     liked:(point?._id?true:false)||props.likedIds.has(point?.name+point?.location_id) 
    },
    geometry: { type: "Point", coordinates: [Number(point?.longitude),Number(point?.latitude)] }
  }})

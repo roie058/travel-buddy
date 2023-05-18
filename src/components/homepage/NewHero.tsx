@@ -2,7 +2,7 @@ import { Box, Typography, useMediaQuery } from '@mui/material'
 import React from 'react'
 import RoundLogo from '../../../public/images/roundlogo.svg'
 type Props = {}
-import {Heebo} from '@next/font/google'
+import {Heebo} from 'next/font/google'
 import Image from 'next/image'
 import UiButton from '../ui/buttons/UiButton'
 import styles from './NewHero.module.css'

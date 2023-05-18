@@ -5,8 +5,8 @@ import styles from './Hero.module.css'
 import logo from '../../../public/images/roundlogo.svg'
 type Props = {}
 
-import {Glory} from '@next/font/google'
-import {Kavoon} from '@next/font/google'
+import {Glory} from 'next/font/google'
+import {Kavoon} from 'next/font/google'
 
 const glory=Glory({subsets:['latin']})
 const kavoon=Kavoon({subsets:['latin'],weight:'400'})
