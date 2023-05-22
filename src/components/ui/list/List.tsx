@@ -95,7 +95,7 @@ type Props={
 }
 export default function List(props:Props) {
   const mapCtx= useContext(MapContext)
-  const types:Array<'hotels'|"restaurants"|"attractions">= ['hotels',"restaurants","attractions"]
+  const types:Array<'hotels'|"restaurants"|"attractions"|'search'>= ['hotels',"restaurants","attractions","search"]
   
   const [value, setValue] = useState(0);
 
@@ -126,17 +126,22 @@ mapCtx?.setIsLoading(false)})
 }
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
   
-    setValue(newValue);
+  
     if(mapCtx=== null) return;
 
-mapCtx.setType(types[newValue])
 
+
+  if(types[newValue]!=='search'){
+    setValue(newValue);
+    mapCtx.setType(types[newValue])
     mapCtx?.setIsLoading(true)
-  getPlaceData(mapCtx.bounds,types[newValue]).then((values)=>{
+    getPlaceData(mapCtx.bounds,types[newValue]).then((values)=>{
+      mapCtx?.setPlaceList(values)
+      mapCtx?.setIsLoading(false)
+        })
+  }  
 
-mapCtx?.setPlaceList(values)
-mapCtx?.setIsLoading(false)
-  })
+
    
   };
 
@@ -150,6 +155,7 @@ mapCtx?.setIsLoading(false)
           <Tab  sx={{textTransform:'capitalize'}}  label="Hotels" {...a11yProps(0)} />
           <Tab sx={{textTransform:'capitalize'}}  label="Restaurants" {...a11yProps(1)} />
           <Tab sx={{textTransform:'capitalize'}} label="Attractions" {...a11yProps(2)} />
+          <Tab sx={{textTransform:'capitalize'}} label="Search" {...a11yProps(3)} />
         </Tabs>
       </Box>
       <TabPanel   value={value} index={0}>
@@ -170,6 +176,12 @@ mapCtx?.setIsLoading(false)
       </TabPanel>
       <TabPanel  value={value} index={2}>
       {mapCtx?.placeList.length===0&&!mapCtx?.isLoading&&<Button onClick={loadHandler} size='small' color="primary" sx={{textTransform:"capitalize",border:'1px solid'}} >Load Places...</Button>}
+          { 
+       mapCtx?.placeList?.filter((place)=>place.name).map((place,i)=><Box sx={{margin:'10px 0'}} width={'100%'} key={place.location_id+place.name}><PlaceCard liked={props.likedIds.has(place.name+place.location_id)} index={i} refEl={refs[i]} selected={Number(mapCtx?.childClicked)===i} type='restaurants' key={place.location_id+place.name} place={place} /> </Box> )
+}
+      </TabPanel>
+      <TabPanel  value={value} index={3}>
+
           { 
        mapCtx?.placeList?.filter((place)=>place.name).map((place,i)=><Box sx={{margin:'10px 0'}} width={'100%'} key={place.location_id+place.name}><PlaceCard liked={props.likedIds.has(place.name+place.location_id)} index={i} refEl={refs[i]} selected={Number(mapCtx?.childClicked)===i} type='restaurants' key={place.location_id+place.name} place={place} /> </Box> )
 }

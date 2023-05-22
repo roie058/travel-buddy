@@ -64,7 +64,7 @@ return{
    properties: {
      cluster: false,
      placeId: point?._id??point?.location_id,
-     place:point ,
+     place:point,
      liked:(point?._id?true:false)||props.likedIds.has(point?.name+point?.location_id) 
    },
    geometry: { type: "Point", coordinates: [Number(point?.longitude),Number(point?.latitude)] }

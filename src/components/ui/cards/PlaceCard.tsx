@@ -82,6 +82,7 @@ const type:"restaurants" | "hotels" | "attractions"|string=(props.place?.categor
       <Typography  fontSize={'1.3rem'} fontWeight={'bold'}>{props.place.name} </Typography>
       <Badge  anchorOrigin={{vertical:'top',horizontal:'right'}} badgeContent={userCtx?.plans.map((plan)=>{
         const placeArr=plan.liked[(props.place?.category?.key??'hotel')+'s']
+       if(!placeArr) return;
         const place=placeArr.find((place:IPlace)=>place.location_id===props.place.location_id)
         if(place){
           return 1
@@ -106,7 +107,7 @@ const type:"restaurants" | "hotels" | "attractions"|string=(props.place?.categor
 </Typography>)}
 
 <Typography variant="subtitle2">{props.place.ranking}</Typography>
-{props.place?.awards[0] &&
+{props.place?.awards&& props.place?.awards[0] &&
 <Box display={"flex"} my={1}>
 <Image width={12} height={10} src={props.place.awards[0].images.small} alt={props.place.awards[0].display_name}  />
 <Typography color={"GrayText"} variant="subtitle2">{props.place.awards[0].display_name}</Typography>

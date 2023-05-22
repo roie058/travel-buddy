@@ -61,7 +61,7 @@ useEffect(() => {
        <MarkerIcon  width={50} height={50}  /> }
         
      {!isSwipe ? <Card   elevation={3} onClick={()=>{props.onClick(index,props.lat,props.lng,props.place)}}   className={styles.paper} >
-            <Image width={200} height={100} style={{objectFit:'cover'}} src={props.place.photo?.images.large.url??'/images/placeholder.png'} alt={props.place.name}/>
+            <Image width={200} height={100} style={{objectFit:'cover'}} src={props.place?.photo?.images?.large?.url??'/images/placeholder.png'} alt={props.place.name}/>
             <Box alignItems={'center'} height={'100%'} display={'flex'} flexDirection={'column'} justifyContent={'space-evenly'} >
                 <Typography sx={{padding:'1%'}} variant="body1" fontWeight={'bold'} className={styles.typography} >
                     {props.place.name}

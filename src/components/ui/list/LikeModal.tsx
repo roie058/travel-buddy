@@ -33,14 +33,16 @@ try {
   setIsLoading(true)
   
   const {data} = await axios.post('/api/place/newPlace',{place:props.clickedLocation,category:`${props.clickedLocation?.category?.key??'hotel'}s`,planId:userCtx?.plans[index]._id})
-
   
 } catch (error) {
     console.log(error);
     
   }
-
-  userCtx?.plans[index].liked[props.type].push(props.clickedLocation)
+if(props.clickedLocation.likedId){
+  userCtx?.plans[index].liked[props.type].push({...props.clickedLocation,likedId:[...props.clickedLocation?.likedId,userCtx?.plans[index]._id]})
+}else{
+  userCtx?.plans[index].liked[props.type].push({...props.clickedLocation,likedId:[userCtx?.plans[index]._id]})
+}
  
   props.likeHandler()
 }

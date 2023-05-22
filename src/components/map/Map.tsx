@@ -13,6 +13,8 @@ import { IPlace } from '@/dummyData'
 import  SearchIcon  from '../../../public/images/search.svg'
 import { FilterIcon } from '../svgComponents'
 import { Plan } from '../pageCompnents/Schedule'
+import { searchFn } from '../attractions/AttractionSearch'
+import { getPlaceDetails } from '../attractions/AttracrionList'
 
 
 
@@ -71,7 +73,7 @@ switch (selected) {
       setLikedList([])
       }else{
         setMapFliter((mapFilter)=>({...mapFilter,restaurants:true,hotels:true,attractions:true}))
-        setLikedList(allLikedList.filter((place:IPlace)=>(mapFliter.plans.some(planId=>place.likedId.includes(planId)))))
+        setLikedList(allLikedList.filter((place:IPlace)=>(mapFliter.plans.some(planId=>place?.likedId.includes(planId)))))
       }
     break;
     case "all-plans":
@@ -101,7 +103,7 @@ switch (selected) {
           setMapFliter((mapFilter)=>({...mapFilter,hotels:true}))
         
           
-          setLikedList((likedList)=>[...likedList,...allLikedList.filter((place:IPlace)=>{return (place?.category?.key??'hotel')==='hotel'&&mapFliter.plans.some(planId=>place.likedId.includes(planId))})])
+          setLikedList((likedList)=>[...likedList,...allLikedList.filter((place:IPlace)=>{return (place?.category?.key??'hotel')==='hotel'&&mapFliter?.plans.some(planId=>place?.likedId?.includes(planId))})])
           }else{
             setMapFliter((mapFilter)=>({...mapFilter,hotels:false}))
             setLikedList((likedList)=>likedList.filter((place:IPlace)=>{return(place?.category?.key??'hotel')!=='hotel'}))
@@ -110,7 +112,7 @@ switch (selected) {
         case 'attractions':
           if(!mapFliter.attractions){
             setMapFliter((mapFilter)=>({...mapFilter,attractions:true}))
-            setLikedList((likedList)=>[...likedList,...allLikedList.filter((place:IPlace)=>(place?.category?.key??'hotel')==='attraction'&&mapFliter.plans.some(planId=>place.likedId.includes(planId)))])
+            setLikedList((likedList)=>[...likedList,...allLikedList.filter((place:IPlace)=>(place?.category?.key??'hotel')==='attraction'&&mapFliter?.plans.some(planId=>place?.likedId?.includes(planId)))])
             }else{
               setMapFliter((mapFilter)=>({...mapFilter,attractions:false}))
               setLikedList((likedList)=>likedList.filter((place:IPlace)=>{return (place?.category?.key??'hotel')!=='attraction'}))
@@ -158,10 +160,25 @@ mapCtx?.setIsLoading(false)
 
  const onLoad=(autoC: google.maps.places.Autocomplete)=>{ setAutocomplete(autoC)}
 
-  const onPlaceChanged=()=>{
+  const onPlaceChanged= async ()=>{
 const lat=autocomplete?.getPlace().geometry?.location?.lat()
 const lng=autocomplete?.getPlace().geometry?.location?.lng()
+const query=autocomplete?.getPlace().name
+const results= await searchFn(query,"https://travel-advisor.p.rapidapi.com/locations/search")
+
 if(lat&&lng)mapCtx?.setCoordinates((coordinates)=> {return {lat:lat,lng:lng}})
+
+
+
+if(results)
+{
+ const places=results.filter((place)=> typeof place.latitude === 'string')
+  mapCtx.setPlaceList(places)
+  mapCtx.setType('search')
+}else{
+  return;
+
+}
 
 
   }

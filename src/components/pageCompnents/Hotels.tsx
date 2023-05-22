@@ -8,6 +8,8 @@ import axios, { AxiosError } from 'axios'
 import { useSession } from 'next-auth/react'
 import { Plan } from './Schedule'
 import { NewSesstion } from '@/pages/api/auth/signup'
+import SearchHotels from '../hotels/SearchHotels'
+import { LoadScriptNext } from '@react-google-maps/api'
 
 
 
@@ -57,7 +59,12 @@ const Hotels = (props: Props) => {
             
           <Grid item container xs={12} sm={12} md={6}  lg={8} >
           
-           {!isLoading&& plan&& <Grid item  xs={12} > <HotelAdd plan={plan} /></Grid>}
+           {!isLoading&& plan&& <Grid item  xs={12} >
+           {/* <LoadScriptNext googleMapsApiKey={process.env.MAPS_API_KEY} libraries={["places"]}  >
+            <SearchHotels likedList={plan.liked.hotels}/>
+            </LoadScriptNext> */}
+             <HotelAdd plan={plan} />
+           </Grid>}
             
             </Grid>
             <Grid item  xs={12} sm={12} md={6} lg={4} >

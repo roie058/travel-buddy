@@ -14,7 +14,7 @@ type MapContextType={
 placeList:IPlace[]|any[],
 setPlaceList:Dispatch<SetStateAction<IPlace[]|any[]>>,
 type:'hotels'|'restaurants'|'attractions',
-setType:Dispatch<SetStateAction<'hotels'|'restaurants'|'attractions'>>,
+setType:Dispatch<SetStateAction<'hotels'|'restaurants'|'attractions'|'search'>>,
 rating:string,
 setRating:Dispatch<SetStateAction<string>>,
 mapRef:React.MutableRefObject<any>,

@@ -14,8 +14,6 @@ type Props = {open:boolean,onClose:()=>void,clickedLocation?:IPlace,type?:'resta
 
 const AddToPlanModal = (props: Props) => {
 
-
-
   return (
     <Dialog fullWidth onClose={props.onClose} open={props.open}>
        <DialogTitle>Add to Plan</DialogTitle>
@@ -31,7 +29,7 @@ const AddToPlanModal = (props: Props) => {
             <ListItemText sx={{width:'100%'}}  primary={plan.header} secondary={`${plan.country} ${moment(new Date(plan.start)).format('DD.MM')} - ${moment(new Date(plan.end)).format('DD.MM')}` }  />
           
           {props.clickedLocation&&props.type&&  <ListItemButton  sx={{justifyContent:'flex-end',width:'40px',height:'40px',padding:'0'}} onClick={()=>props.submitHandler(i)} key={plan._id}>
-            {plan.liked[props.type].find((place)=>(props?.clickedLocation?.location_id==place.location_id))?<AddedIcon width={30} height={30} />:
+            {plan.liked[props.type]?.find((place)=>(props?.clickedLocation?.location_id==place.location_id))?<AddedIcon width={30} height={30} />:
               <Image width={30} height={30} src={'/images/add.png'} alt='add to list button' /> 
     }
          </ListItemButton>}

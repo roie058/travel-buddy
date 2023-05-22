@@ -9,6 +9,8 @@ import { IPlace } from '@/dummyData'
 import Image from 'next/image'
 import DeleteIcon from '../../../public/images/delete.svg'
 import PlaceItemDetailCard from '../ui/calender/PlaceItemDetailCard'
+import AttractionSearch from '../attractions/AttractionSearch'
+import { LoadScriptNext } from '@react-google-maps/api'
 type Props = {}
 
 const LikedList = (props: Props) => {
@@ -87,12 +89,16 @@ if(selectedCategory==="all"){
 
   return (
     <>
+        
     <Dialog open={open} onClose={onClose} >
 <Box>
 <PlaceItemDetailCard place={viewedPlace}/>
 </Box>
     </Dialog>
-    <Container sx={{marginY:'10%',paddingTop:'65px'}}   >
+    <Container sx={{marginY:'5%',paddingTop:'65px',display:'flex',flexDirection:'column',gap:'15px'}}   >
+    <LoadScriptNext googleMapsApiKey={process.env.MAPS_API_KEY} libraries={["places"]}  >
+     {list&& <AttractionSearch likedList={list}/>}
+     </LoadScriptNext>
 <Card elevation={3} >
 <Box  padding={'5%'}  >
 
@@ -126,6 +132,7 @@ if(selectedCategory==="all"){
 </Box>
 </Card>
     </Container>
+
     </>
   )
 }
