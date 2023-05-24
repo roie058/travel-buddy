@@ -26,7 +26,7 @@ export const PasswordLink = ({
       <Body style={main}>
         <Container style={container}>
           <Img
-            src={`https://travel-buddy-one.vercel.app/images/roundlogo.svg`}
+            src={`https://travel-buddy-one.vercel.app/images/logo.png`}
             width="40"
             height="33"
             alt="travelbuddy"
