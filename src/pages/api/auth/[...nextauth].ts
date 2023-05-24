@@ -1,10 +1,11 @@
-import NextAuth, { NextAuthOptions } from "next-auth";
+import NextAuth, { NextAuthOptions} from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import credentialsProvider from "next-auth/providers/credentials";
 import dbConnect from "lib/dbConnect";
-import User from "models/User";
+
 import { compare } from "bcryptjs";
-import { IUser } from "./signup";
+import User from "models/User";
+
 
 const { GOOGLE_ID, GOOGLE_SECRET } = process.env;
 
@@ -50,20 +51,26 @@ export const authOptions:NextAuthOptions = {
   ],
   pages: {
     signIn: "/auth",
+    
   },
   session: { strategy: "jwt" },
   callbacks: {
     jwt: async ({ token, user }) => {
       user && (token.user = user);
+      user && (token.id = user.id);
       return token;
     },
     session: async ({ session, token }) => {
-      const user = token.user;
-      session.user = user as IUser;
+      if(token){
+        const user = token.user;
+        session.user = user;
+      }
+     
       return session;
     },
   },
-  secret:process.env.NEXTAUTH_SECRET
+  secret:process.env.NEXTAUTH_SECRET,
+
 };
 
 export default NextAuth(authOptions);

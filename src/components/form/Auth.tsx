@@ -11,6 +11,7 @@ import { Box } from '@mui/system'
 import { GoolgeIcon } from '../svgComponents'
 import Image from 'next/image'
 import RoundLogo from '../../../public/images/roundlogo.svg'
+import Link from 'next/link'
 type Props = {}
 
 const Auth = (props: Props) => {
@@ -96,7 +97,10 @@ router.push('/')
 
 {isLoading?<CircularProgress size={'5rem'}/>: <UiButton  submit clickFn={()=>{}} color='blue' >{isLoading?'Loading...':isLogin?'Login':'Signup'}</UiButton>}
 {submitError&& <FormHelperText onClick={()=>{setSubmitError(null)}}  sx={{color:'	#DC3545',textAlign:'center',borderRadius:'10px',cursor:'pointer',fontSize:'1rem'}}>{submitError}</FormHelperText>}
+<Box display={"flex"} justifyContent={"space-evenly"}>
 <Typography onClick={changeFormHandler}  className={styles.changeForm} textAlign={'center'} color={'GrayText'} sx={{textDecoration:'underline',textDecorationColor:'GrayText'}} >{isLogin?'Create New Account':'Already Have Account'}</Typography>
+{isLogin&&<Link href={'/forget-password'}><Typography  className={styles.changeForm} textAlign={'center'} color={'GrayText'} sx={{textDecoration:'underline',textDecorationColor:'GrayText'}} >{'Forgot password?'}</Typography></Link>}
+</Box>
 
 </form>
 
