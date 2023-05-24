@@ -16,10 +16,11 @@ if(req.method==='GET'){
     
     try {
         //@ts-ignore
+        
 const user= await User.find({email:email})
 if(user){
     const emailName=email+user.password
-   const isCorrect=await compare(emailName,String(token))
+   const isCorrect=await compare(emailName,decodeURIComponent(String(token)))
 if(isCorrect){
   return  res.status(200).json({success:true});
 }else{

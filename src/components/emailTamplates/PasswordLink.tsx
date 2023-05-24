@@ -15,8 +15,6 @@ interface DropboxResetPasswordEmailProps {
     userFirstname?: string;
     resetPasswordLink?: string;
   }
-
-  const baseUrl = process.env.BACKEND_URL?? '';
   
 export const PasswordLink = ({
   userFirstname,
@@ -28,12 +26,12 @@ export const PasswordLink = ({
       <Body style={main}>
         <Container style={container}>
           <Img
-            src={`${baseUrl}/images/roundlogo.svg`}
+            src={`https://travel-buddy-one.vercel.app/images/roundlogo.svg`}
             width="40"
             height="33"
             alt="travelbuddy"
           />
-          <Section>
+          <Section lang='en'>
             <Text style={text}>Hi {userFirstname},</Text>
             <Text style={text}>
               Someone recently requested a password change for your Travel Buddy

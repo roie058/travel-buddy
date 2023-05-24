@@ -17,7 +17,8 @@ if(req.method==='POST'){
 const user= await User.find({email:email})
 if(user){
     const emailName=email+user.password
-    const  hashedEmailandName= await hash(emailName,12)
+    const  hashedEmailandName= encodeURIComponent(await hash(emailName,12))
+  
     const data = await resend.sendEmail({
         from:process.env.EMAIL_COMPANY||'',
       to: email || '',
@@ -34,7 +35,7 @@ res.status(200).json({success:true});
   return  res.status(400).json(error);
   }
 }else{
-  return  res.status(400).json('method not supported');
+  return  res.status(405).json('method not supported');
 
 }
 
