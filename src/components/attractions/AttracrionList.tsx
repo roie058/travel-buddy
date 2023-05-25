@@ -8,7 +8,7 @@ import { useRouter } from 'next/router'
 import axios from 'axios'
 import { AddedIcon, HeartIcon, LikedIcon } from '../svgComponents'
 
-type Props = {list:IPlace[],likedList:Set<string>}
+type Props = {list:IPlace[],likedList:Set<string>,setList:React.Dispatch<React.SetStateAction<IPlace[]>>}
 
 export const getPlaceDetails=async(locationId:string)=>{
   const options = {
@@ -53,8 +53,11 @@ const AttracrionList = (props: Props) => {
     try {
      const categories=new Set(['attractions','hotels','restaurants'])
      const {data} = await axios.post('/api/place/newPlace',{place:place,category:categories.has(`${place?.category?.key??'hotel'}s`)? `${place?.category?.key??'hotel'}s`  : 'attractions',planId:query.planId})
-   
-     
+  if(data.success){
+   props.setList((list)=>[...list,data.newPlace])
+
+  }
+ 
    } catch (error) {
        console.log(error);
        

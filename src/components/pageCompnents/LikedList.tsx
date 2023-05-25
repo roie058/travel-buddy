@@ -56,9 +56,7 @@ setList(Object.values(liked).flat())
       setIsLoading(true)
       const {data} = await axios.patch('/api/place/newPlace',{place:place,category:(place.category?.key??'hotel')+'s',planId:query.planId})
       if(data.success){
-    
-        const dataI=plan[(place.category?.key??'hotel')+'s'].findIndex((indexPlace)=>indexPlace.location_id==place.location_id)
-      place[(place.category?.key??'hotel')+'s'].splice(dataI,1)
+     setList(()=> list.filter((indexPlace)=>indexPlace.location_id!==place.location_id))
       }else{
         console.log(data.error); 
       }
@@ -97,7 +95,7 @@ if(selectedCategory==="all"){
     </Dialog>
     <Container sx={{marginY:'5%',paddingTop:'65px',display:'flex',flexDirection:'column',gap:'15px'}}   >
     <LoadScriptNext googleMapsApiKey={process.env.MAPS_API_KEY} libraries={["places"]}  >
-     {list&& <AttractionSearch likedList={list}/>}
+     {list&& <AttractionSearch setList={setList} likedList={list}/>}
      </LoadScriptNext>
 <Card elevation={3} >
 <Box  padding={'5%'}  >

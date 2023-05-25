@@ -39,7 +39,7 @@ export const  searchFn=async(query:string,url)=>{
 }
 
 
-type Props = {likedList:IPlace[]}
+type Props = {likedList:IPlace[],setList: React.Dispatch<React.SetStateAction<IPlace[]>>}
 
 const AttractionSearch = (props: Props) => {
   const [resultList,setResultList]=useState<any[]>()
@@ -50,8 +50,8 @@ const {handleSubmit,register}=useForm()
 const searchHandler:SubmitHandler<FieldValues>= async (data)=>{
   setIsLoading(true)
  const results=await searchFn(data.search,'https://travel-advisor.p.rapidapi.com/locations/auto-complete')
-    console.log(results);
-    setResultList(results)
+ 
+    setResultList(results.filter((v,i,a)=>a.findIndex(v2=>(v2.location_id===v.location_id))===i))
   setIsLoading(false)
 }
 
@@ -75,7 +75,7 @@ const searchHandler:SubmitHandler<FieldValues>= async (data)=>{
 </Box>
 
 </form>
-{resultList? <AttracrionList likedList={new Set(props.likedList.map((place)=>place.location_id))} list={resultList}/>:null}
+{resultList? <AttracrionList setList={props.setList} likedList={new Set(props.likedList.map((place)=>place.location_id))} list={resultList}/>:null}
     </Box>
     </Card>
   )
