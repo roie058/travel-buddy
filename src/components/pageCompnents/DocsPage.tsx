@@ -45,7 +45,7 @@ const isSm=useMediaQuery("(max-width:600px)")
     <CardHeader sx={{paddingTop:'3%'}} titleTypographyProps={{className:styles.subHeader,textAlign:'center',fontWeight:"bold"}} title={"Add Places"}/>
     <CardContent>
         <List >
-   <ListItem > <ListItemText primaryTypographyProps={{className:styles.text}} >1. Navigate to the <span ><Link href={'/map'} style={{fontWeight:'bold'}}>Map</Link></span> page or by clicking &quot;Discover Places&quot; on the Navbar.</ListItemText></ListItem>
+   <ListItem > <ListItemText primaryTypographyProps={{className:styles.text}} >1. Navigate to the <span ><Link href={'/map'} style={{fontWeight:'bold'}}>Map</Link></span> page or by clicking &quot;Map&quot; on the Navbar.</ListItemText></ListItem>
    <ListItem > <ListItemText primaryTypographyProps={{className:styles.text}} >2. On the map view the area that you want to search for places.</ListItemText></ListItem>
    <ListItem > <ListItemText primaryTypographyProps={{className:styles.text}} >3. Click one of the category icons on the top left <ButtonGroup orientation={"horizontal"} >
     <Button  onClick={()=>{}}  sx={{width:'35px',minWidth:'0',textTransform:'capitalize',backgroundColor:"white",color:'#3c4043',border:'1px solid #3c404355'}} ><Image alt='atractions' width={20} height={20} src={'/images/amusment.gif'}/></Button>

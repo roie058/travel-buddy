@@ -56,7 +56,7 @@ const router=useRouter()
    </li>
   <li><Link className={(router.pathname ==='/plans')? styles.selected_link : styles.link} href={'/plans'}> My Trips </Link></li>
    <li>
-   <Link className={(router.pathname ==='/map')? styles.selected_link : styles.link} href={'/map'}> Discover Places</Link> 
+   <Link className={(router.pathname ==='/map')? styles.selected_link : styles.link} href={'/map'}> Map</Link> 
    </li>
    <li>
    <Link className={(router.pathname ==='/flights')? styles.selected_link : styles.link} href={'/flights'}>Flights</Link>   
@@ -114,7 +114,7 @@ const router=useRouter()
         <LogoIcon  width={80} height={80}  />
         </Link></ListItem>
 <ListItem sx={{justifyContent:'center'}} onClick={()=>setOpenNav(false)}  ><Link className={(router.pathname ==='/plans')? styles.selected_link : styles.link} href={'/plans'}> My Trips </Link></ListItem>
-<ListItem sx={{justifyContent:'center'}} onClick={()=>setOpenNav(false)}><Link className={(router.pathname ==='/map')? styles.selected_link : styles.link} href={'/map'}> Discover Places</Link> </ListItem>
+<ListItem sx={{justifyContent:'center'}} onClick={()=>setOpenNav(false)}><Link className={(router.pathname ==='/map')? styles.selected_link : styles.link} href={'/map'}> Map</Link> </ListItem>
 <ListItem sx={{justifyContent:'center'}} onClick={()=>setOpenNav(false)}><Link className={(router.pathname ==='/flights')? styles.selected_link : styles.link} href={'/flights'}>Flights</Link> </ListItem>
 <ListItem sx={{justifyContent:'center'}} onClick={()=>setOpenNav(false)}><Link className={(router.pathname ==='/weather')? styles.selected_link : styles.link} href={'/weather'}>Weather</Link> </ListItem>
         </List>

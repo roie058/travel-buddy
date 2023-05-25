@@ -15,6 +15,7 @@ import { FilterIcon } from '../svgComponents'
 import { Plan } from '../pageCompnents/Schedule'
 import { searchFn } from '../attractions/AttractionSearch'
 import { getPlaceDetails } from '../attractions/AttracrionList'
+import { getDistanceFromLatLonInKm } from '@/util/mapHelpars'
 
 
 
@@ -163,22 +164,39 @@ mapCtx?.setIsLoading(false)
   const onPlaceChanged= async ()=>{
 const lat=autocomplete?.getPlace().geometry?.location?.lat()
 const lng=autocomplete?.getPlace().geometry?.location?.lng()
-const query=autocomplete?.getPlace().name
-const results= await searchFn(query,"https://travel-advisor.p.rapidapi.com/locations/search")
+const query=autocomplete?.getPlace().name 
+const places=autocomplete.getPlace()
+
+
+const results= await searchFn(query,"https://travel-advisor.p.rapidapi.com/locations/auto-complete")
+
+
+ const place =results.reduce((prv,cur)=>{
+const prvDistense=getDistanceFromLatLonInKm({latitude:lat,longitude:lng},{latitude:prv?.latitude,longitude:prv?.longitude});
+const curDistense=getDistanceFromLatLonInKm({latitude:lat,longitude:lng},{latitude:Number(cur?.latitude),longitude:Number(cur?.longitude)});
+if( prvDistense > curDistense ){
+  return cur
+} else{
+  return prv
+}
+ },{latitude:0,longitude:0})
+ const detailedPlace=await getPlaceDetails(place.location_id)
+ 
+
+ 
 
 if(lat&&lng)mapCtx?.setCoordinates((coordinates)=> {return {lat:lat,lng:lng}})
 
 
+ if(results)
+ {
 
-if(results)
-{
- const places=results.filter((place)=> typeof place.latitude === 'string')
-  mapCtx.setPlaceList(places)
-  mapCtx.setType('search')
-}else{
-  return;
+   mapCtx.setPlaceList([detailedPlace])
+   mapCtx.setType('search')
+ }else{
+   return;
 
-}
+ }
 
 
   }
