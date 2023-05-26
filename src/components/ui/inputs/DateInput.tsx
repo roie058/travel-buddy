@@ -13,6 +13,7 @@ start?:Date,
 end?:Date
 value?:Date,
 control:any
+hotel?:boolean,
 onChange?:(value:any)=>void
 }
 
@@ -48,7 +49,7 @@ render={({ field: { onChange, value }, fieldState: { error } })=>
     <LocalizationProvider  dateAdapter={AdapterMoment}>
   <DatePicker
   inputFormat='DD-MM-YYYY'
-  disablePast
+  disablePast={!props.hotel}
   shouldDisableDate={disableHandler}
     label={props.label}
     value={value}

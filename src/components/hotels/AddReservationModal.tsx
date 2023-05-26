@@ -65,10 +65,10 @@ const AddReservationModal = (props: Props) => {
       })}>
 {startDate &&<Box width={'100%'} gap="10px" display={'flex'}  >
   <FormControl fullWidth>
-<DateInput control={control} start={props.plan.start} end={props.plan.end}   onChange={onStartDateChange}  name='start' label='*Start Date' />
+<DateInput hotel control={control} start={props.plan.start} end={props.plan.end}   onChange={onStartDateChange}  name='start' label='*Start Date' />
 </FormControl>
  <FormControl fullWidth>
-<DateInput control={control}    start={startDate} end={props.plan.end} name='end' label='*End Date' />
+<DateInput hotel control={control}    start={startDate} end={props.plan.end} name='end' label='*End Date' />
 </FormControl>
 
 
