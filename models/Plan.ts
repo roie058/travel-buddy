@@ -11,7 +11,7 @@ const PlanSchema = new mongoose.Schema({
  start:{type:Date,required:[true,'Start Date is required']},
  end:{type:Date,required:[true,'End Date is required']},
  days:{type:[{date:{type:String,required:false},
-  rutine:{type:[{budget:Number,dragId:String,position:{type:String,required:false},place:{ type:Schema.Types.ObjectId,ref:'Place'}}]},
+  rutine:{type:[{budget:Number,dragId:String,position:{type:String,required:false},place:{ type:Schema.Types.ObjectId,ref:'Place'},description:{type:String,required:false}}]},
   start:{type:Schema.Types.ObjectId,ref:'Place'},
   breakfest:{type:Schema.Types.ObjectId,ref:'Place'},
   mainAttraction:{type:Schema.Types.ObjectId,ref:'Place'},

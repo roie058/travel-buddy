@@ -1,9 +1,9 @@
 
 import { IPlace } from '@/dummyData'
-import { Button, Card, CardContent,Dialog, DialogActions, DialogContent, FormControl, InputLabel, MenuItem, Select, TextField, Typography } from '@mui/material'
+import { Button, Card, CardContent,CircularProgress,Dialog, DialogActions, DialogContent, FormControl, FormHelperText, InputLabel, MenuItem, Select, TextField, Typography } from '@mui/material'
 import { Box } from '@mui/system'
 import axios from 'axios'
-import Image from 'next/image'
+
 
 import React, { useCallback, useContext,  useState } from 'react'
 import { FieldValues, useForm } from 'react-hook-form'
@@ -17,12 +17,11 @@ type Props = {open:boolean,close:()=>void,place:IPlace,static?:boolean,index?:nu
 
 const PlaceDescriptionModal = (props: Props) => {
   const [, updateState] = useState<any>();
+ const  [isLoading,setIsLoading]=useState(false)
 const forceUpdate = useCallback(() => updateState({}), []);
 
   const planCtx=useContext(PlanContext)
- 
-
-        const {register,handleSubmit}=useForm({defaultValues:{budget:props.listItem?.budget,dayType:props.listItem?.position}});
+        const {register,handleSubmit,formState}=useForm({defaultValues:{budget:props.listItem?.budget,dayType:props.listItem?.position,description:props.listItem?.description}});
 
 
 
@@ -31,6 +30,7 @@ const updatePlace=async(formData:FieldValues)=>{
 
 
 try {
+  setIsLoading(true)
   const {data}=await axios.patch('/api/place/editPlace',
   {
     position:formData.dayType
@@ -39,20 +39,23 @@ try {
     place:props.place,
     budget:formData.budget,
     dragId:props.listItem?.dragId,
+    description:formData.description
   })
   if(data.success){
    const placeIndex=planCtx?.plan.days[Number(props.index)].rutine.findIndex((rutineItem:RoutineItem)=>rutineItem.place._id===props.place._id)
-  if(!placeIndex)return;
+   props.close()
+   setIsLoading(false)
+   forceUpdate()
+   if(!placeIndex)return;
   if(!props.listItem)return;
   const dataItem:RoutineItem={dragId:props.listItem?.dragId,place:props.listItem?.place,budget:formData.budget,position:formData.dayType}
    planCtx?.plan.days[Number(props.index)].rutine.splice(placeIndex,1,dataItem)
-forceUpdate()
-   props.close()
   }
+
+   
 } catch (error) {
   throw new Error('bad request')
 }
-
 
 
 
@@ -82,6 +85,10 @@ forceUpdate()
     <form style={{width:'100%'}} onSubmit={handleSubmit(updatePlace)}>
         <Box  display="flex" flexDirection="column" justifyContent='center' alignItems={"center"} gap={2}   >
 
+        <FormControl sx={{width:'50%'}} >
+            <TextField multiline minRows={2}  defaultValue={props.listItem?.description} {...register('description',{maxLength:{value:250,message:'250 max characters'}})}  label="Description" />
+       {formState?.errors?.description?.message&&<FormHelperText>{formState.errors.description.message}</FormHelperText>}
+        </FormControl>
         
         <FormControl sx={{width:'50%'}} >
             <TextField   defaultValue={props.listItem?.budget} {...register('budget',{valueAsNumber:true,min:0})} type="number" label="Budget" />
@@ -98,7 +105,7 @@ forceUpdate()
 
             </Select>  
         </FormControl>
-        <Button sx={{width:'50%'}} type='submit'>change</Button>
+       {isLoading? <CircularProgress/> :<Button sx={{width:'50%'}} type='submit'>change</Button>}
         </Box>
     </form>
   

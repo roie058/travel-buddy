@@ -25,7 +25,7 @@ lastLocation?:ListItems|undefined
 
 }
 
-export type RoutineItem={place:IPlace,dragId:string,budget:number,position?:'mainAttraction'|'breakfest'|'lunch'|'dinner',_id?:string}
+export type RoutineItem={description?:string,place:IPlace,dragId:string,budget:number,position?:'mainAttraction'|'breakfest'|'lunch'|'dinner',_id?:string}
 
 const DayList = (props: Props) => {
 

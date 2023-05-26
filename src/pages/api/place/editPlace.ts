@@ -16,7 +16,7 @@ dbConnect().catch(err=>res.json(err))
 if(method==='PATCH'){
 if(!req.body)return res.status(400).json({error:'data is missing'})
 
-const {position,planId,index,place,budget,dragId}=req.body
+const {position,planId,index,place,budget,dragId,description}=req.body
 
 
 
@@ -46,10 +46,10 @@ if(lastPosition){
 
     }
       plan.days[index][position]=docPlace
-      plan.days[index].rutine[placeIndex].set({position:position,budget:budget});
+      plan.days[index].rutine[placeIndex].set({position:position,budget:budget,description:description});
 
  }else{
-    plan.days[index].rutine[placeIndex].set({budget:budget,position:0});
+    plan.days[index].rutine[placeIndex].set({budget:budget,position:0,description:description});
 
  }
 

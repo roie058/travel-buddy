@@ -48,7 +48,7 @@ props.onClick(props.listItem.dragId)
     <>
     <PlaceDescriptionModal  listItem={props.listItem} index={props.index} static={props.static} place={props.listItem.place} close={closeHandler} open={open} />
     <Card     >
-     {props.position&& Number(props.position)!==0 && <CardHeader  sx={{height:'10px',background:'linear-gradient(60deg, rgba(35,58,102,1) 0%, rgba(36,53,98,1) 100%)',color:'white'}}  titleTypographyProps={{variant:'body1'}}  title={props.position==='mainAttraction'?'Main Attraction':props.position}/>}
+     {props.position&& Number(props.position)!==0 && <CardHeader  sx={{height:'10px',background:'linear-gradient(60deg, rgba(35,58,102,1) 0%, rgba(36,53,98,1) 100%)',color:'white'}}  titleTypographyProps={{variant:'body1',textTransform:'capitalize'}}  title={props.position==='mainAttraction'?'Main Attraction':props.position}/>}
        <Box sx={{margin:'20px 0',borderRadius:0 , fontFamily: "Heebo, sans-serif",display:'flex',padding:'1% 1%',justifyContent:'space-evenly',alignItems:'center'}}>
         <Image style={{objectFit:"cover",borderRadius:'10px'}} width={100} height={100}  src={props.listItem.place.photo?props.listItem.place.photo.images.large.url:'/images/placeholder.png'} alt={""}/>
         <CardContent sx={{margin: '3%', marginRight:'0',padding:'0', paddingBottom:'0 !important'}}>
