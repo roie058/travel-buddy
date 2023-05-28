@@ -37,18 +37,22 @@ const mdScreen=useMediaQuery('(max-width:1200px)')
 
 
   return (
-    <Box display={'flex'} marginBottom="3%" alignItems='center' color={'#575757'}  justifyContent='space-evenly' height={'40px'} sx={{backgroundColor:'white',border:'1px solid lightGray' ,width:'calc(100% - 2px)',borderRadius:'30px'}}>
+    <Box display={'flex'}  alignItems='center' color={'#575757'}  justifyContent="space-between" height={'40px'} sx={{backgroundColor:'white' ,width:'100%'}}>
+      <Box display={'flex'}  gap={1} paddingLeft={3} >
+           <Typography fontWeight='bold' fontSize={mdScreen?'0.8rem':'1rem'} variant='h3'>{day}</Typography>
+      <Typography fontWeight='bold'  fontSize={mdScreen?'0.8rem':'1rem'} variant='h3'>{dayOfWeek}</Typography>
+
+      </Box>
+      <Box display={'flex'}  gap={1} paddingRight={3} >
       <div style={{display:'flex',gap:'3px',alignItems:'center'} }>
-      {<Image alt='weather' width={mdScreen?30:40} height={mdScreen?30:40} src={props.day.weather?.icon?`/images/weatherIcons/${props.day.weather?.icon}.svg`:''}/>}
-      <Typography fontSize={mdScreen? '1rem':'1.3rem'} fontWeight="bold" variant='h3'>{props.day.weather?props.day.weather.temp:18}c°</Typography>
+      {<Image alt='weather' width={mdScreen?35:35} height={mdScreen?35:35} src={props.day.weather?.icon?`/images/weatherIcons/${props.day.weather?.icon}.svg`:''}/>}
+      <Typography fontSize={mdScreen? '0.8rem':'1rem'} fontWeight="bold" variant='h3'>{props.day.weather?props.day.weather.temp:18}c°</Typography>
       </div>
-      <Typography fontWeight='bold'  fontSize={mdScreen?'1rem':'1.3rem'} variant='h3'>{dayOfWeek}</Typography>
-      <Typography fontWeight='bold' fontSize={mdScreen?'1rem':'1.5rem'} variant='h3'>{day}</Typography>
-      
       <div onClick={props.openHandler} className={styles.daySummery}>
       {props.open?<RightArrow width={"24px"} height={"24px"}/>:<Arrow width={"24px"} height="24px"  />}
 
       </div>
+      </Box>
     </Box>
   )
 }

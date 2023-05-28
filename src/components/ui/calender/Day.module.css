@@ -1,12 +1,17 @@
 .day{
-    padding: 3%;
+
 display: flex;
 flex-direction: column;
 align-items: center;
 background-color: white;
+
 border: 0.5px solid rgba(134, 134, 134, 0.144);
 height: 70vh;
-width: 94%;
+width: 100%;
+min-width: 300px;
+max-width: 600px;
+
+
 }
 
 .dayOpen{
@@ -20,15 +25,20 @@ border: 0.5px solid rgba(134, 134, 134, 0.144);
 height: 70vh;
 border-top-left-radius: 15px;
 border-bottom-left-radius: 15px;
+min-width: 300px;
 
 }
 
 .container{
     display: flex;
-    width: 100%;
+width: 100%;
+flex-grow: 1;
     position: relative;
     margin-bottom: 30px;
+justify-content: center;
 }
+
+
 
 .daySummery{
     cursor: pointer;

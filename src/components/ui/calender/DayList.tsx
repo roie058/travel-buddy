@@ -108,13 +108,13 @@ const handleClose=()=>{
    
     <Droppable  droppableId={props.date+'/'+props.position}  >
         {(provided)=>(
-        <Box className={styles.daylist} sx={{overflowY:list.length>3?'scroll':"auto"}}  {...provided.droppableProps}  ref={provided.innerRef} >
+        <Box  className={styles.daylist} sx={{overflowY:list.length>3?'scroll':"auto"}}  {...provided.droppableProps}  ref={provided.innerRef} >
         { list.map((listItem,index)=>{
         return  !listItem.place.location_id ?
          <Draggable  key={listItem.dragId} draggableId={listItem.dragId} index={index} >
                 {(provided)=>(
                     <div id={listItem.dragId} {...provided.draggableProps} {...provided.dragHandleProps}  ref={provided.innerRef}>
-                     <UserAddedNote forceUpdate={forceUpdate} position={listItem?.position}  index={props.date}  onClick={clickHandler} withDiractions btnText='Remove From Day'  listItem={listItem}/>
+                     <UserAddedNote minify={list.length>4} forceUpdate={forceUpdate} position={listItem?.position}  index={props.date}  onClick={clickHandler} withDiractions btnText='Remove From Day'  listItem={listItem}/>
                     </div>
                     )}
             </Draggable>
@@ -122,7 +122,7 @@ const handleClose=()=>{
             <Draggable  key={listItem.dragId} draggableId={listItem.dragId} index={index} >
             {(provided)=>(
                 <div id={listItem.dragId} {...provided.draggableProps} {...provided.dragHandleProps}  ref={provided.innerRef}>
-                 <DayItemCard forceUpdate={forceUpdate} position={listItem?.position}  index={props.date}  onClick={clickHandler}  btnText='Remove From Day'  listItem={listItem}/>
+                 <DayItemCard minify={list.length>4} forceUpdate={forceUpdate} position={listItem?.position}  index={props.date}  onClick={clickHandler}  btnText='Remove From Day'  listItem={listItem}/>
                 </div>
                 )}
         </Draggable>

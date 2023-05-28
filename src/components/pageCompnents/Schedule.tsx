@@ -6,7 +6,7 @@ import { RoutineItem } from '@/components/ui/calender/DayList'
 import { PlanContext } from '@/context/plan-context'
 import { IPlace } from '@/dummyData'
 import { NewSesstion } from '@/pages/api/auth/signup'
-import {  Grid} from '@mui/material'
+import {  Box, Grid} from '@mui/material'
 import { LoadScript, LoadScriptNext } from '@react-google-maps/api'
 
 import axios, { AxiosError } from 'axios'
@@ -148,18 +148,18 @@ setList((list)=> list )
    <LoadScriptNext  googleMapsApiKey={`${process.env.MAPS_API_KEY}`}
   libraries={libraries}> 
     {list&&  <PlanContext.Provider value={{plan:list}}>
-     <main style={{alignContent:"flex-start",display:"block",padding:'0 10%'}}>
+     <main style={{alignContent:"flex-start",display:"block",padding:'0 5%'}}>
     
      <DragDropContext onDragEnd={handleDragEnd} >
      
-        <Grid sx={{justifyContent:'center'}} paddingTop={'5%'}    container  >
+        <Box sx={{justifyContent:'center'}} paddingTop={'5%'} display={'flex'} flexWrap={"wrap"}  >
         {list&& list.days.map((date:Days,i)=>{
        
       return  <Day key={i} plan={list}  index={i} day={date} />
         
         })}
         
-        </Grid>
+        </Box>
         </DragDropContext>
         
         </main>

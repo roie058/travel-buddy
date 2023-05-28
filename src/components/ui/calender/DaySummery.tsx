@@ -156,7 +156,7 @@ const apiIsLoaded = (map:any, maps:any) => {
   
 
 
-       const isMobile=useMediaQuery('(max-width:700px)')
+       const isMobile=useMediaQuery('(max-width:800px)')
 
   return (
     <Paper ref={cardRef}   elevation={3} sx={{width:'100%',minHeight:'min-content'}}>
