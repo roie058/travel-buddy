@@ -12,6 +12,9 @@ import styles from './BudgetBoard.module.css'
 import { Expense, Plan } from '../pageCompnents/Schedule'
 import { Flight } from '../flights/AddFlightModal'
 import DeleteIcon from '../../../public/images/delete.svg'
+import SnackBar from '../ui/SnackBar'
+import useSnackBar from '@/hooks/useSnackBar'
+import ToolTip from '../ui/ToolTip'
 type Props = {plan:Plan,setList:React.Dispatch<React.SetStateAction<Plan|undefined>>}
 
 
@@ -20,7 +23,9 @@ const [budget, setBudget] = useState<{transportation:number,budget:number,expens
 const [totalCost, setTotalCost] = useState<number>()
 const [stopsBudget, setStopsBudget] = useState<Array<Expense>>()
 const [open, setOpen] = useState<boolean>(false)
+const {setSnackBar,snackBarProps}=useSnackBar()
 const [, updateState] = useState<any>();
+
 const forceUpdate = useCallback(() => updateState({}), []);
 const currency=props.plan.budget.currency??'$'
 useEffect(() => {
@@ -50,6 +55,7 @@ const deleteExpenseHandler=async (id:string|undefined,type:"transportation"|'exp
 try {
 const {data}= await axios.delete('/api/budget/deleteBudget',{params:{planId:props.plan._id,expenseId:id,expenseType:type}})
 if(data.success){
+  setSnackBar('Expense Removed',"error")
 props.setList((plan)=> {
   const index=plan?.budget[type].findIndex((expense)=>expense._id===id)
 plan?.budget[type].splice(Number(index),1)
@@ -69,7 +75,7 @@ const isMobile=useMediaQuery('(max-width:600px)')
 
   return (
     <>
-   {budget && <Paper sx={
+   {budget &&  <Paper sx={
         {
           backgroundColor:'white',
           padding:'10%',
@@ -157,7 +163,8 @@ const isMobile=useMediaQuery('(max-width:600px)')
       </Paper>
     
     }
-    <AddExpenseModal  open={open} onClose={()=>{setOpen(false)}} />
+    <AddExpenseModal openSnackBar={setSnackBar}  open={open} onClose={()=>{setOpen(false)}} />
+    <SnackBar {...snackBarProps} />
   </>)
 }
 

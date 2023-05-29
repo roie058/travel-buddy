@@ -13,6 +13,9 @@ import AddFlightModal, { Flight } from './AddFlightModal'
 
 import Image from 'next/image'
 import { Plan } from '../pageCompnents/Schedule'
+import useSnackBar from '@/hooks/useSnackBar'
+import SnackBar from '../ui/SnackBar'
+import ToolTip from '../ui/ToolTip'
 
 type Props = {plan?:Plan,plans?:Plan[]}
 
@@ -38,7 +41,7 @@ const newAirports=JSON.parse(JSON.stringify(airports))
 const FlightAdd = (props: Props) => {
     const {register,control,setError,handleSubmit,setValue,formState}=useForm({defaultValues:{start:new Date(),end:new Date(),airline:'',destination:"",origin:'',flightNumber:"",position:'',price:0}})
 const [airportsData,setAirportsData]=useState<Array<{name:string,iata:string}>>([])
-
+const {setSnackBar,snackBarProps}=useSnackBar()
 const [open, setOpen] = useState(false)
 const [isLoading, setIsLoading] = useState(false)
 const [flightData, setFlightData] = useState<Flight>()
@@ -74,8 +77,6 @@ const onClose=()=>{
 
 const submitHandler=async (data:any)=>{
 
-    
-    
     if(!data.origin?.lat){
 setError('origin',{message:'Origin Is Required'})
     }
@@ -105,8 +106,9 @@ setError('origin',{message:'Origin Is Required'})
                                                             const {data:res} = await axios.patch('/api/flight/newFlight',{flight:data,planId:props.plan._id})
                                                             setIsLoading(false) 
                                                             if(res.success){
-      
-                                                             props.plan.flights.push(res.flight) 
+                                                                props.plan.flights.push(res.flight) 
+                                                                
+                                                                setSnackBar('Flight Added','success')
                                                             
                                                             }else{
                                                               console.log(data.error);  
@@ -135,6 +137,7 @@ setError('origin',{message:'Origin Is Required'})
     <Box justifyContent={"center"} gap={3} display="flex"  >
 
 <FormControl fullWidth >
+    <ToolTip title='takeoff airport' right='-5%' top='-20%'>
      <Autocomplete isOptionEqualToValue={(option,value)=>option.iata===value.iata} onChange={(e,value)=>{changeHandler('origin',value)}}   options={airportsData} getOptionLabel={(option)=>option.name} renderOption={(props, option) => 
         {
         return(
@@ -146,9 +149,10 @@ setError('origin',{message:'Origin Is Required'})
         </Box>
       )}
     }  renderInput={(params)=><TextField   onChange={autoCompleteHandler}   label="Origin" {...params}  />} /> 
-   
+   </ToolTip>
 </FormControl>
 <FormControl fullWidth>
+<ToolTip title='landing airport' right='-5%' top='-20%'>
  <Autocomplete isOptionEqualToValue={(option,value)=>option.iata===value.iata} onChange={(e,value)=>{changeHandler('destination',value)}}   options={airportsData} getOptionLabel={(option)=>option.name} renderOption={(props, option) => 
         {
         return(
@@ -160,7 +164,9 @@ setError('origin',{message:'Origin Is Required'})
         </Box>
       )}
     }  renderInput={(params)=><TextField   onChange={autoCompleteHandler}   label="Destination" {...params}  />} /> 
+</ToolTip>
 </FormControl>
+
 </Box>
  <Box justifyContent={"center"} gap={3} display="flex"  >
 <FormControl fullWidth>
@@ -203,11 +209,13 @@ setError('origin',{message:'Origin Is Required'})
 </Box>
 <FormControl fullWidth    >
 <FormLabel  id="demo-radio-buttons-group-label">Type</FormLabel>
+<ToolTip title='select the flight position in trip flight in the start end or other for everything in the middle '>
 <RadioGroup  name="radio-buttons-group"   defaultValue={'start'} sx={{justifyContent:'center'}}   row >
     <FormControlLabel {...register('position')}  defaultChecked value="start" control={<Radio />} label="Start" />
     <FormControlLabel {...register('position')} value="end"  control={<Radio />} label="End" />
     <FormControlLabel {...register('position')} value="other"  control={<Radio />} label="Other" />
 </RadioGroup>
+</ToolTip>
 </FormControl>
 {formState.errors.origin?.message&&<FormHelperText  sx={{textAlign:"center",color:'red'}} >{formState.errors.origin?.message}</FormHelperText>}
 {formState.errors.destination?.message&&<FormHelperText  sx={{textAlign:"center",color:'red'}} >{formState.errors.destination?.message}</FormHelperText>}
@@ -225,6 +233,7 @@ setError('origin',{message:'Origin Is Required'})
         
     </Card>
    {props.plans&&<AddFlightModal plans={props.plans} open={open} onClose={onClose} flight={flightData} />}
+   <SnackBar {...snackBarProps}/>
     </>
   )
 }

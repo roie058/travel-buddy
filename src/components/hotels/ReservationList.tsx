@@ -8,11 +8,14 @@ import Image from 'next/image'
 import DeleteIcon from '../../../public/images/delete.svg'
 import React, { useCallback, useState } from 'react'
 import { Hotel, Plan } from '../pageCompnents/Schedule'
+import useSnackBar from '@/hooks/useSnackBar'
+import SnackBar from '../ui/SnackBar'
 
 
 
 type Props = {plan?:Plan,plans?:Plan[]}
 const ReservationList = (props: Props) => {
+  const {setSnackBar,snackBarProps} =useSnackBar()
 const [, updateState] = useState<any>();
 
   const forceUpdate = useCallback(() => updateState({}), []);
@@ -40,6 +43,7 @@ try {
 
 const {data}=await axios.delete('/api/hotel/deleteReservation',{params:{planId:planIndex&&props.plans ? props.plans[planIndex]._id:props.plan?._id,hotelId:hotel._id}})
 if(data.success){
+  setSnackBar('Reservation Removed',"error")
   if(props.plans&&planIndex){
     props.plans[planIndex].hotels.splice(index,1)
   }else{
@@ -55,6 +59,7 @@ if(data.success){
 
 }
   return (
+    <>
     <Box width={'100%'} height="100%">
     <Card sx={{height:'100%',borderRadius:'0' }}>
     <CardHeader sx={{textAlign:'center'}} title="My Reservations"></CardHeader>
@@ -86,6 +91,8 @@ if(data.success){
     </Card>
     
         </Box>
+        <SnackBar {...snackBarProps}/>
+        </>
   )
 }
 

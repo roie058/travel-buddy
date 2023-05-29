@@ -10,6 +10,8 @@ import React, { MouseEventHandler, useContext, useState } from 'react'
 import HeartBtn from '../buttons/HeartBtn'
 import LikeModal from '../list/LikeModal'
 import { Pin } from '@/components/svgComponents'
+import useSnackBar from '@/hooks/useSnackBar'
+import SnackBar from '../SnackBar'
 
 
 
@@ -32,7 +34,7 @@ const [open, setOpen] = useState(false)
   const userCtx=useContext(UserContext)
   const mapCtx=useContext(MapContext)
 const {data:session}=useSession()
-  
+  const {setSnackBar,snackBarProps}=useSnackBar()
   
   const clickHandler=()=>{
     if(!session){signIn(); return;}
@@ -74,7 +76,8 @@ const type:"restaurants" | "hotels" | "attractions"|string=(props.place?.categor
 
   return (
     <>
-    <LikeModal likeHandler={likeHandler} clickedLocation={props.place} type={isType(type)?type:'hotels'} onClose={closeHandler} open={open} />
+    <SnackBar {...snackBarProps} />
+    <LikeModal setSnackBar={setSnackBar} likeHandler={likeHandler} clickedLocation={props.place} type={isType(type)?type:'hotels'} onClose={closeHandler} open={open} />
     <Card elevation={6} sx={{display:'flex'}} ref={props.refEl} >
       <CardMedia onClick={coordinatesHandler} sx={{width:'150px',cursor:'pointer'}} title={props.place.name}  image={props.place.photo? props.place.photo.images.large.url: "/images/placeholder.png"}  />
     <CardContent sx={{width:'60%'}}  >

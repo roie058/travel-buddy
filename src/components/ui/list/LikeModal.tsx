@@ -4,8 +4,9 @@ import axios from 'axios'
 
 import React, { useContext, useState } from 'react'
 import AddToPlanModal from './AddToPlanModal'
+import { AlertColor } from '@mui/material'
 
-type Props = {open:boolean,onClose:()=>void,clickedLocation:IPlace,type:"restaurants" | "hotels" | "attractions",likeHandler:()=>void}
+type Props = {setSnackBar: (message: string, severity: AlertColor) => void,open:boolean,onClose:()=>void,clickedLocation:IPlace,type:"restaurants" | "hotels" | "attractions",likeHandler:()=>void}
 
 const LikeModal = (props: Props) => {
 const userCtx = useContext(UserContext)
@@ -18,6 +19,7 @@ if(isLiked){
     setIsLoading(true)
     const {data} = await axios.patch('/api/place/newPlace',{place:props.clickedLocation,category:`${props.clickedLocation?.category?.key??'hotel'}s`,planId:userCtx?.plans[index]._id})
     if(data.success){
+      props.setSnackBar('Place Removed from plan',"error")
       const dataI=userCtx?.plans[index].liked[`${props.clickedLocation?.category?.key??'hotel'}s`].findIndex((place:IPlace)=>place.location_id==props.clickedLocation.location_id)
       userCtx?.plans[index].liked[props.type].splice(dataI,1)
     }else{
@@ -33,7 +35,7 @@ try {
   setIsLoading(true)
   
   const {data} = await axios.post('/api/place/newPlace',{place:props.clickedLocation,category:`${props.clickedLocation?.category?.key??'hotel'}s`,planId:userCtx?.plans[index]._id})
-  
+  props.setSnackBar('place added to plan','success')
 } catch (error) {
     console.log(error);
     

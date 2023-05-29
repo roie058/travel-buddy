@@ -1,6 +1,6 @@
 
 import { IPlace } from '@/dummyData';
-import { Box, CircularProgress,  FormControl,  FormHelperText, Modal, TextField, Typography } from '@mui/material';
+import { AlertColor, Box, CircularProgress,  FormControl,  FormHelperText, Modal, TextField, Typography } from '@mui/material';
 import axios from 'axios';
 import React, { useState } from 'react'
 import { FieldValues, useForm } from 'react-hook-form';
@@ -9,7 +9,7 @@ import DateInput from '../ui/inputs/DateInput';
 import styles from '../form/EditPlan.module.css'
 import { Plan } from '../pageCompnents/Schedule';
 
-type Props = {onClose:()=>void,open:boolean,hotel:IPlace,plan:Plan}
+type Props = {onClose:()=>void,open:boolean,hotel:IPlace,plan:Plan,setSnackBar: (message: string, severity: AlertColor) => void}
 
 const AddReservationModal = (props: Props) => {
 
@@ -31,6 +31,7 @@ const AddReservationModal = (props: Props) => {
              setIsLoading(true)
          const {data:res} =await  axios.patch('/api/hotel/addReservation',{planId:props.plan._id,data})
          if(res.success){
+          props.setSnackBar('Reservation Added','success')
              if(!props.plan){props.onClose();setIsLoading(false);   return}
         props.plan?.hotels.push(res.reservation);
          props.onClose()

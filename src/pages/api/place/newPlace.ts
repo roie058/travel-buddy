@@ -25,8 +25,8 @@ if(req.body.category){
 const {place,planId,category}:{place:IPlace,planId:string,category:string}=req.body
 
 if (category !== place?.category?.key + 's'){
-  // @ts-ignore
-place.category.key=category.substring(0,category.length-1)
+//@ts-ignore
+place.category={key:category.substring(0,category.length-1)}
 }
 
 // @ts-ignore

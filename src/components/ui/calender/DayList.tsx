@@ -16,6 +16,8 @@ import { Flight } from '@/components/flights/AddFlightModal'
 import FlightCard from '@/components/flights/FlightCard'
 import { PlanContext } from '@/context/plan-context'
 import { Box } from '@mui/material'
+import useSnackBar from '@/hooks/useSnackBar'
+import SnackBar from '../SnackBar'
 type Props = {
 list:Array<RoutineItem>|any[],
 position:'mainAttraction'|'breakfest'|'lunch'|'dinner'|'rutine'
@@ -34,6 +36,7 @@ const [list, setList] = useState<Array<RoutineItem>>([])
 const [open, setOpen] = useState(false)
 const planCtx=useContext(PlanContext)
 const [, updateState] = useState<any>();
+const {setSnackBar,snackBarProps}=useSnackBar()
 const forceUpdate = useCallback(() => updateState({}), []);
 const plan=planCtx?.plan
 
@@ -48,6 +51,7 @@ const clickHandler=async(id:string)=>{
 try {
  const {data}= await axios.delete('/api/plan/days',{params:{dragId:id,index:props.date,planId:planCtx?.plan._id,placeId:item?.place._id}})
 if(data.success){
+setSnackBar('Item Removed',"error")
   setList((list)=> filteredList)
   if(planCtx&&plan){
       plan.days[props.date].rutine=filteredList
@@ -79,7 +83,7 @@ const handleSubmit=async (selected:IPlace|UserAddedItem )=>{
     try {
       const {data}=await axios.patch('/api/plan/days',{listItem:newIdListItem,index:props.date,planId:plan?._id})
       if(data.success){
-
+setSnackBar('New stop added','success')
       }
     } catch (error) {
       throw new Error('Bad Request')
@@ -114,7 +118,7 @@ const handleClose=()=>{
          <Draggable  key={listItem.dragId} draggableId={listItem.dragId} index={index} >
                 {(provided)=>(
                     <div id={listItem.dragId} {...provided.draggableProps} {...provided.dragHandleProps}  ref={provided.innerRef}>
-                     <UserAddedNote minify={list.length>4} forceUpdate={forceUpdate} position={listItem?.position}  index={props.date}  onClick={clickHandler} withDiractions btnText='Remove From Day'  listItem={listItem}/>
+                     <UserAddedNote  minify={list.length>4} forceUpdate={forceUpdate} position={listItem?.position}  index={props.date}  onClick={clickHandler} withDiractions btnText='Remove From Day'  listItem={listItem}/>
                     </div>
                     )}
             </Draggable>
@@ -122,7 +126,7 @@ const handleClose=()=>{
             <Draggable  key={listItem.dragId} draggableId={listItem.dragId} index={index} >
             {(provided)=>(
                 <div id={listItem.dragId} {...provided.draggableProps} {...provided.dragHandleProps}  ref={provided.innerRef}>
-                 <DayItemCard minify={list.length>4} forceUpdate={forceUpdate} position={listItem?.position}  index={props.date}  onClick={clickHandler}  btnText='Remove From Day'  listItem={listItem}/>
+                 <DayItemCard  minify={list.length>4} forceUpdate={forceUpdate} position={listItem?.position}  index={props.date}  onClick={clickHandler}  btnText='Remove From Day'  listItem={listItem}/>
                 </div>
                 )}
         </Draggable>
@@ -135,7 +139,7 @@ const handleClose=()=>{
 </Box>
 )}
 </Droppable>
-
+<SnackBar {...snackBarProps}/>
 </>
   )
 }

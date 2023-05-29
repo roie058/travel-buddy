@@ -10,6 +10,7 @@ import { Plan } from './Schedule'
 import { NewSesstion } from '@/pages/api/auth/signup'
 
 
+
 type Props = {}
 
 
@@ -18,6 +19,7 @@ const PlanFlights = (props: Props) => {
 
   const [list,setList ] =useState<Plan>()
 const [isLoading,setIsLoading]=useState(false)
+
   const {data:session}=useSession()
 const newSession:NewSesstion={...session}
   useEffect(() => {

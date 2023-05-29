@@ -1,11 +1,12 @@
-import { Button } from '@mui/material';
+import { AlertColor, Button } from '@mui/material';
 import Image from 'next/image';
 import React, { MouseEventHandler } from 'react'
 
 type Props = {
 liked?:boolean,
 noIcon?:boolean,
-onClick:MouseEventHandler<HTMLButtonElement>
+onClick:MouseEventHandler<HTMLButtonElement>,
+
 }
 
 

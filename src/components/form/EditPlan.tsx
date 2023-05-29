@@ -1,19 +1,20 @@
 
 
-import { CircularProgress, FormControl, FormHelperText, MenuItem, Select, TextField } from '@mui/material'
+import { AlertColor, CircularProgress, FormControl, FormHelperText, MenuItem, Select, TextField } from '@mui/material'
 import { Box } from '@mui/system'
 import { Autocomplete } from '@react-google-maps/api'
 import axios from 'axios'
 import moment from 'moment'
 import { useRouter } from 'next/router'
-import React, {  useState } from 'react'
+import React, {  useContext, useState } from 'react'
 import { FieldValues, useForm } from 'react-hook-form'
 import UiButton from '../ui/buttons/UiButton'
 import DateInput from '../ui/inputs/DateInput'
 import ImageInput from '../ui/inputs/ImageInput'
 import styles from './EditPlan.module.css'
 import { Plan } from '../pageCompnents/Schedule'
-type Props = {plan:Plan,setOpen:React.Dispatch<React.SetStateAction<boolean>>}
+import { PlanContext } from '@/context/plan-context'
+type Props = {plan:Plan,setOpen:React.Dispatch<React.SetStateAction<boolean>>,openSnackBar:(message: string, severity: AlertColor) => void}
 
 const compereFormData:(data1:FieldValues,data2:Plan)=>boolean=(data1,data2)=>{
   
@@ -37,6 +38,7 @@ const {register,control,setValue,formState,getValues,handleSubmit}=useForm({defa
 const [submitError, setSubmitError] = useState<undefined|string>()
 const [isLoading, setIsLoading] = useState<boolean>(false)
 const router=useRouter();
+const planCtx=useContext(PlanContext)
 const onStartDateChange=(e:any)=>{
   setValue('start',e._d)
 
@@ -53,7 +55,9 @@ const isDateChange=moment(data.start).format('YYYY-MM-DD') !== moment(formState.
 
    const res=await axios.patch('/api/plan/updatePlan',{data,isDateChange}) 
    if(res.data.success){
-    router.reload()
+planCtx.setPlan(res.data.plan)
+
+    props.openSnackBar('Plan Changed',"success")
     
     
     props.setOpen(false)

@@ -10,11 +10,13 @@ import { Flight } from './AddFlightModal'
 import { Plan } from '../pageCompnents/Schedule'
 
 import DeleteIcon from '../../../public/images/delete.svg'
+import useSnackBar from '@/hooks/useSnackBar'
+import SnackBar from '../ui/SnackBar'
 
 type Props = {plan?:Plan,plans?:Plan[]}
 
 const MyFlights = (props: Props) => {
-
+const {setSnackBar,snackBarProps}=useSnackBar()
 const [, updateState] = useState<any>();
 
   const forceUpdate = useCallback(() => updateState({}), []);
@@ -52,6 +54,7 @@ if(data.success){
  if(props.plans){
   props?.plans[Number(planIndex)].flights.splice(index,1)
  }
+ setSnackBar('Flight Removed','error')
   forceUpdate()
 }
 } catch (error) {
@@ -63,6 +66,7 @@ if(data.success){
 
 
   return (
+    <>
     <Box width={'100%'} height="100%">
 <Card>
 <CardHeader sx={{textAlign:'center'}} title="My Flights"></CardHeader>
@@ -93,6 +97,8 @@ if(data.success){
 </Card>
 
     </Box>
+    <SnackBar {...snackBarProps} />
+    </>
   )
 }
 

@@ -1,15 +1,14 @@
 import React, { MouseEventHandler, useState } from 'react'
 
-import { Button, Card, CardContent, CardHeader, Divider, Icon, Typography } from '@mui/material'
-import Image from 'next/image'
-import ListButton from '../buttons/ListButton'
+import { Button, Card, CardContent, Divider, Icon, Typography } from '@mui/material'
+
 
 import styles from './DayItemCard.module.css'
 
 import { RoutineItem } from './DayList'
 import PlaceDescriptionModal from './PlaceDescriptionModal'
 import { Box } from '@mui/system'
-import { AddedIcon, BreakfestIcon, DinnerIcon, LunchIcon, MainAttractionIcon, PaperPinIcon, Pin, SearchIcon, XIcon } from '@/components/svgComponents'
+import {  BreakfestIcon, DinnerIcon, LunchIcon, MainAttractionIcon, PaperPinIcon, Pin, XIcon } from '@/components/svgComponents'
 
 export type UserAddedItem={
   id:string,
@@ -28,7 +27,8 @@ type Props = {
 index:number,
 position?:string
 forceUpdate:()=>void
-minify:boolean
+minify:boolean,
+
 }
 
 
@@ -54,8 +54,8 @@ setOpen(false)
       return (
         <>
         <PlaceDescriptionModal listItem={props.listItem} index={props.index} place={props.listItem.place} close={closeHandler} open={open} />
-        <Card sx={{height:!props.minify ?'150px':'60px',paddingX:props.minify?'10px':'0',backgroundColor:"#FFFDF2CC",borderRadius:0 ,fontFamily: "Heebo, sans-serif",display:'flex',flexDirection:props.minify?'row-reverse':"row",alignItems:'center',position:'relative'}}     >
-        <Button onClick={clickHandler} sx={{position:props.minify? "static":'absolute',top:0,right:0,paddingX:1,minWidth:'max-content',zIndex:3}}>{<XIcon height={20} width={20}/>}</Button>
+        <Card className={styles.item} sx={{height:!props.minify ?'150px':'60px',paddingX:props.minify?'10px':'0',backgroundColor:"#FFFDF2CC",borderRadius:0 ,fontFamily: "Heebo, sans-serif",display:'flex',flexDirection:props.minify?'row-reverse':"row",alignItems:'center',position:'relative'}}     >
+        <Button className={styles.deleteButton} onClick={clickHandler} sx={{position:props.minify? "static":'absolute',top:0,right:0,paddingX:1,minWidth:'max-content',zIndex:3}}>{<XIcon height={20} width={20}/>}</Button>
         {!props.minify && props.position&& Number(props.position)!==0 && <Icon sx={{position:'absolute',bottom:0,right:0,width:75,height:60,padding:1}}>{typeInDay[props.position]}</Icon>}
        {!props.minify && <Icon sx={{position:'absolute',top:0,left:0,width:30,height:30,padding:1,zIndex:3}}><PaperPinIcon width={30} height={30} /></Icon>}
 

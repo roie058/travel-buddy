@@ -3,6 +3,7 @@ import {  Button, Dialog, DialogTitle, Grid, ImageList, ImageListItem, ListItemB
 import React, { useEffect, useState } from 'react'
 import Image from 'next/image'
 import { Box } from '@mui/system'
+import ToolTip from '../ToolTip'
 
 type Props = {setValue:any,value?:string,types:string[],country:string}
 
@@ -40,13 +41,16 @@ const isMobile=useMediaQuery("(max-width:600px)")
     <>
     
     {selectedValue&& <Box sx={{cursor:'pointer'}}   onClick={handleClickOpen}  >
+    
       <Typography color={'GrayText'} >Selected:</Typography>
+      
         <Image  loading="lazy" style={{objectFit:"cover",borderRadius:'20px'}} width={100} height={100} alt={selectedValue??''} src={selectedValue??''}/>
       </Box>}
       
-    {!selectedValue&&  <Button  onClick={handleClickOpen} variant="contained" >
+    {!selectedValue&& <ToolTip right='-10%' top='-40%' title='pick an image to customize your trip'><Button  onClick={handleClickOpen} variant="contained" >
   Pick Image
-</Button>}
+</Button></ToolTip>}
+
 <Dialog maxWidth={'md'} fullWidth  onClose={handleClose}  open={open}>
       <DialogTitle>Image Selector</DialogTitle>
       <ImageList sx={{width:'100%'}} gap={2} cols={isMobile?1:3} >

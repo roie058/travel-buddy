@@ -18,6 +18,8 @@ import Link from 'next/link'
 import { Plan } from '../pageCompnents/Schedule'
 import DeleteIcon from '../../../public/images/delete.svg'
 import { Pin } from '../svgComponents'
+import useSnackBar from '@/hooks/useSnackBar'
+import SnackBar from '../ui/SnackBar'
 
 type Props = {plan:Plan}
 
@@ -25,12 +27,13 @@ const HotelAdd = (props: Props) => {
    const [open, setOpen] = useState<boolean>(false)
    const [isLoading, setIsLoading] = useState<boolean>(false)
    const [openIndex, setOpenIndex] = useState<number>()
-    
+    const {setSnackBar,snackBarProps}=useSnackBar()
    const deletetHandler=async (hotel:IPlace)=>{
       try {
         setIsLoading(true)
         const {data} = await axios.patch('/api/place/newPlace',{place:hotel,category:'hotels',planId:props.plan._id})
         if(data.success){
+          setSnackBar('Hotel Removed From Plan','error')
           const dataI=props.plan.liked.hotels.findIndex((place)=>place.location_id==hotel.location_id)
         props.plan.liked.hotels.splice(dataI,1)
         }else{
@@ -46,6 +49,7 @@ const HotelAdd = (props: Props) => {
 
 
   return (
+    <>
     <Card sx={{width:'100%', height:'100%',borderRadius:'0' }} >
       <CardHeader titleTypographyProps={{textAlign:'center',sx:{textDecoration:'underline'}}}  title={'Liked Hotels'}/>
         <CardContent  sx={{display:'flex',gap:'12px',flexWrap:'wrap',justifyContent:'center'}}>
@@ -90,7 +94,7 @@ const HotelAdd = (props: Props) => {
 
                  {isLoading? <CircularProgress size={'1rem'} />  : <Button sx={{width:'30px',height:'30px'}}  onClick={()=>{deletetHandler(hotel)}}   ><Image alt='delete' fill sizes='30px' src={DeleteIcon}/></Button>}
                     </div>
-                   {openIndex===i&& <AddReservationModal plan={props.plan} hotel={hotel} open={open} onClose={()=>{setOpen(false)}}/>}
+                   {openIndex===i&& <AddReservationModal setSnackBar={setSnackBar} plan={props.plan} hotel={hotel} open={open} onClose={()=>{setOpen(false)}}/>}
                       </Card>)}
 
          
@@ -99,6 +103,8 @@ const HotelAdd = (props: Props) => {
           <Typography width={'100%'} fontSize={'1.2rem'} textAlign={'center'} variant="body1">Want to find more hotels? check out the <Link style={{color:"blue"}} href={'/map'}> Map</Link></Typography>
         </CardActions>
     </Card>
+    <SnackBar {...snackBarProps}/>
+    </>
   )
 }
 

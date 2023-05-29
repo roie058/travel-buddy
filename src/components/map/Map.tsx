@@ -16,6 +16,8 @@ import { Plan } from '../pageCompnents/Schedule'
 import { searchFn } from '../attractions/AttractionSearch'
 import { getPlaceDetails } from '../attractions/AttracrionList'
 import { getDistanceFromLatLonInKm } from '@/util/mapHelpars'
+import useSnackBar from '@/hooks/useSnackBar'
+import SnackBar from '../ui/SnackBar'
 
 
 
@@ -35,7 +37,7 @@ const Map = (props: Props) => {
   const [allLikedList, setAllLikedList] = React.useState<IPlace[]>();
   const [mapFliter, setMapFliter] = React.useState<{plans:string[],restaurants:boolean,hotels:boolean,attractions:boolean}>({plans:[],restaurants:true,attractions:true,hotels:true});
   const open = Boolean(anchorEl);
-
+const {setSnackBar,snackBarProps}=useSnackBar()
 
 const [autocomplete,setAutocomplete]=useState<google.maps.places.Autocomplete|null>(null)
 const mapCtx = useContext(MapContext)
@@ -165,12 +167,11 @@ mapCtx?.setIsLoading(false)
 const lat=autocomplete?.getPlace().geometry?.location?.lat()
 const lng=autocomplete?.getPlace().geometry?.location?.lng()
 const query=autocomplete?.getPlace().name 
-const places=autocomplete.getPlace()
 
 
+setSnackBar('Searching...',"info")
 const results= await searchFn(query,"https://travel-advisor.p.rapidapi.com/locations/auto-complete")
-
-
+setSnackBar('Success!',"success")
  const place =results.reduce((prv,cur)=>{
 const prvDistense=getDistanceFromLatLonInKm({latitude:lat,longitude:lng},{latitude:prv?.latitude,longitude:prv?.longitude});
 const curDistense=getDistanceFromLatLonInKm({latitude:lat,longitude:lng},{latitude:Number(cur?.latitude),longitude:Number(cur?.longitude)});
@@ -318,6 +319,7 @@ if(lat&&lng)mapCtx?.setCoordinates((coordinates)=> {return {lat:lat,lng:lng}})
             <ListItemText>Attractions</ListItemText></MenuItem>
         </MenuList>
       </Menu>
+      <SnackBar {...snackBarProps}/>
     </>
   
   )

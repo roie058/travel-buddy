@@ -7,6 +7,8 @@ import PlaceItemDetailCard from '../ui/calender/PlaceItemDetailCard'
 import { useRouter } from 'next/router'
 import axios from 'axios'
 import { AddedIcon, HeartIcon, LikedIcon } from '../svgComponents'
+import useSnackBar from '@/hooks/useSnackBar'
+import SnackBar from '../ui/SnackBar'
 
 type Props = {list:IPlace[],likedList:Set<string>,setList:React.Dispatch<React.SetStateAction<IPlace[]>>}
 
@@ -40,7 +42,7 @@ const AttracrionList = (props: Props) => {
   const [viewedPlace,setViewedPlace]=useState<IPlace>()
   const [open,setOpen]=useState<boolean>(false)
   const [isLoading,setIsLoading]=useState<boolean>(false)
-
+const {setSnackBar,snackBarProps}=useSnackBar()
   const {query}=useRouter()
 
 
@@ -54,6 +56,7 @@ const AttracrionList = (props: Props) => {
      const categories=new Set(['attractions','hotels','restaurants'])
      const {data} = await axios.post('/api/place/newPlace',{place:place,category:categories.has(`${place?.category?.key??'hotel'}s`)? `${place?.category?.key??'hotel'}s`  : 'attractions',planId:query.planId})
   if(data.success){
+    setSnackBar('Place added to plan',"success")
    props.setList((list)=>[...list,data.newPlace])
 
   }
@@ -114,6 +117,7 @@ const AttracrionList = (props: Props) => {
 </Box>
   </ListItem>)}
   </List>
+  <SnackBar {...snackBarProps}/>
     </>
   )
 }

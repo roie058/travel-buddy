@@ -18,6 +18,7 @@ import {useRouter} from 'next/router'
 import Image from 'next/image'
 import TravelBg from '../../../public/images/travelBg.webp'
 import { NewSesstion } from '@/pages/api/auth/signup'
+import ToolTip from '../ui/ToolTip'
 
  type Props = {}
 
@@ -112,11 +113,16 @@ const isMobile=useMediaQuery("(max-width:800px)")
 
     <Box  width={"600px"} maxWidth={"100%"} minWidth={"100%"} minHeight={"25vh"} height={"100%"} display={step===0? 'flex' : 'none'} flexDirection={"column"} justifyContent={"center"} rowGap={"25px"}>
   <FormControl fullWidth>
+    <ToolTip title='name of the trip'>
+  
     <TextField   label="*Trip Name"  error={ typeof formState.errors.title?.message  === 'string'} {...register('title',{required:'Trip name is required',maxLength:{value:25,message:'Name must be max 25 cheracters'}})}  variant="outlined" fullWidth />
+    </ToolTip>
  <FormHelperText sx={{color:'#d32f2f'}} >{formState.errors.title?.message}</FormHelperText>
   </FormControl>
+  <ToolTip title='Pick a destination for the trip'>
 <Box width={'100%'} gap="10px"    display={'flex'}   >
   <FormControl fullWidth >
+  
     <Autocomplete onChange={onChange}
     
   id="combo-box-demo"
@@ -140,6 +146,7 @@ const isMobile=useMediaQuery("(max-width:800px)")
   )}
     }
   renderInput={(params) => <TextField  error={typeof formState.errors.country?.message  === 'string'}  {...register('country',{required:'Country is required'})}      {...params}  label="*Country name here" />}/>
+  
    <FormHelperText sx={{color:'#d32f2f'}} >{formState.errors.country?.message}</FormHelperText>
   </FormControl>
   {selectedCountry&& selectedCountry?.length>0 && selectedCities&& <FormControl fullWidth   >
@@ -150,13 +157,13 @@ const isMobile=useMediaQuery("(max-width:800px)")
   renderInput={(params) => <TextField {...register('city')}       {...params}   label="City Name here" />}/>
   </FormControl>}
   </Box>
-  
+  </ToolTip>
   </Box>
-
+ 
 
 
 <Box  width={"600px"} maxWidth={"100%"} minWidth={"100%"} minHeight={"25vh"} height={"100%"} display={step===1? 'flex' : 'none'} flexDirection={"column"} justifyContent={"center"} rowGap={"25px"}>
-
+<ToolTip title='pick the dates of your trip'>
 <Box width={'100%'} gap="10px" display={'flex'}  >
   <FormControl fullWidth>
 <DateInput control={control}   onChange={onStartDateChange}  name='start' label='*Start Date' />
@@ -168,8 +175,9 @@ const isMobile=useMediaQuery("(max-width:800px)")
 }
 
 </Box>
+</ToolTip>
 <FormHelperText sx={{color:'#d32f2f'}} >{formState.errors.start?.message}</FormHelperText>
-
+<ToolTip title='Travel buddy will help you keep track of your budget'>
 <Box display={"flex"} width={"100%"}>
 <FormControl fullWidth sx={{flexBasis:'80%'}}>
     <TextField   label="Budget"  error={typeof formState.errors.budget?.message  === 'string'||Number(getValues('budget'))<=0} type={'number'} {...register('budget',{valueAsNumber:true,min:{value:1,message:'We can not help you manage budget if you travel for free!'}})} />
@@ -190,7 +198,7 @@ const isMobile=useMediaQuery("(max-width:800px)")
     <FormHelperText sx={{color:'#d32f2f'}} >{formState.errors.budget?.message}</FormHelperText>
 </FormControl>
 </Box>
-
+</ToolTip>
 </Box>
 
 <Box width={"600px"} maxWidth={"100%"} minWidth={"100%"} minHeight={"25vh"} height={"100%"} display={step===2? 'flex' : 'none'} flexDirection={"column"} justifyContent={"center"} rowGap={"25px"}>

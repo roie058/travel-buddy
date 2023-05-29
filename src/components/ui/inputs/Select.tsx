@@ -1,5 +1,6 @@
 import { Box,  FormControl, Autocomplete, AutocompleteChangeDetails, AutocompleteChangeReason, TextField, FormHelperText } from '@mui/material'
 import React, { useState } from 'react'
+import ToolTip from '../ToolTip'
 
 
 
@@ -15,6 +16,7 @@ const [value,setValue]=useState<undefined|string[]>()
 
   return (
     <FormControl fullWidth >
+      <ToolTip title='Pick the type of experience you are planning'>
     <Autocomplete
     onChange={handleChange}
       multiple 
@@ -34,6 +36,7 @@ const [value,setValue]=useState<undefined|string[]>()
       )}
     }
    />
+   </ToolTip>
   <FormHelperText sx={{color:'#d32f2f'}}>{(value?.length>3)?'Pick 3 types max':''}</FormHelperText>
   </FormControl>
 

@@ -1,5 +1,5 @@
 import { IPlace } from '@/dummyData'
-import { Box, Button, Card, CardActions, Rating, Typography, useMediaQuery } from '@mui/material'
+import { AlertColor, Box, Button, Card, CardActions, Rating, Typography, useMediaQuery } from '@mui/material'
 import Image from 'next/image'
 import React, { useContext, useEffect, useState } from 'react'
 import HeartBtn from '../ui/buttons/HeartBtn'
@@ -8,7 +8,7 @@ import { useSession,signIn } from 'next-auth/react'
 import LikeModal from '../ui/list/LikeModal'
 import { LikedMarker, MarkerIcon, Pin } from '../svgComponents'
 import { MapContext } from '@/context/map-context'
-type Props = {lat:number,lng:number,place:IPlace,liked?:boolean,onClick:(i:number,lat:number,lng:number,place:IPlace)=>void}
+type Props = {setSnackBar: (message: string, severity: AlertColor) => void,lat:number,lng:number,place:IPlace,liked?:boolean,onClick:(i:number,lat:number,lng:number,place:IPlace)=>void}
 
 
 
@@ -55,7 +55,7 @@ useEffect(() => {
   return (
     <>
     
-     <LikeModal likeHandler={closeHandler} clickedLocation={props.place} type={isType(type)?type:'hotels'} onClose={closeHandler} open={open} />
+     <LikeModal setSnackBar={props.setSnackBar}  likeHandler={closeHandler} clickedLocation={props.place} type={isType(type)?type:'hotels'} onClose={closeHandler} open={open} />
     {location&& <div  onClick={isSwipe?()=> props.onClick(index,props.lat,props.lng,props.place):()=>{}}  className={styles.marker}  >
       {props.liked?<LikedMarker width={50} height={50} className={styles.markerImg} />:
        <MarkerIcon  width={50} height={50}  /> }
@@ -88,7 +88,7 @@ useEffect(() => {
 </CardActions>}
 </Box>
                     <div className={styles.heartBtn}>
-                    <HeartBtn liked={false} onClick={clickHandler}/>
+                    <HeartBtn  liked={false} onClick={clickHandler}/>
                     </div>
                       </Card>
                        :null

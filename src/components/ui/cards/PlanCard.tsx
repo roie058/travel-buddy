@@ -11,6 +11,7 @@ import Pill from '../Pill'
 import styles from './PlanCard.module.css'
 import { Plan } from '@/components/pageCompnents/Schedule'
 import DeleteIcon from '../../../../public/images/delete.svg'
+import ToolTip from '../ToolTip'
 
 
 type Props = {
@@ -44,13 +45,15 @@ const dates= moment(props.plan?.start).format('DD/MM/YYYY')+'-'+ moment(props.pl
  </div>
 
 if(!props.new&&props.plan&&props.deleteHandler){
-card=<div className={styles.card}>
+card=<Box className={styles.card}>
 
 <div className={styles.main_img}>
 <Image priority style={{objectFit:"cover",objectPosition:'0 30%',borderTopLeftRadius:'12px',borderTopRightRadius:'12px'}} width={300} height={150} alt={props.plan?props.plan.country:'place'} src={props?.plan.image} />
 
 </div>
-<button onClick={()=>props.deleteHandler(props.plan?._id??'')} className={styles.deleteBtn}><Image alt='delete trip' width={35} height={35} src={DeleteIcon} /></button>
+
+
+<button onClick={()=>props.deleteHandler(props.plan?._id??'')} className={styles.deleteBtn}><Image alt='delete trip' width={35} height={35} src={DeleteIcon} /></button>  
 <h3 className={styles.place}>{props.plan?props.plan.header:''} </h3>
 
 <h3 className={styles.dates}>{props.plan?props.plan.country:''}</h3>
@@ -62,11 +65,14 @@ card=<div className={styles.card}>
 
 }):''}      
 </div>
+
 <Box display={'flex'} justifyContent='center' paddingBottom={3} >
+
 <UiButton className={styles.btn}  size="small" clickFn={edittripHandler} color='blue' >Edit</UiButton>
+
 </Box>
 
-</div> 
+</Box> 
 
 }
 

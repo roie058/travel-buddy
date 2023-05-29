@@ -9,6 +9,8 @@ import Supercluster from 'supercluster'
 import { GeoJsonProperties,BBox } from "geojson";
 import MobileDrawer from './MobileDrawer'
 import { useMediaQuery } from '@mui/material'
+import useSnackBar from '@/hooks/useSnackBar'
+import SnackBar from '../ui/SnackBar'
 type Props = {likedMarkers?:IPlace[]|[],likedIds:Set<string>}
 
 
@@ -24,7 +26,7 @@ const MapComponent = (props: Props) => {
    const [filteredPlaceList,setFilteredPlaceList]=useState<IPlace[]>([])
     const mapRef=useRef<any>()
     const mapCtx = useContext(MapContext)
-
+    const {setSnackBar,snackBarProps}=useSnackBar()
 
     const markerClick=(i:number,lat:number,lng:number,place)=>{
         mapCtx?.setChildClicked(i)
@@ -116,12 +118,13 @@ return <ClusterMarker  length={clusters.length} pointCount={pointCount} key={i+S
    </ClusterMarker>
 }
 
-return <Marker onClick={markerClick} liked={cluster.properties.liked} place={cluster?.properties?.place} key={i+cluster?.properties?.placeId} lat={Number(latitude)} lng={Number(longitude)}/>
+return <Marker setSnackBar={setSnackBar} onClick={markerClick} liked={cluster.properties.liked} place={cluster?.properties?.place} key={i+cluster?.properties?.placeId} lat={Number(latitude)} lng={Number(longitude)}/>
 
          })}
 
         </GoogleMapReact>
         {isMobile&&<MobileDrawer selectedPlace={selectedPlace} open={open} setOpen={setOpen}/>}
+        <SnackBar {...snackBarProps} />
      </>
   )
 }

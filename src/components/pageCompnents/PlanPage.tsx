@@ -60,7 +60,7 @@ const [isLoading,setIsLoading]=useState(false)
   libraries={libraries}>
     {isLoading ? <CircularProgress sx={{padding:'20% 40%'}} size={'10vw'}/> :
     <>
-  {list&& <PlanContext.Provider value={{plan:list}}>
+  {list&& <PlanContext.Provider value={{plan:list,setPlan:setList}}>
     <main style={{justifyContent:'normal',height:'100%'}}>
 
     <Grid justifyContent={"center"}    columnGap={1} rowGap={1}   container >

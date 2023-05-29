@@ -147,7 +147,7 @@ setList((list)=> list )
   return (<>
    <LoadScriptNext  googleMapsApiKey={`${process.env.MAPS_API_KEY}`}
   libraries={libraries}> 
-    {list&&  <PlanContext.Provider value={{plan:list}}>
+    {list&&  <PlanContext.Provider value={{plan:list,setPlan:setList}}>
      <main style={{alignContent:"flex-start",display:"block",padding:'0 5%'}}>
     
      <DragDropContext onDragEnd={handleDragEnd} >

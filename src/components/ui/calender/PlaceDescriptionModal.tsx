@@ -1,6 +1,6 @@
 
 import { IPlace } from '@/dummyData'
-import { Button, Card, CardContent,CircularProgress,Dialog, DialogActions, DialogContent, FormControl, FormHelperText, InputLabel, MenuItem, Select, TextField, Typography } from '@mui/material'
+import { Button, Card, CardContent,CircularProgress,Dialog, DialogActions, DialogContent, Divider, FormControl, FormHelperText, Icon, InputLabel, MenuItem, Select, TextField, Typography } from '@mui/material'
 import { Box } from '@mui/system'
 import axios from 'axios'
 
@@ -10,7 +10,8 @@ import { FieldValues, useForm } from 'react-hook-form'
 import { RoutineItem } from './DayList'
 import PlaceItemDetailCard from './PlaceItemDetailCard'
 import { PlanContext } from '@/context/plan-context'
-import { Pin } from '@/components/svgComponents'
+import { PaperPinIcon, Pin } from '@/components/svgComponents'
+import ToolTip from '../ToolTip'
 
 
 type Props = {open:boolean,close:()=>void,place:IPlace,static?:boolean,index?:number,listItem?:RoutineItem,}
@@ -62,39 +63,51 @@ try {
 }
 
   return (
-    <Dialog  onClose={props.close} open={props.open} >
-        <DialogContent>
+    <Dialog fullWidth onClose={props.close} open={props.open} >
+        <DialogContent  >
           {props.place.location_id?
     <PlaceItemDetailCard place={props.place}/>
     : 
-    <Card sx={{backgroundColor:"peachpuff"}}>
-      
-       <CardContent sx={{width:'100%'}}  >
-    <Box  sx={{cursor:'pointer'}} display={"flex"} justifyContent="space-between">
-    <Typography  fontSize={'1.3rem'} fontWeight={'bold'}>{props.place.name} </Typography>
-    </Box>
-{props.place?.address && (<Typography gutterBottom variant='subtitle2' color="InfoText">
-<Pin width={12} height={10}  /> {props.place.address}
-</Typography>)}
-{props.place?.description&&
-<Typography gutterBottom fontFamily={"cursive"}> {props.place.description} </Typography>}
-  </CardContent></Card> }
+    <Card  sx={{height:'150px',paddingX:'0',backgroundColor:"#FFFDF2CC",borderRadius:0 ,fontFamily: "Heebo, sans-serif",display:'flex',alignItems:'center',position:'relative'}}>
+
+        <Icon sx={{position:'absolute',top:0,left:0,width:30,height:30,padding:1,zIndex:3}}><PaperPinIcon width={30} height={30} /></Icon>
+            <CardContent   sx={{zIndex:2,marginLeft: '25px',  height:'100%',padding:'5%', paddingBottom:'0 !important',borderLeft:'1px solid #B4050573',display:'flex',flexDirection:"column",justifyContent:'center'}}>
+ 
+                <Typography variant='h4' textTransform={"capitalize"} fontSize={"1rem"} fontWeight="bold">{props.listItem.place.name} </Typography>
+                <Typography variant="subtitle1" ><Pin height={10} width={10} /> {props.listItem.place.address}</Typography>  
+                <Typography variant="subtitle1"  >- {props.listItem.place?.description}</Typography>  
+            </CardContent>
+
+              <Box position={"absolute"} zIndex={1} display={'flex'} height={"100%"} marginTop={'22px'} justifyContent={"space-evenly"} flexDirection={"column"} top={0} right={0} width={'100%'}> 
+                <Divider></Divider>
+                <Divider></Divider>
+                <Divider></Divider>
+                <Divider></Divider>
+                <Divider></Divider>
+                <Divider></Divider>
+              </Box>
+              </Card> }
         </DialogContent>
 {!props.static && <DialogActions >
 
     <form style={{width:'100%'}} onSubmit={handleSubmit(updatePlace)}>
-        <Box  display="flex" flexDirection="column" justifyContent='center' alignItems={"center"} gap={2}   >
+    <ToolTip title='add additional details about this place set it as a meal/main attraction add the expense budget or add a comment' top='-5%' right='3%'>
+        <Box paddingX={'5%'} display="flex" flexDirection="column" justifyContent='center' alignItems={"center"} gap={2}   >
 
-        <FormControl sx={{width:'50%'}} >
+        <FormControl fullWidth >
+         
             <TextField multiline minRows={2}  defaultValue={props.listItem?.description} {...register('description',{maxLength:{value:250,message:'250 max characters'}})}  label="Description" />
        {formState?.errors?.description?.message&&<FormHelperText>{formState.errors.description.message}</FormHelperText>}
+       
         </FormControl>
+    
         
-        <FormControl sx={{width:'50%'}} >
+        <FormControl fullWidth >
             <TextField   defaultValue={props.listItem?.budget} {...register('budget',{valueAsNumber:true,min:0})} type="number" label="Budget" />
         </FormControl>
-        <FormControl sx={{width:'50%'}} >
+        <FormControl fullWidth >
         <InputLabel id="lunch">Set as</InputLabel>
+        
         <Select {...register('dayType')} defaultValue={props.listItem?.position}   label="Set as" labelId="lunch"   >
        
         <MenuItem defaultChecked={true} value={0}>none</MenuItem>
@@ -104,9 +117,11 @@ try {
         <MenuItem value='dinner'>Dinner</MenuItem>
 
             </Select>  
+           
         </FormControl>
-       {isLoading? <CircularProgress/> :<Button sx={{width:'50%'}} type='submit'>change</Button>}
+       {isLoading? <CircularProgress/> :<Button variant="contained" sx={{width:'50%'}} type='submit'>set</Button>}
         </Box>
+        </ToolTip>
     </form>
   
     

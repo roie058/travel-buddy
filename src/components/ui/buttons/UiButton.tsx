@@ -1,6 +1,7 @@
-import { Badge, Button } from '@mui/material'
+import { Badge, Button, Tooltip } from '@mui/material'
 import styles from './UiButton.module.css'
 import React, { useEffect, useState } from 'react'
+import ToolTip from '../ToolTip'
 type Props = {
   children:string,
   clickFn:()=>void,
@@ -33,7 +34,7 @@ setColor({background: "linear-gradient(51deg, rgba(0,194,202,1) 0%, rgba(55,193,
 
 
   return (
-    
+  
     <Button  disabled={props.disabled} type={props.submit?"submit":'button'} className={`${props.className} ${styles.btn} btn`} size={props.size} onClick={props.clickFn} variant="contained" sx={{boxShadow: "0px 10px 15px rgba(0, 0, 0, 0.25)",fontWeight:'bold',fontSize:'1.5rem' ,padding:'3% 15%',textTransform:'capitalize', ...color,borderRadius:'12px',...props.style}}>
 <Badge   showZero invisible={!props.count} badgeContent={props.count} sx={{'& .MuiBadge-badge':{
 
@@ -47,7 +48,6 @@ fontWeight:'bold',
 {props.children}
 </Badge>
     </Button>
-    
     
   )
 }

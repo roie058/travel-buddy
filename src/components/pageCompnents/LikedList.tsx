@@ -11,6 +11,8 @@ import DeleteIcon from '../../../public/images/delete.svg'
 import PlaceItemDetailCard from '../ui/calender/PlaceItemDetailCard'
 import AttractionSearch from '../attractions/AttractionSearch'
 import { LoadScriptNext } from '@react-google-maps/api'
+import useSnackBar from '@/hooks/useSnackBar'
+import SnackBar from '../ui/SnackBar'
 type Props = {}
 
 const LikedList = (props: Props) => {
@@ -20,7 +22,7 @@ const LikedList = (props: Props) => {
     const [category, setCategory] = useState<"all"|"restaurants"|'hotels'|'attractions'>('all')
     const [plan, setPlan] = useState<{restaurants:IPlace[],hotels:IPlace[],attractions:IPlace[]}>()
     const [list, setList] = useState<IPlace[]>()
-
+const {setSnackBar,snackBarProps}=useSnackBar()
 const {query}=useRouter()
 const {data:session}=useSession()
 
@@ -56,6 +58,7 @@ setList(Object.values(liked).flat())
       setIsLoading(true)
       const {data} = await axios.patch('/api/place/newPlace',{place:place,category:(place.category?.key??'hotel')+'s',planId:query.planId})
       if(data.success){
+        setSnackBar('Place removed from plan',"error")
      setList(()=> list.filter((indexPlace)=>indexPlace.location_id!==place.location_id))
       }else{
         console.log(data.error); 
@@ -130,7 +133,7 @@ if(selectedCategory==="all"){
 </Box>
 </Card>
     </Container>
-
+<SnackBar {...snackBarProps}/>
     </>
   )
 }

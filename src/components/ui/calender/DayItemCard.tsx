@@ -3,7 +3,7 @@
 
 import { IPlace } from '@/dummyData'
 
-import { Button, Card, CardContent, CardHeader, Icon, SvgIcon, Typography } from '@mui/material'
+import { AlertColor, Button, Card, CardContent, CardHeader, Icon, SvgIcon, Typography, useMediaQuery } from '@mui/material'
 import { Box } from '@mui/system'
 import Image from 'next/image'
 
@@ -22,7 +22,7 @@ type Props = {
 static?:boolean,
 position?:string,
 forceUpdate:()=>void,
-minify:boolean
+minify:boolean,
 }
 
 const DayItemCard = (props: Props) => {
@@ -48,14 +48,14 @@ props.onClick(props.listItem._id)
 props.onClick(props.listItem.dragId)
 
 }
-
+const isMobile=useMediaQuery('(max-width:768px)')
 const typeInDay={breakfest:<BreakfestIcon  width={75} height={75}/>,lunch:<LunchIcon width={75} height={75}/>,dinner:<DinnerIcon width={75} height={75}/>,mainAttraction:<MainAttractionIcon width={75} height={75}/>}
 
   return (
     <>
     <PlaceDescriptionModal  listItem={props.listItem} index={props.index} static={props.static} place={props.listItem.place} close={closeHandler} open={open} />
-    <Card sx={{height:!props.minify ?'150px':'60px',borderRadius:0 , fontFamily: "Heebo, sans-serif",display:'flex',flexDirection:props.minify?'row-reverse':"row",paddingX:'10px',justifyContent:'space-evenly',alignItems:'center',backgroundColor:bgColor,backdropFilter:'blur(2px)',position:'relative'}}     >
-      <Button onClick={clickHandler} sx={{position:props.minify? 'static':'absolute',top:0,right:0,paddingX:1,minWidth:'max-content',zIndex:3}}>{<XIcon height={20} width={20}/>}</Button>
+    <Card className={styles.item} sx={{height:!props.minify ?'150px':'60px',borderRadius:0 , fontFamily: "Heebo, sans-serif",display:'flex',flexDirection:props.minify?'row-reverse':"row",paddingX:'10px',justifyContent:'space-evenly',alignItems:'center',backgroundColor:bgColor,backdropFilter:'blur(2px)',position:'relative'}}     >
+      <Button className={styles.deleteButton} onClick={clickHandler} sx={{position:props.minify? 'static':'absolute',top:0,right:0,paddingX:1,minWidth:'max-content',zIndex:3}}>{<XIcon height={20} width={20}/>}</Button>
       
       {!props.minify&& props.position&& Number(props.position)!==0 && <Icon sx={{position:'absolute',bottom:0,right:0,width:75,height:60,padding:1}}>{typeInDay[props.position]}</Icon>}
      {/* props.position&& Number(props.position)!==0 && <CardHeader  sx={{height:'10px',background:'linear-gradient(60deg, rgba(35,58,102,1) 0%, rgba(36,53,98,1) 100%)',color:'white'}}  titleTypographyProps={{variant:'body1',textTransform:'capitalize'}}  title={props.position==='mainAttraction'?'Main Attraction':props.position}/> */}

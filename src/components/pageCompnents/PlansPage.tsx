@@ -6,6 +6,9 @@ import {useSession} from 'next-auth/react'
 import axios, { AxiosError } from 'axios'
 
 import { NewSesstion } from '@/pages/api/auth/signup'
+import useSnackBar from '@/hooks/useSnackBar'
+import SnackBar from '../ui/SnackBar'
+import { CircularProgress } from '@mui/material'
 
 
 
@@ -13,7 +16,7 @@ export default function PlansPage() {
 
 const [plans, setPlans] = useState<undefined|Array<any>>()
 const [isLoading, setIsLoading] = useState<boolean>(false)
-
+const {setSnackBar,snackBarProps}=useSnackBar()
 const {data:session}=useSession()
 
 const newSession:NewSesstion={...session}
@@ -49,6 +52,7 @@ const deleteHandler=async(id:string)=>{
     
     const {data}=await axios.delete(`/api/plan/deletePlan`,{params:{planId:id}})
    if (data.success){
+    setSnackBar('Plan Removed',"error")
     setPlans((plans)=>plans?.filter((plan)=>plan._id!==id))
    
    }
@@ -63,12 +67,14 @@ const deleteHandler=async(id:string)=>{
 
   return (
     <>
+    <SnackBar {...snackBarProps}/>
       <main >
     
        <div className={styles.plans}>
-        {!isLoading&& plans && plans.map((plan)=>{
+        {!isLoading?( plans && plans.map((plan)=>{
           return <PlanCard deleteHandler={deleteHandler} key={plan.header}  plan={plan}/>
-        })}
+        })):<CircularProgress />
+      }
       
        <PlanCard  new/>
        </div>

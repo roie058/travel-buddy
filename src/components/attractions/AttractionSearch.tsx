@@ -1,5 +1,5 @@
 
-import { Box, Button, Card, CircularProgress,  FormControl,  TextField, Typography } from '@mui/material'
+import { AlertColor, Box, Button, Card, CircularProgress,  FormControl,  TextField, Typography } from '@mui/material'
 import { Autocomplete } from '@react-google-maps/api'
 import axios from 'axios'
 
@@ -30,7 +30,6 @@ export const  searchFn=async(query:string,url)=>{
     const response = await axios.request(options);
    
   const results = response.data.data.map((responseItem)=>{return responseItem.result_object})
-    console.log(results);
    return results
   } catch (error) {
     console.error(error);
@@ -50,8 +49,9 @@ const {handleSubmit,register}=useForm()
 const searchHandler:SubmitHandler<FieldValues>= async (data)=>{
   setIsLoading(true)
  const results=await searchFn(data.search,'https://travel-advisor.p.rapidapi.com/locations/auto-complete')
- 
-    setResultList(results.filter((v,i,a)=>a.findIndex(v2=>(v2.location_id===v.location_id))===i))
+ if(results){
+   setResultList(results.filter((v,i,a)=>a.findIndex(v2=>(v2.location_id===v.location_id))===i))
+ }
   setIsLoading(false)
 }
 
