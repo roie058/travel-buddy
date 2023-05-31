@@ -13,3 +13,16 @@ const passwordForget = (props: Props) => {
 }
 
 export default passwordForget
+
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+
+export async function getStaticProps({ locale }) {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, [
+        'auth',"common"
+      ])),
+      // Will be passed to the page component as props
+    },
+  }
+}

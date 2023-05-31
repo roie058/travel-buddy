@@ -6,16 +6,17 @@ import React, { useState } from 'react'
 import { FieldValues, useForm } from 'react-hook-form';
 import { UserAddedItem } from '../ui/calender/UserAddedNote';
 
-
+import { useTranslation } from 'next-i18next';
 type Props = {
   onSubmit:(value:IPlace|UserAddedItem)=>void
 }
 
 const UserAddedNoteForm = (props: Props) => {
-    const [expanded, setExpanded] = useState<boolean>(false);
-    const [isLoading, setIsLoading] = useState<boolean>(false);
-    const [autocomplete,setAutocomplete]=useState<google.maps.places.Autocomplete|null>(null)
-
+  const [expanded, setExpanded] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [autocomplete,setAutocomplete]=useState<google.maps.places.Autocomplete|null>(null)
+  
+  const {t}=useTranslation("day")
 const {register,handleSubmit,setValue,formState,setError}=useForm()
     const handleChange =
       () => {
@@ -64,30 +65,30 @@ setError('address',{message:'please write a real address'})
             id="panel1bh-header"
           >
             <Typography sx={{ width: '33%', flexShrink: 0 }}>
-              Add Note
+            {t("addNote")}
             </Typography>
             
           </AccordionSummary>
           <AccordionDetails>
             <form onSubmit={handleSubmit((data)=>submitHandler(data))} style={{display:'flex',gap:'10px',flexDirection:'column' }}>
             <FormControl fullWidth >
-                <TextField  {...register('name',{required:'Title is required'})}  label="Title" id='header'/>
+                <TextField  {...register('name',{required:'Title is required'})}  label={t("title")} id='header'/>
                 <FormHelperText sx={{color:'red'}}>{typeof formState.errors.name?.message === "string"&&formState.errors.name?.message}</FormHelperText>
             </FormControl>
             <FormControl fullWidth >
                 <Autocomplete className='googleAuto' onLoad={onLoad} onPlaceChanged={onPlaceChanged}  >
-                <TextField onKeyDown={(e) => { e.key === 'Enter' && e.preventDefault() }}  {...register('address',{required:'address is required'})} label="address"  id='address' name='address'/>
+                <TextField onKeyDown={(e) => { e.key === 'Enter' && e.preventDefault() }}  {...register('address',{required:'address is required'})} label={t("address")}  id='address' name='address'/>
                 </Autocomplete>
                 <FormHelperText sx={{color:'red'}}>{typeof formState.errors.address?.message === "string"&&formState.errors.address?.message}</FormHelperText>
             </FormControl>
             <FormControl fullWidth>
                 
-              <TextField  multiline {...register('description',{maxLength:{value:250,message:'body must be less then 250 characters'}})} label="Note body"  id='description' name='description'/>
-              <FormHelperText>250 characters max</FormHelperText>
+              <TextField  multiline {...register('description',{maxLength:{value:250,message:'body must be less then 250 characters'}})} label={t("body")}  id='description' name='description'/>
+              <FormHelperText>{t("maxChar")}</FormHelperText>
               <FormHelperText sx={{color:'red'}}>{typeof formState.errors.description?.message === "string"&&formState.errors.description?.message}</FormHelperText>
             </FormControl>
 
-          { isLoading? <CircularProgress/> : <Button   type="submit">Add</Button>}
+          { isLoading? <CircularProgress/> : <Button   type="submit">{t("add")}</Button>}
             </form>
           </AccordionDetails>
         </Accordion>

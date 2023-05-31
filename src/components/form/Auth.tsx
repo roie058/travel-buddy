@@ -12,12 +12,14 @@ import { GoolgeIcon } from '../svgComponents'
 import Image from 'next/image'
 import RoundLogo from '../../../public/images/roundlogo.svg'
 import Link from 'next/link'
+import { useTranslation } from 'next-i18next'
 type Props = {}
 
 const Auth = (props: Props) => {
   const [isLogin, setIsLogin] = useState(true)
   const [isLoading, setIsLoading] = useState(false)
   const [submitError, setSubmitError] = useState<null|string>(null)
+ const {t}= useTranslation("auth")
   const router =useRouter()
 const {data:session}=useSession()
 const fullNameRef=useRef<any>()
@@ -83,32 +85,32 @@ router.push('/')
 <form onSubmit={submitHandler} className={styles.form}>
 {!isLogin && 
 <FormControl>
-  <TextField inputRef={fullNameRef} error={submitError==='Fullname is required'}  name='fullName' fullWidth inputMode='text' label="Full Name" />
+  <TextField inputRef={fullNameRef} error={submitError==='Fullname is required'}  name='fullName' fullWidth inputMode='text' label={t('input1')} />
 </FormControl>
 }
 <FormControl>
-  <TextField inputRef={emailRef} error={submitError==='Email is required'} name='email' fullWidth inputMode='email' label="Email" />
+  <TextField inputRef={emailRef} error={submitError==='Email is required'} name='email' fullWidth inputMode='email' label={t('input2')} />
 </FormControl>
 
 
 <FormControl>
-  <TextField inputRef={passwordRef} name='password' error={submitError==='Password must be at least six characters long'} fullWidth type={'password'} label="Password" />
+  <TextField inputRef={passwordRef} name='password' error={submitError==='Password must be at least six characters long'} fullWidth type={'password'} label={t('input3')} />
 </FormControl>
 
-{isLoading?<CircularProgress size={'5rem'}/>: <UiButton  submit clickFn={()=>{}} color='blue' >{isLoading?'Loading...':isLogin?'Login':'Signup'}</UiButton>}
+{isLoading?<CircularProgress size={'5rem'}/>: <UiButton  submit clickFn={()=>{}} color='blue' >{isLoading?'Loading...':isLogin? t('buttonLogin'):t('buttonSignup')}</UiButton>}
 {submitError&& <FormHelperText onClick={()=>{setSubmitError(null)}}  sx={{color:'	#DC3545',textAlign:'center',borderRadius:'10px',cursor:'pointer',fontSize:'1rem'}}>{submitError}</FormHelperText>}
 <Box display={"flex"} justifyContent={"space-evenly"}>
-<Typography onClick={changeFormHandler}  className={styles.changeForm} textAlign={'center'} color={'GrayText'} sx={{textDecoration:'underline',textDecorationColor:'GrayText'}} >{isLogin?'Create New Account':'Already Have Account'}</Typography>
-{isLogin&&<Link href={'/forget-password'}><Typography  className={styles.changeForm} textAlign={'center'} color={'GrayText'} sx={{textDecoration:'underline',textDecorationColor:'GrayText'}} >{'Forgot password?'}</Typography></Link>}
+<Typography onClick={changeFormHandler}  className={styles.changeForm} textAlign={'center'} color={'GrayText'} sx={{textDecoration:'underline',textDecorationColor:'GrayText'}} >{isLogin?t('newAccount'):t('haveAccount')}</Typography>
+{isLogin&&<Link href={'/forget-password'}><Typography  className={styles.changeForm} textAlign={'center'} color={'GrayText'} sx={{textDecoration:'underline',textDecorationColor:'GrayText'}} >{t('forgot')}</Typography></Link>}
 </Box>
 
 </form>
 
 <Box mt={3} mb={3} width={"80%"} display="flex" flexDirection={'column'} gap="15px"  >
   <div>
-  <Divider ><Chip label="Or"/></Divider>
+  <Divider ><Chip label={t('or')}/></Divider>
   </div>
-<Button variant="outlined"   sx={{textTransform:'capitalize', color:'#7b7e84',borderColor:'#7b7e8430'}} startIcon={<GoolgeIcon width={25} height={25}/>} onClick={()=>signIn('google',{callbackUrl:'/'})} >Continue with Google</Button>
+<Button variant="outlined"   sx={{textTransform:'capitalize', color:'#7b7e84',borderColor:'#7b7e8430'}} startIcon={<GoolgeIcon width={25} height={25}/>} onClick={()=>signIn('google',{callbackUrl:'/'})} >{t('googleText')}</Button>
 </Box>
 
     </Card>

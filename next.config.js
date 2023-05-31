@@ -1,7 +1,8 @@
 /** @type {import('next').NextConfig} */
+const { i18n } = require("./next-i18next.config");
 const nextConfig = {
   reactStrictMode: false,
-
+  i18n,
   env: {
     MONGODB_URI: process.env.MONGODB_URI,
     BACKEND_URL: process.env.BACKEND_URL,

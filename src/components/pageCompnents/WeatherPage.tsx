@@ -1,13 +1,14 @@
 import { Box, Card,  CardActions, CardContent, CardHeader, CircularProgress, FormControl, List, ListItem, ListItemIcon, ListItemText, TextField, Typography, useMediaQuery } from '@mui/material'
 import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers'
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment'
-import { Autocomplete, LoadScript, LoadScriptNext } from '@react-google-maps/api'
+import { Autocomplete, LoadScriptNext } from '@react-google-maps/api'
 import moment from 'moment'
 import React, { useState } from 'react'
 
 import axios from 'axios'
 import Image from 'next/image'
 import UiButton from '../ui/buttons/UiButton'
+import { useTranslation } from 'next-i18next'
 
 type hour={
     cloudcover: number
@@ -88,7 +89,7 @@ const [autocomplete, setAutocomplete] = useState<google.maps.places.Autocomplete
 const [location, setLocation] = useState<{lat:number,lng:number}>()
 const [isLoading, setIsLoading] = useState(false)
 const [days, setDays] = useState<Weather[]>()
-
+const {t}=useTranslation("form")
 const onLoad=(autoC: google.maps.places.Autocomplete)=>{ setAutocomplete(autoC)}
 
 const onPlaceChanged=()=>{
@@ -119,7 +120,7 @@ const isMobile=useMediaQuery("(max-width:600px)")
     <main style={{width:'100%',justifyContent:"space-evenly"}}>
         
         <Card sx={{margin:'10% 10% 0% 10%', minWidth:'80%' }}>
-<CardHeader title={'Check the weather'}/>
+<CardHeader title={t("weather.header")}/>
 <LocalizationProvider dateAdapter={AdapterMoment}>
 <FormControl fullWidth>
 <Autocomplete onLoad={onLoad} onPlaceChanged={onPlaceChanged} ><TextField fullWidth /></Autocomplete>
@@ -134,7 +135,7 @@ const isMobile=useMediaQuery("(max-width:600px)")
 </Box>
 </LocalizationProvider>
 <CardActions sx={{display:'flex',justifyContent:'center',maxWidth:isMobile? "100%":'60%',margin:isMobile?'0':'0 20%'}}>
-{isLoading? <CircularProgress size={'1rem'}/>  : <UiButton  clickFn={onClickHandler} color='blue'>Check Weather</UiButton>}
+{isLoading? <CircularProgress size={'1rem'}/>  : <UiButton  clickFn={onClickHandler} color='blue'>{t("weather.btn")}</UiButton>}
 </CardActions>
 
 
@@ -155,13 +156,13 @@ const isMobile=useMediaQuery("(max-width:600px)")
        
             <Typography fontSize={isMobile?'0.8rem' : "1rem"}  >{day.description}</Typography>
            <Box display={"flex"} justifyContent={"space-between"}>
-           <Typography fontSize={isMobile?'0.8rem' : "1rem"} >Sunrise: {day.sunrise}</Typography>
-            <Typography fontSize={isMobile?'0.8rem' : "1rem"} >Sunset: {day.sunset}</Typography>
+           <Typography fontSize={isMobile?'0.8rem' : "1rem"} >{t("weather.sunrise")}: {day.sunrise}</Typography>
+            <Typography fontSize={isMobile?'0.8rem' : "1rem"} >{t("weather.sunset")}: {day.sunset}</Typography>
            </Box>
            <Box display={"flex"} justifyContent={"space-between"}>
-            <Typography fontSize={isMobile?'0.8rem' : "1rem"} >{day.humidity}% humidity</Typography>
-            <Typography fontSize={isMobile?'0.8rem' : "1rem"} >{day.precipprob}% Chance of rain</Typography>
-            <Typography fontSize={isMobile?'0.8rem' : "1rem"} >{day.uvindex} UV index</Typography>
+            <Typography fontSize={isMobile?'0.8rem' : "1rem"} >{day.humidity}% {t("weather.humidity")}</Typography>
+            <Typography fontSize={isMobile?'0.8rem' : "1rem"} >{day.precipprob}% {t("weather.rainProb")}</Typography>
+            <Typography fontSize={isMobile?'0.8rem' : "1rem"} >{day.uvindex} {t("weather.uv")}</Typography>
             </Box>
             <Typography>{}</Typography>
         </CardContent>

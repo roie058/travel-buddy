@@ -14,18 +14,19 @@ import { Flight } from '../flights/AddFlightModal'
 import DeleteIcon from '../../../public/images/delete.svg'
 import SnackBar from '../ui/SnackBar'
 import useSnackBar from '@/hooks/useSnackBar'
-import ToolTip from '../ui/ToolTip'
+import { useTranslation } from 'next-i18next'
 type Props = {plan:Plan,setList:React.Dispatch<React.SetStateAction<Plan|undefined>>}
 
 
 const BudgetBoard = (props: Props) => {
-const [budget, setBudget] = useState<{transportation:number,budget:number,expenses:number,hotels:number,stops:number}>()
-const [totalCost, setTotalCost] = useState<number>()
-const [stopsBudget, setStopsBudget] = useState<Array<Expense>>()
-const [open, setOpen] = useState<boolean>(false)
-const {setSnackBar,snackBarProps}=useSnackBar()
-const [, updateState] = useState<any>();
-
+  const [budget, setBudget] = useState<{transportation:number,budget:number,expenses:number,hotels:number,stops:number}>()
+  const [totalCost, setTotalCost] = useState<number>()
+  const [stopsBudget, setStopsBudget] = useState<Array<Expense>>()
+  const [open, setOpen] = useState<boolean>(false)
+  const {setSnackBar,snackBarProps}=useSnackBar()
+  const [, updateState] = useState<any>();
+  
+  const {t}=useTranslation("plan")
 const forceUpdate = useCallback(() => updateState({}), []);
 const currency=props.plan.budget.currency??'$'
 useEffect(() => {
@@ -82,12 +83,12 @@ const isMobile=useMediaQuery('(max-width:600px)')
         }  
       }>
           <Box display={"flex"} justifyContent="space-between" >
-      <Typography fontWeight={'bold'} fontSize={isMobile? '1.5rem' :'2rem'} variant="h2">Trip budget:</Typography>
+      <Typography fontWeight={'bold'} fontSize={isMobile? '1.5rem' :'2rem'} variant="h2">{t("budget.header")}:</Typography>
       <Typography fontWeight={'bold'} fontSize={isMobile? '1.5rem' :'2rem'}  variant="h2">{props.plan.budget.budget +currency}</Typography>
       </Box>
       <Box marginTop={'3%'}>
       <Box display={"flex"} justifyContent="space-between"  >
-      <Typography fontWeight={'bold'} color="GrayText" fontSize={isMobile?'1rem':'1.5rem'} variant="h3">Accommodations:</Typography>
+      <Typography fontWeight={'bold'} color="GrayText" fontSize={isMobile?'1rem':'1.5rem'} variant="h3">{t("budget.accommodations")}:</Typography>
       <Typography fontWeight={'bold'} color="GrayText" fontSize={isMobile?'1rem':'1.5rem'} variant="h3">{budget.hotels+currency}</Typography>
       </Box>
       <List>
@@ -103,7 +104,7 @@ const isMobile=useMediaQuery('(max-width:600px)')
       </Box>
       <Box marginTop={'3%'}>
       <Box display={"flex"} justifyContent="space-between"  >
-      <Typography fontWeight={'bold'} color="GrayText" fontSize={isMobile?"1rem":'1.5rem'} variant="h3">Transportation:</Typography>
+      <Typography fontWeight={'bold'} color="GrayText" fontSize={isMobile?"1rem":'1.5rem'} variant="h3">{t("budget.transportation")}:</Typography>
       <Typography fontWeight={'bold'} color="GrayText" fontSize={isMobile?"1rem":'1.5rem'} variant="h3">{budget.transportation+currency}</Typography>
       </Box>
       <List>
@@ -129,7 +130,7 @@ const isMobile=useMediaQuery('(max-width:600px)')
       </Box>
       <Box marginTop={'3%'}>
       <Box display={"flex"} justifyContent="space-between"  >
-      <Typography fontWeight={'bold'} color="GrayText" fontSize={isMobile?"1rem":'1.5rem'} variant="h3">Expenses:</Typography>
+      <Typography fontWeight={'bold'} color="GrayText" fontSize={isMobile?"1rem":'1.5rem'} variant="h3">{t("budget.expenses")}:</Typography>
       <Typography fontWeight={'bold'} color="GrayText" fontSize={isMobile?"1rem":'1.5rem'} variant="h3">{budget.expenses+budget.stops+currency}</Typography>
       </Box>
       <List>
@@ -154,10 +155,10 @@ const isMobile=useMediaQuery('(max-width:600px)')
       </Box>
       <Box marginTop={'10%'} display="flex" flexDirection={"column"} justifyContent="center">
           <Box marginBottom={'15%'} gap="10px" display={"flex"} flexDirection={'column'}  >
-          <Typography fontWeight={"bold"} textAlign={"center"} variant="h2" fontSize={isMobile?'1.5rem':"2rem"}>Total Cost: {totalCost+currency}</Typography>
-          <Typography fontWeight={"bold"} textAlign={"center"} variant="h2" fontSize={isMobile?'1.5rem':"2rem"}>Budget Left: <span style={{color:budget.budget-Number(totalCost)>=0?'#65E76B':"#F35757"}} > {props.plan.budget.budget-Number(totalCost)+currency}</span></Typography>
+          <Typography fontWeight={"bold"} textAlign={"center"} variant="h2" fontSize={isMobile?'1.5rem':"2rem"}>{t("budget.total")}: {totalCost+currency}</Typography>
+          <Typography fontWeight={"bold"} textAlign={"center"} variant="h2" fontSize={isMobile?'1.5rem':"2rem"}>{t("budget.left")}: <span style={{color:budget.budget-Number(totalCost)>=0?'#65E76B':"#F35757"}} > {props.plan.budget.budget-Number(totalCost)+currency}</span></Typography>
           </Box>
-      <UiButton clickFn={()=>{setOpen(true)}} color='blue' >Add New Expense</UiButton>
+      <UiButton clickFn={()=>{setOpen(true)}} color='blue' >{t("budget.button")}</UiButton>
       </Box>
       
       </Paper>

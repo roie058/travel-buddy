@@ -20,6 +20,7 @@ import DeleteIcon from '../../../public/images/delete.svg'
 import { Pin } from '../svgComponents'
 import useSnackBar from '@/hooks/useSnackBar'
 import SnackBar from '../ui/SnackBar'
+import { useTranslation } from 'next-i18next'
 
 type Props = {plan:Plan}
 
@@ -27,6 +28,7 @@ const HotelAdd = (props: Props) => {
    const [open, setOpen] = useState<boolean>(false)
    const [isLoading, setIsLoading] = useState<boolean>(false)
    const [openIndex, setOpenIndex] = useState<number>()
+   const {t}=useTranslation("hotels")
     const {setSnackBar,snackBarProps}=useSnackBar()
    const deletetHandler=async (hotel:IPlace)=>{
       try {
@@ -51,7 +53,7 @@ const HotelAdd = (props: Props) => {
   return (
     <>
     <Card sx={{width:'100%', height:'100%',borderRadius:'0' }} >
-      <CardHeader titleTypographyProps={{textAlign:'center',sx:{textDecoration:'underline'}}}  title={'Liked Hotels'}/>
+      <CardHeader titleTypographyProps={{textAlign:'center',sx:{textDecoration:'underline'}}}  title={t("header")}/>
         <CardContent  sx={{display:'flex',gap:'12px',flexWrap:'wrap',justifyContent:'center'}}>
         
 {props.plan&&props.plan.liked.hotels.map((hotel:IPlace,i)=> <Card key={hotel._id}    elevation={3}    className={styles.paper} >
@@ -86,7 +88,7 @@ const HotelAdd = (props: Props) => {
 
 </CardActions>}
 
-<UiButton className={styles.reservationBtn} clickFn={()=>{setOpenIndex(i);setOpen(true); }} >Add Reservation</UiButton>
+<UiButton className={styles.reservationBtn} clickFn={()=>{setOpenIndex(i);setOpen(true); }} >{t("addBtn")}</UiButton>
 
 </Box>
 
@@ -100,7 +102,7 @@ const HotelAdd = (props: Props) => {
          
         </CardContent>
         <CardActions >
-          <Typography width={'100%'} fontSize={'1.2rem'} textAlign={'center'} variant="body1">Want to find more hotels? check out the <Link style={{color:"blue"}} href={'/map'}> Map</Link></Typography>
+          <Typography width={'100%'} fontSize={'1.2rem'} textAlign={'center'} variant="body1">{t("mapref")} <Link style={{color:"blue"}} href={'/map'}>{t("mapLink")}</Link></Typography>
         </CardActions>
     </Card>
     <SnackBar {...snackBarProps}/>

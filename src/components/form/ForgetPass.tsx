@@ -11,14 +11,16 @@ import styles from './ForgetPass.module.css'
 import Image from 'next/image'
 import RoundLogo from '../../../public/images/roundlogo.svg'
 import { FieldValues, useForm } from 'react-hook-form'
+import { useTranslation } from 'next-i18next'
+
 type Props = {}
 
 const ForgetPass = (props: Props) => {
   const [isLoading, setIsLoading] = useState(false)
   const [submitError, setSubmitError] = useState<null|string>(null)
   const [submitSuccess, setSubmitSuccess] = useState<boolean>(false)
-  const router =useRouter()
 
+ const {t}= useTranslation('auth')
 const {register,formState,handleSubmit}=useForm({defaultValues:{email:''}})
 
 
@@ -47,17 +49,18 @@ const submitHandler=async (data:FieldValues)=>{
     <div className={styles.background}>
    {submitSuccess?<Card sx={{ minWidth:'300px',maxWidth:'500px',width:"100%",height:'100%',display:'flex',justifyContent:'center',flexDirection:'column',alignItems:'center'}}>
       <Image width={200} height={200} alt='travel buddy' src={RoundLogo}/>
-      <CardHeader titleTypographyProps={{color:'#00c2cb',}} title="Travel Buddy" sx={{height:'min-content',padding:'0 0 7% 0'}}  /> <Typography>Succsess🎉</Typography> <Typography>please check your inbox</Typography> </Card>  :<Card sx={{ minWidth:'300px',maxWidth:'500px',width:"100%",height:'100%',display:'flex',justifyContent:'center',flexDirection:'column',alignItems:'center'}}>
+      <CardHeader titleTypographyProps={{color:'#00c2cb',}} title="Travel Buddy" sx={{height:'min-content',padding:'0 0 7% 0'}}  /> <Typography>{t('success')}🎉</Typography> <Typography>{t("inbox")}</Typography> </Card>  :
+      <Card sx={{ minWidth:'300px',maxWidth:'500px',width:"100%",height:'100%',display:'flex',justifyContent:'center',flexDirection:'column',alignItems:'center'}}>
       <Image width={200} height={200} alt='travel buddy' src={RoundLogo}/>
       <CardHeader titleTypographyProps={{color:'#00c2cb',}} title="Travel Buddy" sx={{height:'min-content',padding:'0 0 7% 0'}}  />
 <form onSubmit={handleSubmit(submitHandler)} className={styles.form}>
 
 <FormControl>
-  <TextField  error={submitError==='Email is required'} name='email' fullWidth inputMode='email' label="Email" {...register('email',{required:'email is required',pattern:{value:/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,message:'not a valid email'}})} />
+  <TextField  error={submitError===t("requiredEmail")} name='email' fullWidth inputMode='email' label={t('input2')} {...register('email',{required:t('requiredEmail'),pattern:{value:/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,message:t('emailValid')}})} />
 </FormControl>
 
 
-{isLoading?<CircularProgress size={'5rem'}/>: <UiButton  submit clickFn={()=>{}} color='blue' >{isLoading?'Loading...':'Recover Password'}</UiButton>}
+{isLoading?<CircularProgress size={'5rem'}/>: <UiButton  submit clickFn={()=>{}} color='blue' >{isLoading?'Loading...':t('recovery')}</UiButton>}
 {submitError&& <FormHelperText onClick={()=>{setSubmitError(null)}}  sx={{color:'	#DC3545',textAlign:'center',borderRadius:'10px',cursor:'pointer',fontSize:'1rem'}}>{submitError}</FormHelperText>}
 {formState.errors?.email?.message&& <FormHelperText onClick={()=>{setSubmitError(null)}}  sx={{color:'	#DC3545',textAlign:'center',borderRadius:'10px',cursor:'pointer',fontSize:'1rem'}}>{formState.errors?.email?.message}</FormHelperText>}
 

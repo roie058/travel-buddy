@@ -25,3 +25,17 @@ const weather = (props: Props) => {
 }
 
 export default weather
+
+
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+
+export async function getServerSideProps({ locale }) {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, [
+        "common","form"
+      ])),
+      // Will be passed to the page component as props
+    },
+  }
+}

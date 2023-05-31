@@ -12,13 +12,14 @@ import { Plan } from '../pageCompnents/Schedule'
 import DeleteIcon from '../../../public/images/delete.svg'
 import useSnackBar from '@/hooks/useSnackBar'
 import SnackBar from '../ui/SnackBar'
+import { useTranslation } from 'next-i18next'
 
 type Props = {plan?:Plan,plans?:Plan[]}
 
 const MyFlights = (props: Props) => {
 const {setSnackBar,snackBarProps}=useSnackBar()
 const [, updateState] = useState<any>();
-
+const {t}=useTranslation("flights")
   const forceUpdate = useCallback(() => updateState({}), []);
   let flightList:Array<Flight>=[]
   if(props.plan){
@@ -69,7 +70,7 @@ if(data.success){
     <>
     <Box width={'100%'} height="100%">
 <Card>
-<CardHeader sx={{textAlign:'center'}} title="My Flights"></CardHeader>
+<CardHeader sx={{textAlign:'center'}} title={t("header2")}></CardHeader>
 <Divider/>
 <CardContent sx={{minHeight:'50vh'}}>
 

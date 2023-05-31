@@ -7,6 +7,7 @@ import PlaceCard from '../cards/PlaceCard';
 import { Button, CircularProgress, FormControl, Grid, MenuItem, Rating, Select, SelectChangeEvent } from '@mui/material';
 import { MapContext } from '@/context/map-context';
 import { getPlaceData } from '@/hooks/data-hook';
+import { useTranslation } from 'next-i18next';
 
 
 
@@ -36,7 +37,7 @@ export type PlaceList={attractions:Array<ListItems>,hotels:Array<ListItems>,rest
 
 function TabPanel(props: TabPanelProps) {
   const { children, value, index, ...other } = props;
-
+  const {t}=useTranslation("map")
   const mapCtx= useContext(MapContext)
 
 
@@ -65,7 +66,7 @@ mapCtx?.setRating(event.target.value)
 
     onChange={onChangeHandler}
   >
-    <MenuItem value={'0'}>Any Rating</MenuItem>
+    <MenuItem value={'0'}>{t("rating")}</MenuItem>
     <MenuItem value={'3'}><Rating size='small' readOnly value={3}/></MenuItem>
     <MenuItem value={'4'}><Rating size='small' readOnly value={4}/></MenuItem>
     <MenuItem value={'4.5'}><Rating size='small' precision={0.5} readOnly value={4.5}/></MenuItem>
@@ -96,7 +97,7 @@ type Props={
 export default function List(props:Props) {
   const mapCtx= useContext(MapContext)
   const types:Array<'hotels'|"restaurants"|"attractions"|'search'>= ['hotels',"restaurants","attractions","search"]
-  
+  const {t}=useTranslation("map")
   const [value, setValue] = useState(0);
 
 const [refs,setRefs]=useState<any>([]);
@@ -152,15 +153,15 @@ mapCtx?.setIsLoading(false)})
 
        <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
         <Tabs value={types.indexOf(mapCtx?.type??'hotels')?? value} onChange={handleChange} sx={{ '& .MuiTabs-indicator':{height:'100%'},'& .Mui-selected':{zIndex:1,color:'white !important'} ,'& .MuiTabs-flexContainer':{justifyContent:'center'}}} aria-label="basic tabs example">
-          <Tab  sx={{textTransform:'capitalize'}}  label="Hotels" {...a11yProps(0)} />
-          <Tab sx={{textTransform:'capitalize'}}  label="Restaurants" {...a11yProps(1)} />
-          <Tab sx={{textTransform:'capitalize'}} label="Attractions" {...a11yProps(2)} />
-          <Tab sx={{textTransform:'capitalize'}} label="Search" {...a11yProps(3)} />
+          <Tab  sx={{textTransform:'capitalize'}}  label={t("hotels")} {...a11yProps(0)} />
+          <Tab sx={{textTransform:'capitalize'}}  label={t("restaurants")} {...a11yProps(1)} />
+          <Tab sx={{textTransform:'capitalize'}} label={t("attractions")} {...a11yProps(2)} />
+          <Tab sx={{textTransform:'capitalize'}} label={t("search")} {...a11yProps(3)} />
         </Tabs>
       </Box>
-      <TabPanel   value={value} index={0}>
+      <TabPanel    value={value} index={0}>
        
-      {mapCtx?.placeList.length===0&&!mapCtx?.isLoading&&<Box width={'100%'} justifySelf={'center'} sx={{margin:'0'}}><Button onClick={loadHandler} size='small' color="primary" sx={{textTransform:"capitalize",border:'1px solid',width:'100%'}} >Load Places...</Button></Box> }
+      {mapCtx?.placeList.length===0&&!mapCtx?.isLoading&&<Box width={'100%'} justifySelf={'center'} sx={{margin:'0'}}><Button onClick={loadHandler} size='small' color="primary" sx={{textTransform:"capitalize",border:'1px solid',width:'100%'}} >{t("loadBtn")}</Button></Box> }
          { 
        mapCtx?.placeList?.filter((place)=>place.name).map((place,i)=><Box  sx={{margin:'10px 0'}} width={'100%'} key={place.location_id+place.name}> <PlaceCard liked={props.likedIds.has(place.name+place.location_id)}  refEl={refs[i]} index={i} selected={Number(mapCtx?.childClicked)===i} type='restaurants'  place={place} /></Box>) 
 }

@@ -26,6 +26,18 @@ const hotels = (props: Props) => {
       )
     }
   
+    import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+
+export async function getServerSideProps({ locale }) {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, [
+        "common","hotels"
+      ])),
+      // Will be passed to the page component as props
+    },
+  }
+}
 
 
 export default hotels

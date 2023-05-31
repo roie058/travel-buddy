@@ -3,16 +3,17 @@
 
 import { IPlace } from '@/dummyData'
 
-import { AlertColor, Button, Card, CardContent, CardHeader, Icon, SvgIcon, Typography, useMediaQuery } from '@mui/material'
-import { Box } from '@mui/system'
+import {  Button, Card, CardContent, Icon, Typography} from '@mui/material'
+
 import Image from 'next/image'
 
 import React, { useState } from 'react'
-import ListButton from '../buttons/ListButton'
+
 import styles from './DayItemCard.module.css'
 import { RoutineItem } from './DayList'
 import PlaceDescriptionModal from './PlaceDescriptionModal'
-import { AddedIcon, BreakfestIcon, DinnerIcon, HeartIcon, LunchIcon, MainAttractionIcon, Pin, SearchIcon, XIcon } from '@/components/svgComponents'
+import { BreakfestIcon, DinnerIcon, LunchIcon, MainAttractionIcon, Pin,  XIcon } from '@/components/svgComponents'
+import { useTranslation } from 'next-i18next'
 type Props = { 
     btnText:string,
     withDiractions?:IPlace|null,
@@ -28,7 +29,7 @@ minify:boolean,
 const DayItemCard = (props: Props) => {
 
 const [open, setOpen] = useState<boolean>(false)
-
+const {t}=useTranslation("day")
 const color = props.listItem.place.category.key=== "restaurant" ? "#3F950A" : "#6808A3"
 const bgColor = props.listItem.place.category.key=== "restaurant" ? "#94FF9829" : "#CAB7FF29"
 
@@ -48,7 +49,6 @@ props.onClick(props.listItem._id)
 props.onClick(props.listItem.dragId)
 
 }
-const isMobile=useMediaQuery('(max-width:768px)')
 const typeInDay={breakfest:<BreakfestIcon  width={75} height={75}/>,lunch:<LunchIcon width={75} height={75}/>,dinner:<DinnerIcon width={75} height={75}/>,mainAttraction:<MainAttractionIcon width={75} height={75}/>}
 
   return (
@@ -64,7 +64,7 @@ const typeInDay={breakfest:<BreakfestIcon  width={75} height={75}/>,lunch:<Lunch
             <Typography variant='h5' fontSize={"1rem"} fontWeight="bold">{props.listItem.place.name} </Typography>
             {!props.minify&&  <p className={styles.address}><Pin height={10} width={10} /> {props.listItem.place.address}</p>}
         
-    <Button sx={{textTransform:'capitalize',backgroundColor:'white',border:`1px solid ${color}`,borderRadius:'30px',paddingX:2,fontWeight:'bold',color:color}} onClick={openHandler}>More Info</Button>
+    <Button sx={{textTransform:'capitalize',backgroundColor:'white',border:`1px solid ${color}`,borderRadius:'30px',paddingX:2,fontWeight:'bold',color:color}} onClick={openHandler}>{t("infoBtn")}</Button>
         </CardContent>
        
           </Card>

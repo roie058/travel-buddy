@@ -4,11 +4,12 @@ import React, { useEffect, useState } from 'react'
 import Image from 'next/image'
 import { Box } from '@mui/system'
 import ToolTip from '../ToolTip'
+import { useTranslation } from 'next-i18next'
 
 type Props = {setValue:any,value?:string,types:string[],country:string}
 
 const ImageInput = (props: Props) => {
- 
+ const {t}=useTranslation("form")
   const [open, setOpen] = useState<boolean>(false)
   const [selectedValue, setSelectedValue] = React.useState<string|undefined>();
   const [randomImage, setRandomImage] = React.useState<string|undefined>();
@@ -42,17 +43,17 @@ const isMobile=useMediaQuery("(max-width:600px)")
     
     {selectedValue&& <Box sx={{cursor:'pointer'}}   onClick={handleClickOpen}  >
     
-      <Typography color={'GrayText'} >Selected:</Typography>
+      <Typography color={'GrayText'} >{t("selected")}:</Typography>
       
         <Image  loading="lazy" style={{objectFit:"cover",borderRadius:'20px'}} width={100} height={100} alt={selectedValue??''} src={selectedValue??''}/>
       </Box>}
       
-    {!selectedValue&& <ToolTip right='-10%' top='-40%' title='pick an image to customize your trip'><Button  onClick={handleClickOpen} variant="contained" >
-  Pick Image
+    {!selectedValue&& <ToolTip right='-10%' top='-40%' title={t("imageTooltip")}><Button  onClick={handleClickOpen} variant="contained" >
+  {t("imageBtn")}
 </Button></ToolTip>}
 
 <Dialog maxWidth={'md'} fullWidth  onClose={handleClose}  open={open}>
-      <DialogTitle>Image Selector</DialogTitle>
+      <DialogTitle>{t("imageBtn")}</DialogTitle>
       <ImageList sx={{width:'100%'}} gap={2} cols={isMobile?1:3} >
      {randomImage&& <ImageListItem   key={randomImage} sx={{position:'relative',width:'100%',minHeight:'200px'}} >
   <ListItemButton  onClick={() => handleClose(randomImage)}>

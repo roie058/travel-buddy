@@ -8,6 +8,7 @@ import Image from 'next/image'
 import React,{ useState} from 'react'
 import styles from './Day.module.css'
 import { Arrow, RightArrow } from '@/components/svgComponents'
+import { useRouter } from 'next/router'
 
 type Props = {
   date:string,
@@ -16,12 +17,16 @@ type Props = {
   open:boolean
 }
 
-const weekDay=(day:string)=>{
+const weekDay=(day:string,locale:string)=>{
   
   
   const date=moment(new Date(day))
+  let weekDays=["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
   
-  const weekDays=["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+if(locale==="he"){
+  weekDays=["ראשון", "שני", "שלישי", "רביעי", "חמישי", "שישי", "שבת"];
+}
+
 
   
   return weekDays[date.weekday()]
@@ -30,7 +35,8 @@ const weekDay=(day:string)=>{
 
 
 const DayBar = (props: Props) => {
-const[dayOfWeek,setDayOfWeek ]=useState(weekDay(props.date))
+const {locale}=useRouter()
+const[dayOfWeek,setDayOfWeek ]=useState(weekDay(props.date,locale))
 const[day,setDay ]=useState(props.date.split('/')[1])
 
 const mdScreen=useMediaQuery('(max-width:1200px)')

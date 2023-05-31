@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import React from 'react'
 import { Pin } from '../svgComponents'
+import { useTranslation } from 'next-i18next'
 
 
 
@@ -14,7 +15,7 @@ import { Pin } from '../svgComponents'
 
 const HotelCard = (props: Props) => {
   const{query}=useRouter()
-    
+    const {t} =useTranslation("day")
   return (
     <>
     
@@ -25,7 +26,7 @@ const HotelCard = (props: Props) => {
         <CardContent sx={{margin: '3%', marginRight:'0',padding:'0', paddingBottom:'0 !important',display:'flex',flexDirection:'column',gap:'10px'}}>
             <Typography variant='h4' fontSize={"1rem"} fontWeight="bold">{props.listItem.name} </Typography>
            {props.listItem.address&& <p className={"styles.address"}><Pin  height={10} width={10} />{props.listItem.address}</p>}
-           <Link href={`/plans/${query.planId}/hotels`}><Button sx={{px:"12%",backgroundColor:'white',border:'1px solid #341099',borderRadius:'25px'}} ><Typography color={'#341099'} textTransform={"capitalize"} fontWeight={'bold'} >Booking Details</Typography></Button> </Link>
+           <Link href={`/plans/${query.planId}/hotels`}><Button sx={{px:"12%",backgroundColor:'white',border:'1px solid #341099',borderRadius:'25px'}} ><Typography color={'#341099'} textTransform={"capitalize"} fontWeight={'bold'} >{t("booking")}</Typography></Button> </Link>
         </CardContent>
         </Box>
           </Card>:<div></div>}

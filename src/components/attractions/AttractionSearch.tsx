@@ -9,6 +9,7 @@ import { FieldValues, SubmitHandler, useForm } from 'react-hook-form'
 import AttracrionList from './AttracrionList'
 import { IPlace } from '@/dummyData'
 import { SearchIcon } from '../svgComponents'
+import { useTranslation } from 'next-i18next'
 
 export const  searchFn=async(query:string,url)=>{
   const options = {
@@ -44,7 +45,7 @@ const AttractionSearch = (props: Props) => {
   const [resultList,setResultList]=useState<any[]>()
   const [isLoading,setIsLoading]=useState<boolean>(false)
 const {handleSubmit,register}=useForm()
-
+const {t}=useTranslation("allLiked")
 
 const searchHandler:SubmitHandler<FieldValues>= async (data)=>{
   setIsLoading(true)
@@ -61,12 +62,12 @@ const searchHandler:SubmitHandler<FieldValues>= async (data)=>{
     <Card  >
 <Box  padding={'5%'}  >
 
-<Typography fontSize={"3rem"} variant='h1'>Search Places</Typography>
+<Typography fontSize={"3rem"} variant='h1'>{t('searchHeader')}</Typography>
 <form onSubmit={ handleSubmit(searchHandler)} style={{width:'100%'}}  >
 <Box display={'flex'}>
 <FormControl fullWidth>
 <Autocomplete>
-  <TextField fullWidth {...register('search',{required:'Search term is required'})} placeholder='Search Attractions'/>
+  <TextField fullWidth {...register('search',{required:'Search term is required'})} placeholder={t('searchHeader')}/>
 </Autocomplete>
 </FormControl>
   

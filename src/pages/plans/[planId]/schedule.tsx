@@ -30,3 +30,16 @@ const schedule = (props: Props) => {
 }
 
 export default schedule
+
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+
+export async function getServerSideProps({ locale }) {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, [
+        "common","plan","day"
+      ])),
+      // Will be passed to the page component as props
+    },
+  }
+}

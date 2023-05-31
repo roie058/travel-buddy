@@ -12,7 +12,7 @@ import PlaceItemDetailCard from './PlaceItemDetailCard'
 import { PlanContext } from '@/context/plan-context'
 import { PaperPinIcon, Pin } from '@/components/svgComponents'
 import ToolTip from '../ToolTip'
-
+import { useTranslation } from 'next-i18next'
 
 type Props = {open:boolean,close:()=>void,place:IPlace,static?:boolean,index?:number,listItem?:RoutineItem,}
 
@@ -20,7 +20,7 @@ const PlaceDescriptionModal = (props: Props) => {
   const [, updateState] = useState<any>();
  const  [isLoading,setIsLoading]=useState(false)
 const forceUpdate = useCallback(() => updateState({}), []);
-
+const {t}=useTranslation("day")
   const planCtx=useContext(PlanContext)
         const {register,handleSubmit,formState}=useForm({defaultValues:{budget:props.listItem?.budget,dayType:props.listItem?.position,description:props.listItem?.description}});
 
@@ -91,35 +91,35 @@ try {
 {!props.static && <DialogActions >
 
     <form style={{width:'100%'}} onSubmit={handleSubmit(updatePlace)}>
-    <ToolTip title='add additional details about this place set it as a meal/main attraction add the expense budget or add a comment' top='-5%' right='3%'>
+    <ToolTip title={t("placeTooltip")} top='-5%' right='3%'>
         <Box paddingX={'5%'} display="flex" flexDirection="column" justifyContent='center' alignItems={"center"} gap={2}   >
 
         <FormControl fullWidth >
          
-            <TextField multiline minRows={2}  defaultValue={props.listItem?.description} {...register('description',{maxLength:{value:250,message:'250 max characters'}})}  label="Description" />
+            <TextField multiline minRows={2}  defaultValue={props.listItem?.description} {...register('description',{maxLength:{value:250,message:'250 max characters'}})}  label={t("description")} />
        {formState?.errors?.description?.message&&<FormHelperText>{formState.errors.description.message}</FormHelperText>}
        
         </FormControl>
     
         
         <FormControl fullWidth >
-            <TextField   defaultValue={props.listItem?.budget} {...register('budget',{valueAsNumber:true,min:0})} type="number" label="Budget" />
+            <TextField   defaultValue={props.listItem?.budget} {...register('budget',{valueAsNumber:true,min:0})} type="number" label={t("budget")} />
         </FormControl>
         <FormControl fullWidth >
-        <InputLabel id="lunch">Set as</InputLabel>
+        <InputLabel id="lunch">{t("set")}</InputLabel>
         
         <Select {...register('dayType')} defaultValue={props.listItem?.position}   label="Set as" labelId="lunch"   >
        
-        <MenuItem defaultChecked={true} value={0}>none</MenuItem>
-        <MenuItem value='mainAttraction'>Main Attraction</MenuItem>
-        <MenuItem value='breakfest'>Breakfest</MenuItem>
-        <MenuItem value='lunch'>Lunch</MenuItem>
-        <MenuItem value='dinner'>Dinner</MenuItem>
+        <MenuItem defaultChecked={true} value={0}>{t("none")}</MenuItem>
+        <MenuItem value='mainAttraction'>{t("main")}</MenuItem>
+        <MenuItem value='breakfest'>{t("breakfest")}</MenuItem>
+        <MenuItem value='lunch'>{t("lunch")}</MenuItem>
+        <MenuItem value='dinner'>{t("dinner")}</MenuItem>
 
             </Select>  
            
         </FormControl>
-       {isLoading? <CircularProgress/> :<Button variant="contained" sx={{width:'50%'}} type='submit'>set</Button>}
+       {isLoading? <CircularProgress/> :<Button variant="contained" sx={{width:'50%'}} type='submit'>{t("setBtn")}</Button>}
         </Box>
         </ToolTip>
     </form>

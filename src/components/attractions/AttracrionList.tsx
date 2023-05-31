@@ -6,9 +6,10 @@ import Image from 'next/image'
 import PlaceItemDetailCard from '../ui/calender/PlaceItemDetailCard'
 import { useRouter } from 'next/router'
 import axios from 'axios'
-import { AddedIcon, HeartIcon, LikedIcon } from '../svgComponents'
+import { AddedIcon } from '../svgComponents'
 import useSnackBar from '@/hooks/useSnackBar'
 import SnackBar from '../ui/SnackBar'
+import { useTranslation } from 'next-i18next'
 
 type Props = {list:IPlace[],likedList:Set<string>,setList:React.Dispatch<React.SetStateAction<IPlace[]>>}
 
@@ -42,6 +43,7 @@ const AttracrionList = (props: Props) => {
   const [viewedPlace,setViewedPlace]=useState<IPlace>()
   const [open,setOpen]=useState<boolean>(false)
   const [isLoading,setIsLoading]=useState<boolean>(false)
+  const {t}=useTranslation("allLiked")
 const {setSnackBar,snackBarProps}=useSnackBar()
   const {query}=useRouter()
 
@@ -109,8 +111,8 @@ const {setSnackBar,snackBarProps}=useSnackBar()
   </Box>
  
   {isLoading?  <CircularProgress/> :<Box display={"flex"} alignItems={"center"}>
-  <ListItemButton sx={{border:'1px solid lightgray',borderRadius:'50px',maxHeight:'50px'}} onClick={()=>viewHandler(place.location_id)}>View</ListItemButton>
-<ListItemButton sx={{display:'flex',justifyContent:'center',borderRadius:'50px',maxHeight:'50px'}} disabled={props.likedList.has(place.location_id)} onClick={()=>addHandler(place.location_id)} >{props.likedList.has(place.location_id)? <AddedIcon width={30} height={30}/> :'Add'}</ListItemButton>
+  <ListItemButton sx={{border:'1px solid lightgray',borderRadius:'50px',maxHeight:'50px'}} onClick={()=>viewHandler(place.location_id)}>{t("view")}</ListItemButton>
+<ListItemButton sx={{display:'flex',justifyContent:'center',borderRadius:'50px',maxHeight:'50px'}} disabled={props.likedList.has(place.location_id)} onClick={()=>addHandler(place.location_id)} >{props.likedList.has(place.location_id)? <AddedIcon width={30} height={30}/> :t("add")}</ListItemButton>
  
   </Box>
 }

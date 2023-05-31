@@ -18,6 +18,7 @@ import { PlanContext } from '@/context/plan-context'
 import { Box } from '@mui/material'
 import useSnackBar from '@/hooks/useSnackBar'
 import SnackBar from '../SnackBar'
+import { useTranslation } from 'next-i18next'
 type Props = {
 list:Array<RoutineItem>|any[],
 position:'mainAttraction'|'breakfest'|'lunch'|'dinner'|'rutine'
@@ -32,6 +33,7 @@ export type RoutineItem={description?:string,place:IPlace,dragId:string,budget:n
 const DayList = (props: Props) => {
 
     resetServerContext()
+    const {t}=useTranslation("day")
 const [list, setList] = useState<Array<RoutineItem>>([])
 const [open, setOpen] = useState(false)
 const planCtx=useContext(PlanContext)
@@ -132,8 +134,8 @@ const handleClose=()=>{
         </Draggable>
  } )}
  {props.flights&& props.flights?.length>0&&props.flights.map((flight)=><FlightCard key={flight._id} flight={flight}/>)}
-{list.length>0&&(list.length<10  ? <div onClick={handleOpenAdd} className={styles.newBtn}>+Add next stop</div>:<div  className={styles.newBtn}>Max 10 stops per day</div>)}
-{list.length<=0 && <div onClick={handleOpenAdd} className={styles.firstNewBtn}>+Add next stop</div>}
+{list.length>0&&(list.length<10  ? <div onClick={handleOpenAdd} className={styles.newBtn}>+{t("nextStop")}</div>:<div  className={styles.newBtn}>Max 10 stops per day</div>)}
+{list.length<=0 && <div onClick={handleOpenAdd} className={styles.firstNewBtn}>+{t("nextStop")}</div>}
 
 {provided.placeholder}
 </Box>

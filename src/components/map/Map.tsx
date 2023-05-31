@@ -18,6 +18,7 @@ import { getPlaceDetails } from '../attractions/AttracrionList'
 import { getDistanceFromLatLonInKm } from '@/util/mapHelpars'
 import useSnackBar from '@/hooks/useSnackBar'
 import SnackBar from '../ui/SnackBar'
+import { useTranslation } from 'next-i18next'
 
 
 
@@ -38,7 +39,7 @@ const Map = (props: Props) => {
   const [mapFliter, setMapFliter] = React.useState<{plans:string[],restaurants:boolean,hotels:boolean,attractions:boolean}>({plans:[],restaurants:true,attractions:true,hotels:true});
   const open = Boolean(anchorEl);
 const {setSnackBar,snackBarProps}=useSnackBar()
-
+const {t}=useTranslation("map")
 const [autocomplete,setAutocomplete]=useState<google.maps.places.Autocomplete|null>(null)
 const mapCtx = useContext(MapContext)
 
@@ -213,7 +214,7 @@ if(lat&&lng)mapCtx?.setCoordinates((coordinates)=> {return {lat:lat,lng:lng}})
 <div className={styles.searchIcon}>
 <Image src={SearchIcon} alt='search' width={20} height={20}  />
 </div>
-<InputBase placeholder='Search...' />
+<InputBase placeholder={t("searchBar")} />
 </div>
 </Autocomplete> 
 
@@ -241,7 +242,7 @@ if(lat&&lng)mapCtx?.setCoordinates((coordinates)=> {return {lat:lat,lng:lng}})
 >
 <MenuList>
 
-<ListSubheader>Plan filter</ListSubheader>
+<ListSubheader>{t("filterPlan")}</ListSubheader>
 <MenuItem  key={'all'} onClick={()=>{filterList('all-plans')}}>
     <ListItemIcon>
                 <Checkbox
@@ -251,7 +252,7 @@ if(lat&&lng)mapCtx?.setCoordinates((coordinates)=> {return {lat:lat,lng:lng}})
                   disableRipple
                 />
               </ListItemIcon>
-            <ListItemText>All</ListItemText>
+            <ListItemText>{t("all")}</ListItemText>
           </MenuItem>
         {props.plans&& props.plans.map((plan)=>{
 
@@ -274,7 +275,7 @@ if(lat&&lng)mapCtx?.setCoordinates((coordinates)=> {return {lat:lat,lng:lng}})
         })}
        
         <Divider />
-        <ListSubheader>Type Filter</ListSubheader>
+        <ListSubheader>{t("filterType")}</ListSubheader>
         <MenuItem onClick={()=>{filterList('all')}}><ListItemIcon>
                 <Checkbox
                   edge="start"
@@ -283,7 +284,7 @@ if(lat&&lng)mapCtx?.setCoordinates((coordinates)=> {return {lat:lat,lng:lng}})
                   disableRipple
                 />
               </ListItemIcon>
-            <ListItemText>All</ListItemText></MenuItem>
+            <ListItemText>{t("all")}</ListItemText></MenuItem>
         <MenuItem ><ListItemIcon>
                 <Checkbox
                 onClick={()=>{filterList('restaurants')}}
@@ -294,7 +295,7 @@ if(lat&&lng)mapCtx?.setCoordinates((coordinates)=> {return {lat:lat,lng:lng}})
                   disableRipple
                 />
               </ListItemIcon>
-            <ListItemText>Restaurants</ListItemText></MenuItem>
+            <ListItemText>{t("restaurants")}</ListItemText></MenuItem>
         <MenuItem ><ListItemIcon>
                 <Checkbox
                 onClick={()=>{filterList('hotels')}}
@@ -305,7 +306,7 @@ if(lat&&lng)mapCtx?.setCoordinates((coordinates)=> {return {lat:lat,lng:lng}})
                   disableRipple
                 />
               </ListItemIcon>
-            <ListItemText>Hotels</ListItemText></MenuItem>
+            <ListItemText>{t("hotels")}</ListItemText></MenuItem>
         <MenuItem ><ListItemIcon>
                 <Checkbox
                   onClick={()=>{filterList('attractions')}}
@@ -316,7 +317,7 @@ if(lat&&lng)mapCtx?.setCoordinates((coordinates)=> {return {lat:lat,lng:lng}})
                   disableRipple
                 />
               </ListItemIcon>
-            <ListItemText>Attractions</ListItemText></MenuItem>
+            <ListItemText>{t("attractions")}</ListItemText></MenuItem>
         </MenuList>
       </Menu>
       <SnackBar {...snackBarProps}/>

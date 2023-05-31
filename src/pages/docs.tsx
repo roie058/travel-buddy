@@ -2,10 +2,12 @@
 import DocsPage from '@/components/pageCompnents/DocsPage'
 import Head from 'next/head'
 import React from 'react'
-
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import { useTranslation } from 'next-i18next'
 type Props = {}
 
 const docs = (props: Props) => {
+ 
   return (
     <>
    <Head>
@@ -15,10 +17,21 @@ const docs = (props: Props) => {
     <link rel="icon" href="/favicon.ico" />
   </Head>
     <main>
- <DocsPage/>
+ <DocsPage />
     </main>
    </>
   )
 }
 
 export default docs
+
+export async function getStaticProps({ locale }) {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, [
+        'docs',"common"
+      ])),
+      // Will be passed to the page component as props
+    },
+  }
+}

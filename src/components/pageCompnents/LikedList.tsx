@@ -13,6 +13,7 @@ import AttractionSearch from '../attractions/AttractionSearch'
 import { LoadScriptNext } from '@react-google-maps/api'
 import useSnackBar from '@/hooks/useSnackBar'
 import SnackBar from '../ui/SnackBar'
+import { useTranslation } from 'next-i18next'
 type Props = {}
 
 const LikedList = (props: Props) => {
@@ -22,6 +23,7 @@ const LikedList = (props: Props) => {
     const [category, setCategory] = useState<"all"|"restaurants"|'hotels'|'attractions'>('all')
     const [plan, setPlan] = useState<{restaurants:IPlace[],hotels:IPlace[],attractions:IPlace[]}>()
     const [list, setList] = useState<IPlace[]>()
+    const {t}=useTranslation("allLiked")
 const {setSnackBar,snackBarProps}=useSnackBar()
 const {query}=useRouter()
 const {data:session}=useSession()
@@ -103,12 +105,12 @@ if(selectedCategory==="all"){
 <Card elevation={3} >
 <Box  padding={'5%'}  >
 
-<Typography fontSize={"3rem"} variant='h1'>Liked Places</Typography>
+<Typography fontSize={"3rem"} variant='h1'>{t("listHeader")}</Typography>
 <Select fullWidth   defaultValue={category} onChange={changeHandler}>
-    <MenuItem value="all" >All</MenuItem>
-    <MenuItem value="restaurants">Restaurants</MenuItem>
-    <MenuItem value="hotels" >Hotels</MenuItem>
-    <MenuItem value="attractions">Attractions</MenuItem>
+    <MenuItem value="all" >{t("categories.all")}</MenuItem>
+    <MenuItem value="restaurants">{t("categories.restaurants")}</MenuItem>
+    <MenuItem value="hotels" >{t("categories.hotels")}</MenuItem>
+    <MenuItem value="attractions">{t("categories.attractions")}</MenuItem>
 </Select>
 <List>
 
@@ -122,7 +124,7 @@ if(selectedCategory==="all"){
         <Typography color={"GrayText"} textTransform={"capitalize"} >{place.category?.key??'Hotel'}</Typography>
     </Box>
 <Box display={"flex"} alignItems={"center"}>
-<ListItemButton onClick={()=>{ setOpen(true);setViewedPlace(place)}} sx={{border:'1px solid lightgray',borderRadius:'50px',maxHeight:'50px'}} >View</ListItemButton>
+<ListItemButton onClick={()=>{ setOpen(true);setViewedPlace(place)}} sx={{border:'1px solid lightgray',borderRadius:'50px',maxHeight:'50px'}} >{t("view")}</ListItemButton>
        {isLoading? <CircularProgress/> :<ListItemButton onClick={()=>deletetHandler(place)} sx={{display:'flex',justifyContent:'center',borderRadius:'50px',maxHeight:'50px'}}><Image alt='delete' height={20} src={DeleteIcon}/> </ListItemButton>}
 </Box>
     </Box>   

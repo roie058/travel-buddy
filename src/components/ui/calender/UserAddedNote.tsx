@@ -9,6 +9,7 @@ import { RoutineItem } from './DayList'
 import PlaceDescriptionModal from './PlaceDescriptionModal'
 import { Box } from '@mui/system'
 import {  BreakfestIcon, DinnerIcon, LunchIcon, MainAttractionIcon, PaperPinIcon, Pin, XIcon } from '@/components/svgComponents'
+import { useTranslation } from 'next-i18next'
 
 export type UserAddedItem={
   id:string,
@@ -34,7 +35,7 @@ minify:boolean,
 
 const UserAddedNote = (props: Props) => {
 const [open, setOpen] = useState<boolean>(false)
-
+const {t}=useTranslation("day")
   const clickHandler =()=>{
     props.onClick(props.listItem.dragId)
     }
@@ -64,7 +65,7 @@ setOpen(false)
                
                 <Typography variant='h4' textTransform={"capitalize"} fontSize={"1rem"} fontWeight="bold">{props.listItem.place.name} </Typography>
                 {!props.minify && <Typography variant="subtitle1" className={styles.address}><Pin height={10} width={10} /> {props.listItem.place.address}</Typography>  }
-               <Button sx={{textTransform:'capitalize',backgroundColor:'white',border:`1px solid #95760A`,borderRadius:'30px',paddingX:2,fontWeight:'bold',color:'#95760A', maxWidth:'max-content'}} onClick={openHandler}>More Info</Button>
+               <Button sx={{textTransform:'capitalize',backgroundColor:'white',border:`1px solid #95760A`,borderRadius:'30px',paddingX:2,fontWeight:'bold',color:'#95760A', maxWidth:'max-content'}} onClick={openHandler}>{t("infoBtn")}</Button>
             </CardContent>
 
               <Box position={"absolute"} zIndex={1} display={'flex'} height={"100%"} marginTop={'22px'} justifyContent={"space-evenly"} flexDirection={"column"} top={0} right={0} width={'100%'}> 

@@ -1,0 +1,15 @@
+{
+    "nav":{
+        "myTrips":"My Trips",
+        "map":"Map",
+        "flights":"Flights",
+        "weather":"Weather"
+    },
+    "profile":{
+        "alltrips":"All Trips",
+        "newPlan":"New Plan",
+        "logout":"Logout",
+        "login":"Login",
+        "edit":"Edit"
+    }
+}

@@ -1,0 +1,13 @@
+{
+    "searchHeader":"Search Places",
+    "searchBar":"Search Attractions",
+    "listHeader":"Liked Places",
+    "categories":{
+        "all":"All",
+        "restaurants":"Restaurants",
+        "hotels":"Hotels",
+        "attractions":"Attractions"
+    },
+"view":"View",
+"add":"Add"
+}

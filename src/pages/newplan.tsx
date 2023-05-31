@@ -13,3 +13,16 @@ const newplan = (props: Props) => {
 }
 
 export default newplan
+
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+
+export async function getServerSideProps({ locale }) {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, [
+        "common","form"
+      ])),
+      // Will be passed to the page component as props
+    },
+  }
+}

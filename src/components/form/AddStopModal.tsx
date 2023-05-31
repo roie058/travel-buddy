@@ -6,6 +6,7 @@ import React from 'react'
 import { UserAddedItem } from '../ui/calender/UserAddedNote';
 
 import UserAddedNoteForm from './UserAddedNoteForm';
+import { useTranslation } from 'next-i18next';
 
 
 type Props = { open: boolean;
@@ -16,7 +17,7 @@ likedList:Array<IPlace>
 
 const AddStopModal = (props: Props) => {
     const { onClose, onSubmit, open,likedList } = props;
-
+    const {t}=useTranslation("day")
 
     const handleClose = () => {
         onClose();
@@ -31,7 +32,7 @@ const AddStopModal = (props: Props) => {
 
   return (
     <Dialog sx={{zIndex:1000}}  onClose={handleClose} open={open}>
-    <DialogTitle>Pick</DialogTitle>
+    <DialogTitle>{t("pick")}</DialogTitle>
 
 <ListItem>
   <UserAddedNoteForm onSubmit={handleListItemClick}/>

@@ -11,7 +11,7 @@ import Pill from '../Pill'
 import styles from './PlanCard.module.css'
 import { Plan } from '@/components/pageCompnents/Schedule'
 import DeleteIcon from '../../../../public/images/delete.svg'
-import ToolTip from '../ToolTip'
+import { useTranslation } from 'next-i18next'
 
 
 type Props = {
@@ -31,7 +31,7 @@ const dates= moment(props.plan?.start).format('DD/MM/YYYY')+'-'+ moment(props.pl
   const newtripHandler=()=>{
     router.push("/newplan")
   }
-
+const {t}=useTranslation('common')
   const edittripHandler=()=>{
     router.push(`/plans/${ props.plan? props.plan._id : '/plans'}`)
   }
@@ -41,7 +41,7 @@ const dates= moment(props.plan?.start).format('DD/MM/YYYY')+'-'+ moment(props.pl
 
 
  let card= <div className={styles.new_card}>
- <UiButton className={styles.btn}  size="small" clickFn={newtripHandler} >New Trip</UiButton>
+ <UiButton className={styles.btn}  size="small" clickFn={newtripHandler} >{t('profile.newPlan')}</UiButton>
  </div>
 
 if(!props.new&&props.plan&&props.deleteHandler){
@@ -68,7 +68,7 @@ card=<Box className={styles.card}>
 
 <Box display={'flex'} justifyContent='center' paddingBottom={3} >
 
-<UiButton className={styles.btn}  size="small" clickFn={edittripHandler} color='blue' >Edit</UiButton>
+<UiButton className={styles.btn}  size="small" clickFn={edittripHandler} color='blue' >{t('profile.edit')}</UiButton>
 
 </Box>
 

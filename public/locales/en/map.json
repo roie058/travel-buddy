@@ -1,0 +1,13 @@
+{
+    "hotels":"Hotels",
+    "restaurants":"Restaurants",
+    "attractions":"Attractions",
+    "search":"Search",
+    "rating":"Any Rating",
+    "loadBtn":"Load Places...",
+    "searchBar":"Search...",
+    "filterPlan":"Plan filter",
+    "filterType":"Type filter",
+    "all":"All"
+    
+}

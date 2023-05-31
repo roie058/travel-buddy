@@ -5,7 +5,7 @@ import { Box } from '@mui/system'
 import { Autocomplete } from '@react-google-maps/api'
 import axios from 'axios'
 import moment from 'moment'
-import { useRouter } from 'next/router'
+
 import React, {  useContext, useState } from 'react'
 import { FieldValues, useForm } from 'react-hook-form'
 import UiButton from '../ui/buttons/UiButton'
@@ -14,6 +14,7 @@ import ImageInput from '../ui/inputs/ImageInput'
 import styles from './EditPlan.module.css'
 import { Plan } from '../pageCompnents/Schedule'
 import { PlanContext } from '@/context/plan-context'
+import { useTranslation } from 'next-i18next'
 type Props = {plan:Plan,setOpen:React.Dispatch<React.SetStateAction<boolean>>,openSnackBar:(message: string, severity: AlertColor) => void}
 
 const compereFormData:(data1:FieldValues,data2:Plan)=>boolean=(data1,data2)=>{
@@ -37,7 +38,7 @@ const EditPlan = (props: Props) => {
 const {register,control,setValue,formState,getValues,handleSubmit}=useForm({defaultValues:{ ...props.plan,currency:props.plan.budget.currency,start:new Date(props.plan.start),end:new Date(props.plan.end),budget:props.plan.budget.budget}})
 const [submitError, setSubmitError] = useState<undefined|string>()
 const [isLoading, setIsLoading] = useState<boolean>(false)
-const router=useRouter();
+const{t}=useTranslation("form")
 const planCtx=useContext(PlanContext)
 const onStartDateChange=(e:any)=>{
   setValue('start',e._d)
@@ -73,18 +74,18 @@ setIsLoading(false)
   return (
     <form  className={styles.form} onSubmit={handleSubmit(submitEditing)}>
       <FormControl fullWidth>
-  <TextField fullWidth error={ typeof formState.errors.header?.message  === 'string'} {...register('header',{required:'Trip name is required',maxLength:{value:25,message:'Name must be max 25 cheracters'}})}  defaultValue={getValues('header')} label="Change Name" />
+  <TextField fullWidth error={ typeof formState.errors.header?.message  === 'string'} {...register('header',{required:'Trip name is required',maxLength:{value:25,message:'Name must be max 25 cheracters'}})}  defaultValue={getValues('header')} label={t("editName")} />
   <FormHelperText sx={{color:'#d32f2f'}} >{formState.errors.header?.message}</FormHelperText>
 </FormControl>
 <FormControl fullWidth>
   <Autocomplete className={styles.googleAuto}>
-  <TextField fullWidth error={typeof formState.errors.country?.message  === 'string'}  {...register('country',{required:'Destination is required'})} defaultValue={getValues('country')} label="Change Destination" />
+  <TextField fullWidth error={typeof formState.errors.country?.message  === 'string'}  {...register('country',{required:'Destination is required'})} defaultValue={getValues('country')} label={t("editDestination")} />
   </Autocomplete>
   <FormHelperText sx={{color:'#d32f2f'}} >{formState.errors.country?.message}</FormHelperText>
 </FormControl>
 <Box display={"flex"} width={"100%"}>
 <FormControl fullWidth sx={{flexBasis:'80%'}}>
-    <TextField   label="Budget"  error={typeof formState.errors.budget?.message  === 'string'||Number(getValues('budget'))<=0} type={'number'} {...register('budget',{valueAsNumber:true,min:{value:1,message:'We can not help you manage budget if you travel for free!'}})} />
+    <TextField   label={t("budget")}  error={typeof formState.errors.budget?.message  === 'string'||Number(getValues('budget'))<=0} type={'number'} {...register('budget',{valueAsNumber:true,min:{value:1,message:'We can not help you manage budget if you travel for free!'}})} />
     <FormHelperText sx={{color:'#d32f2f'}} >{formState.errors.budget?.message}</FormHelperText>
 </FormControl>
 <FormControl sx={{flexBasis:'20%'}} >
@@ -104,11 +105,11 @@ setIsLoading(false)
 </Box>
 <Box width={'100%'} gap="10px" display={'flex'}  >
   <FormControl fullWidth>
-<DateInput control={control} value={getValues('start')}   onChange={onStartDateChange}  name='start' label='*Start Date' />
+<DateInput control={control} value={getValues('start')}   onChange={onStartDateChange}  name='start' label={t("startDate")} />
 
 </FormControl>
 {getValues('start') && <FormControl fullWidth>
-<DateInput control={control} value={getValues('end')}   start={getValues('start')} name='end' label='*End Date' />
+<DateInput control={control} value={getValues('end')}   start={getValues('start')} name='end' label={t("endDate")} />
 </FormControl>
 }
 
@@ -116,7 +117,7 @@ setIsLoading(false)
 <FormHelperText sx={{color:'#d32f2f'}} >{formState.errors.start?.message}</FormHelperText>
   <ImageInput value={getValues('image')} setValue={setValue} country={getValues('country')} types={getValues("tags")} />
   {getValues('image').length<=0&&formState.isSubmitted&& <FormHelperText sx={{color:'#d32f2f'}}>Image is Required</FormHelperText>}
-{isLoading?<CircularProgress size={'5rem'}/>:<UiButton disabled={!formState.isValid} clickFn={()=>{}}  submit size='small'>Change Plan</UiButton>}
+{isLoading?<CircularProgress size={'5rem'}/>:<UiButton disabled={!formState.isValid} clickFn={()=>{}}  submit size='small'>{t("changeBtn")}</UiButton>}
 <FormHelperText sx={{color:'#d32f2f'}}>{typeof submitError === 'string'? submitError:''}</FormHelperText>
     </form>
   )

@@ -16,6 +16,7 @@ import { Plan } from '../pageCompnents/Schedule'
 import useSnackBar from '@/hooks/useSnackBar'
 import SnackBar from '../ui/SnackBar'
 import ToolTip from '../ui/ToolTip'
+import { useTranslation } from 'next-i18next'
 
 type Props = {plan?:Plan,plans?:Plan[]}
 
@@ -45,7 +46,7 @@ const {setSnackBar,snackBarProps}=useSnackBar()
 const [open, setOpen] = useState(false)
 const [isLoading, setIsLoading] = useState(false)
 const [flightData, setFlightData] = useState<Flight>()
-
+const{t}=useTranslation("flights")
 const autoCompleteHandler:ChangeEventHandler<HTMLTextAreaElement | HTMLInputElement>=async(e)=>{   
 const {data} =await axios.get(`https://airport-autosuggest.flightright.net/v1/airports/COM?name=${e.target?.value}`)
 setAirportsData(data)
@@ -130,14 +131,14 @@ setError('origin',{message:'Origin Is Required'})
   return (
     <>
     <Card>
-        <CardHeader sx={{textAlign:'center'}} title="Add Flights Manualy"></CardHeader>
+        <CardHeader sx={{textAlign:'center'}} title={t("header")}></CardHeader>
         <CardContent sx={{display:'flex',justifyContent:'center'}} >
             
 <form style={{display:'flex',flexDirection:'column',gap:'30px',maxWidth:"500px"}} onSubmit={handleSubmit((data)=>{submitHandler(data)})}>
     <Box justifyContent={"center"} gap={3} display="flex"  >
 
 <FormControl fullWidth >
-    <ToolTip title='takeoff airport' right='-5%' top='-20%'>
+    <ToolTip title={t("departionTooltip")} right='-5%' top='-20%'>
      <Autocomplete isOptionEqualToValue={(option,value)=>option.iata===value.iata} onChange={(e,value)=>{changeHandler('origin',value)}}   options={airportsData} getOptionLabel={(option)=>option.name} renderOption={(props, option) => 
         {
         return(
@@ -148,11 +149,11 @@ setError('origin',{message:'Origin Is Required'})
           
         </Box>
       )}
-    }  renderInput={(params)=><TextField   onChange={autoCompleteHandler}   label="Origin" {...params}  />} /> 
+    }  renderInput={(params)=><TextField   onChange={autoCompleteHandler}   label={t("origin")} {...params}  />} /> 
    </ToolTip>
 </FormControl>
 <FormControl fullWidth>
-<ToolTip title='landing airport' right='-5%' top='-20%'>
+<ToolTip title={t("arrivalTooltip")} right='-5%' top='-20%'>
  <Autocomplete isOptionEqualToValue={(option,value)=>option.iata===value.iata} onChange={(e,value)=>{changeHandler('destination',value)}}   options={airportsData} getOptionLabel={(option)=>option.name} renderOption={(props, option) => 
         {
         return(
@@ -163,21 +164,21 @@ setError('origin',{message:'Origin Is Required'})
           
         </Box>
       )}
-    }  renderInput={(params)=><TextField   onChange={autoCompleteHandler}   label="Destination" {...params}  />} /> 
+    }  renderInput={(params)=><TextField   onChange={autoCompleteHandler}   label={t("destination")} {...params}  />} /> 
 </ToolTip>
 </FormControl>
 
 </Box>
  <Box justifyContent={"center"} gap={3} display="flex"  >
 <FormControl fullWidth>
-    <DateTimeInput name='start' value={new Date()}  control={control} label="Departure Time" />
+    <DateTimeInput name='start' value={new Date()}  control={control} label={t("departure")} />
 </FormControl>
 <FormControl fullWidth>
-<DateTimeInput name='end' value={new Date()}   control={control} label="Arival Time" />
+<DateTimeInput name='end' value={new Date()}   control={control} label={t("arrival")} />
 </FormControl>
 </Box> 
 <FormControl fullWidth>
-<Autocomplete onChange={(e,value)=>{changeHandler('airline',value)}} isOptionEqualToValue={(option,value)=>option.iata===value.iata}  getOptionLabel={(option:{name:string,iata:string,country:string})=> option.name+" "+ option.iata} options={allAirlines} renderInput={(params)=><TextField    label="Airline" {...params}  />} renderOption={(props, option) => 
+<Autocomplete onChange={(e,value)=>{changeHandler('airline',value)}} isOptionEqualToValue={(option,value)=>option.iata===value.iata}  getOptionLabel={(option:{name:string,iata:string,country:string})=> option.name+" "+ option.iata} options={allAirlines} renderInput={(params)=><TextField    label={t("airline")} {...params}  />} renderOption={(props, option) => 
         {
         return(
         <Box key={option.name}    component="li" sx={{ '& > img': { mr: 2, flexShrink: 0 } }}  {...props}>
@@ -200,20 +201,20 @@ setError('origin',{message:'Origin Is Required'})
 <Box justifyContent={"center"} gap={3} display="flex"   >
 
 <FormControl fullWidth>
-<TextField label="Flight Number" {...register('flightNumber',{required:'Flight Number Is Required'})} />
+<TextField label={t("flightNum")} {...register('flightNumber',{required:'Flight Number Is Required'})} />
 </FormControl>
 <FormControl fullWidth>
-<TextField label="Flight Price" type={'number'} {...register('price',{valueAsNumber:true})} />
+<TextField label={t("price")} type={'number'} {...register('price',{valueAsNumber:true})} />
 </FormControl>
 
 </Box>
 <FormControl fullWidth    >
-<FormLabel  id="demo-radio-buttons-group-label">Type</FormLabel>
-<ToolTip title='select the flight position in trip flight in the start end or other for everything in the middle '>
+<FormLabel  id="demo-radio-buttons-group-label">{t("type")}</FormLabel>
+<ToolTip title={t("positionTooltip")}>
 <RadioGroup  name="radio-buttons-group"   defaultValue={'start'} sx={{justifyContent:'center'}}   row >
-    <FormControlLabel {...register('position')}  defaultChecked value="start" control={<Radio />} label="Start" />
-    <FormControlLabel {...register('position')} value="end"  control={<Radio />} label="End" />
-    <FormControlLabel {...register('position')} value="other"  control={<Radio />} label="Other" />
+    <FormControlLabel {...register('position')}  defaultChecked value="start" control={<Radio />} label={t("start")} />
+    <FormControlLabel {...register('position')} value="end"  control={<Radio />} label={t("end")}/>
+    <FormControlLabel {...register('position')} value="other"  control={<Radio />} label={t("other")} />
 </RadioGroup>
 </ToolTip>
 </FormControl>
@@ -226,7 +227,7 @@ setError('origin',{message:'Origin Is Required'})
 {formState.errors.price?.message&&<FormHelperText  sx={{textAlign:"center",color:'red'}} >{formState.errors.price?.message}</FormHelperText>}
 
 
-{isLoading?<CircularProgress size={'2rem'}/>:<UiButton submit size='small' clickFn={()=>{}} >Add</UiButton>}
+{isLoading?<CircularProgress size={'2rem'}/>:<UiButton submit size='small' clickFn={()=>{}} >{t("addBtn")}</UiButton>}
 
 </form>
         </CardContent>

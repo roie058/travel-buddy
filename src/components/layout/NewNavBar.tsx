@@ -1,5 +1,5 @@
 
-import { Button, Divider, Drawer, List, ListItem, Menu, MenuItem, useMediaQuery } from '@mui/material'
+import { Button, Divider, Drawer, IconButton, List, ListItem, Menu, MenuItem, Select, useMediaQuery } from '@mui/material'
 
 
 import Image from 'next/image'
@@ -11,6 +11,7 @@ import styles from './NewNavBar.module.css'
 import Link from 'next/link'
 import { Box } from '@mui/system'
 import { AccountIcon, LogoIcon } from '../svgComponents'
+import { useTranslation } from 'next-i18next'
 
 
 type Props = {}
@@ -19,7 +20,7 @@ const NewNavBar = (props: Props) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [openNav, setOpenNav] = useState<boolean>(false);
 const {data:session}=useSession()
-
+const {t}=useTranslation()
 
   const open = Boolean(anchorEl);
 const router=useRouter()
@@ -54,21 +55,27 @@ const router=useRouter()
    <li>
    
    </li>
-  <li><Link className={(router.pathname ==='/plans')? styles.selected_link : styles.link} href={'/plans'}> My Trips </Link></li>
+  <li><Link className={(router.pathname ==='/plans')? styles.selected_link : styles.link} href={'/plans'}> {t('nav.myTrips')} </Link></li>
    <li>
-   <Link className={(router.pathname ==='/map')? styles.selected_link : styles.link} href={'/map'}> Map</Link> 
+   <Link className={(router.pathname ==='/map')? styles.selected_link : styles.link} href={'/map'}> {t('nav.map')}</Link> 
    </li>
    <li>
-   <Link className={(router.pathname ==='/flights')? styles.selected_link : styles.link} href={'/flights'}>Flights</Link>   
+   <Link className={(router.pathname ==='/flights')? styles.selected_link : styles.link} href={'/flights'}>{t('nav.flights')}</Link>   
    </li>
    <li>
-   <Link className={(router.pathname ==='/weather')? styles.selected_link : styles.link} href={'/weather'}>Weather</Link>   
+   <Link className={(router.pathname ==='/weather')? styles.selected_link : styles.link} href={'/weather'}>{t('nav.weather')}</Link>   
    </li>
    
    
   
     </ul>}
     
+   <Box >
+
+ {isMobile&&<Select onChange={(e)=>{ router.push(router.asPath,undefined,{locale:String(e.target.value)})  }} variant="standard" defaultValue={router.locale} >
+    <MenuItem value={"he"}><Image width={20} height={15} alt={"hebrew"}    src={'https://flagcdn.com/40x30/il.webp'}  />  He</MenuItem>
+    <MenuItem value={"en"}><Image width={20} height={14} alt={"english"}    src={'https://flagcdn.com/40x30/gb.webp'}  />  En</MenuItem>
+  </Select>}
    {session?.user?
           <Button
         id="button"
@@ -84,9 +91,9 @@ const router=useRouter()
       <Button
       onClick={()=>{router.push('/auth') } }
     >
-     Login
+    {t("profile.login")}
     </Button>}
-    
+    </Box> 
     <Menu
         id="menu"
         aria-labelledby="button"
@@ -100,9 +107,9 @@ const router=useRouter()
         }}
         disableScrollLock
         >
-        <MenuItem onClick={()=>{ router.push('/plans'),handleCloseMenu()}}>All Trips</MenuItem>
-        <MenuItem onClick={()=>{ router.push('/newplan'),handleCloseMenu()}}>New Plan</MenuItem>
-        <MenuItem onClick={()=>{signOut() ;handleCloseMenu()}}>Logout</MenuItem>
+        <MenuItem onClick={()=>{ router.push('/plans'),handleCloseMenu()}}>{t('profile.alltrips')}</MenuItem>
+        <MenuItem onClick={()=>{ router.push('/newplan'),handleCloseMenu()}}>{t('profile.newPlan')}</MenuItem>
+        <MenuItem onClick={()=>{signOut() ;handleCloseMenu()}}>{t('profile.logout')}</MenuItem>
       </Menu>
     
     <Drawer PaperProps={{sx:{width:'100%'}}} sx={{width:'100%'}} anchor='left' open={openNav} onClose={()=>{setOpenNav(false)}}><Box width={"100%"}>
@@ -113,11 +120,16 @@ const router=useRouter()
             <ListItem   sx={{justifyContent:'center',borderRadius:'50%',overflow:"hidden",width:'70px',height:'70px'}} onClick={()=>setOpenNav(false)}><Link href={'/'}>
         <LogoIcon  width={80} height={80}  />
         </Link></ListItem>
-<ListItem sx={{justifyContent:'center'}} onClick={()=>setOpenNav(false)}  ><Link className={(router.pathname ==='/plans')? styles.selected_link : styles.link} href={'/plans'}> My Trips </Link></ListItem>
-<ListItem sx={{justifyContent:'center'}} onClick={()=>setOpenNav(false)}><Link className={(router.pathname ==='/map')? styles.selected_link : styles.link} href={'/map'}> Map</Link> </ListItem>
-<ListItem sx={{justifyContent:'center'}} onClick={()=>setOpenNav(false)}><Link className={(router.pathname ==='/flights')? styles.selected_link : styles.link} href={'/flights'}>Flights</Link> </ListItem>
-<ListItem sx={{justifyContent:'center'}} onClick={()=>setOpenNav(false)}><Link className={(router.pathname ==='/weather')? styles.selected_link : styles.link} href={'/weather'}>Weather</Link> </ListItem>
+<ListItem sx={{justifyContent:'center'}} onClick={()=>setOpenNav(false)}  ><Link className={(router.pathname ==='/plans')? styles.selected_link : styles.link} href={'/plans'}>{t('nav.myTrips')}</Link></ListItem>
+<ListItem sx={{justifyContent:'center'}} onClick={()=>setOpenNav(false)}><Link className={(router.pathname ==='/map')? styles.selected_link : styles.link} href={'/map'}>{t('nav.map')}</Link> </ListItem>
+<ListItem sx={{justifyContent:'center'}} onClick={()=>setOpenNav(false)}><Link className={(router.pathname ==='/flights')? styles.selected_link : styles.link} href={'/flights'}>{t('nav.flights')}</Link> </ListItem>
+<ListItem sx={{justifyContent:'center'}} onClick={()=>setOpenNav(false)}><Link className={(router.pathname ==='/weather')? styles.selected_link : styles.link} href={'/weather'}>{t('nav.weather')}</Link> </ListItem>
+       <ListItem sx={{justifyContent:'center'}}><Select  onChange={(e)=>{ setOpenNav(false);router.push(router.asPath,undefined,{locale:String(e.target.value)})  }} variant="standard" defaultValue={router.locale} >
+    <MenuItem value={"he"}><Image width={20} height={15} alt={"hebrew"}    src={'https://flagcdn.com/40x30/il.webp'}  />  He</MenuItem>
+    <MenuItem value={"en"}><Image width={20} height={14} alt={"english"}    src={'https://flagcdn.com/40x30/gb.webp'}  />  En</MenuItem>
+  </Select></ListItem> 
         </List>
+      
         </Box></Drawer>
   </nav>
   <Divider/>
@@ -126,3 +138,4 @@ const router=useRouter()
 }
 
 export default NewNavBar
+

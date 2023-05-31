@@ -11,11 +11,13 @@ import { AddedIcon, EditIcon, FlightIcon, HotelIcon, ScheduleIcon, WeatherIcon }
 import SnackBar from '../ui/SnackBar'
 import useSnackBar from '@/hooks/useSnackBar'
 import ToolTip from '../ui/ToolTip'
+import { useTranslation } from 'next-i18next'
 
 
 type Props = {plan:Plan}
 
 const DashBtn:React.FC<{image:ReactElement,title:string,link:string}>=({image,title,link})=>{
+
 
  return <Link href={link} style={{textDecoration:'none'}}>
   <Card className={styles.btn} elevation={5}    sx={{flexGrow:'3',minHeight:'10vh',display:'flex',alignItems:'center',backgroundColor:'#fefefe'}} >
@@ -34,6 +36,7 @@ const DashBtn:React.FC<{image:ReactElement,title:string,link:string}>=({image,ti
 const DashBtns = (props: Props) => {
     const{ query}=useRouter()
     const [isModal, setIsModal] = useState<boolean>(false);
+    const {t}=useTranslation("plan")
 const {setSnackBar,snackBarProps}=useSnackBar()
   
     const handleClickModal = (event: React.MouseEvent<HTMLElement>) => {
@@ -49,8 +52,8 @@ const {setSnackBar,snackBarProps}=useSnackBar()
 
   return (
     <>
-     <ToolTip title='the schedule page where you handle the trip itinerary' top='-15%'  >
-    <DashBtn title='Schedule' link={`/plans/${query.planId}/schedule`} image={ <ScheduleIcon width={40} height={40} />}/>
+     <ToolTip title={t("scheduleTooltip")} top='-15%'  >
+    <DashBtn title={t("schedule")} link={`/plans/${query.planId}/schedule`} image={ <ScheduleIcon width={40} height={40} />}/>
     </ToolTip>
     
     <Button
@@ -66,23 +69,23 @@ const {setSnackBar,snackBarProps}=useSnackBar()
     <Card elevation={5}    sx={{flexGrow:'3',minHeight:'10vh',display:'flex',alignItems:'center',backgroundColor:'#fefefe'}} >
     <CardContent sx={{display:'flex',alignItems:'center',gap:'15px',marginLeft:'10%'}}>
   <EditIcon width={40} height={40}/>
-  <Typography variant="h2" fontSize={'2rem'} textTransform={"capitalize"} >Edit Plan</Typography>
+  <Typography variant="h2" fontSize={'2rem'} textTransform={"capitalize"} >{t("edit")}</Typography>
 
   </CardContent>
     </Card>
    
     </Button> 
-    <ToolTip title='here you can view all the places you added and search for new ones' top='-15%'  >
-    <DashBtn title='All Places' link={`/plans/${query.planId}/likedPlaces`} image={<AddedIcon width={40} height={40}/>}/>
+    <ToolTip title={t("allPlacesTooltip")} top='-15%'  >
+    <DashBtn title={t("all")} link={`/plans/${query.planId}/likedPlaces`} image={<AddedIcon width={40} height={40}/>}/>
     </ToolTip>
-    <ToolTip title='add your flight tickets and manage existing flights' top='-15%'  >
-    <DashBtn title='flights' link={`/plans/${query.planId}/flights`} image={<FlightIcon width={40} height={40}/>}/>
+    <ToolTip title={t("flightsTooltip")} top='-15%'  >
+    <DashBtn title={t("flights")} link={`/plans/${query.planId}/flights`} image={<FlightIcon width={40} height={40}/>}/>
     </ToolTip>
-    <ToolTip title='add your hotel reservations and manage existing ones' top='-15%'  >
-    <DashBtn title='Hotels' link={`/plans/${query.planId}/hotels`} image={<HotelIcon width={40} height={40}/>}/>
+    <ToolTip title={t("hotelsTooltip")} top='-15%'  >
+    <DashBtn title={t("hotels")} link={`/plans/${query.planId}/hotels`} image={<HotelIcon width={40} height={40}/>}/>
     </ToolTip>
-    <ToolTip title='check the weather anywhere' top='-15%'  >
-    <DashBtn title='weather' link={`/weather`} image={<WeatherIcon width={40} height={40}/>}/>
+    <ToolTip title={t("weatherTooltip")} top='-15%'  >
+    <DashBtn title={t("weather")} link={`/weather`} image={<WeatherIcon width={40} height={40}/>}/>
     </ToolTip>
    
     <Modal  open={isModal} sx={{zIndex:'10'}} onClose={handleCloseModal}><Box sx={ {position: 'absolute' as 'absolute',
@@ -96,7 +99,7 @@ const {setSnackBar,snackBarProps}=useSnackBar()
   boxShadow: 24,
   p: 4,}}>
     <Typography id="modal-modal-title" variant="h6" component="h2">
-      Change Date
+      {t("edit")}
     </Typography>
   
       <EditPlan openSnackBar={setSnackBar} setOpen={setIsModal} plan={props.plan} />

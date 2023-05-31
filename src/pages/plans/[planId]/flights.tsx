@@ -25,3 +25,16 @@ const flights = (props: Props) => {
 }
 
 export default flights
+
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+
+export async function getServerSideProps({ locale }) {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, [
+        "common","flights"
+      ])),
+      // Will be passed to the page component as props
+    },
+  }
+}

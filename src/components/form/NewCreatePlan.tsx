@@ -19,6 +19,7 @@ import Image from 'next/image'
 import TravelBg from '../../../public/images/travelBg.webp'
 import { NewSesstion } from '@/pages/api/auth/signup'
 import ToolTip from '../ui/ToolTip'
+import { useTranslation } from 'next-i18next'
 
  type Props = {}
 
@@ -49,6 +50,7 @@ const newCodes=JSON.parse(JSON.stringify(codes))
 const newStates=JSON.parse(JSON.stringify(states))
 
 const NewCreatePlan = (props: Props) => {
+  const {t}=useTranslation("form")
   const countries=['Africa','East Asia',"Oceania","Middle East","South America","Central America","North America","Europe",...Object.keys(states)]
   const {data:session}=useSession()
   const [selectedCountry,setSelectedCountry]=useState<null|string>(null)
@@ -108,18 +110,18 @@ const isMobile=useMediaQuery("(max-width:800px)")
       <Image  priority src={TravelBg} alt='bg' style={{width:'100%',height:'100%',position:'absolute',objectFit:"cover"}}   sizes='150vh'/>
       <Card  sx={{minWidth:'70%',width:'100%',backgroundColor:'white',justifyContent:'center',alignItems:'center',display:'flex',flexDirection:"column",position:'relative',overflow:'visible' }}>
       <CardMedia      image='/images/roundlogo.svg' sx={{backgroundSize:isMobile?"contain":"cover",position:isMobile?'static':'absolute',top:'70%',left:"80%",width:isMobile? 150:230,height:isMobile?150:230}} />
-        <CardHeader  title="Create Trip" sx={{textAlign:'center',textDecoration:'underline',marginTop:'3%',fontWeight:'bolder'}} />
+        <CardHeader  title={t("createHeader")} sx={{textAlign:'center',textDecoration:'underline',marginTop:'3%',fontWeight:'bolder'}} />
 <form className={styles.form}  onSubmit={handleSubmit(submitHandler)}>
 
     <Box  width={"600px"} maxWidth={"100%"} minWidth={"100%"} minHeight={"25vh"} height={"100%"} display={step===0? 'flex' : 'none'} flexDirection={"column"} justifyContent={"center"} rowGap={"25px"}>
   <FormControl fullWidth>
-    <ToolTip title='name of the trip'>
+    <ToolTip title={t("nameTooltip")}>
   
-    <TextField   label="*Trip Name"  error={ typeof formState.errors.title?.message  === 'string'} {...register('title',{required:'Trip name is required',maxLength:{value:25,message:'Name must be max 25 cheracters'}})}  variant="outlined" fullWidth />
+    <TextField   label={"*"+t("name")}  error={ typeof formState.errors.title?.message  === 'string'} {...register('title',{required:'Trip name is required',maxLength:{value:25,message:'Name must be max 25 cheracters'}})}  variant="outlined" fullWidth />
     </ToolTip>
  <FormHelperText sx={{color:'#d32f2f'}} >{formState.errors.title?.message}</FormHelperText>
   </FormControl>
-  <ToolTip title='Pick a destination for the trip'>
+  <ToolTip title={t("destinationTooltip")}>
 <Box width={'100%'} gap="10px"    display={'flex'}   >
   <FormControl fullWidth >
   
@@ -145,7 +147,7 @@ const isMobile=useMediaQuery("(max-width:800px)")
     </Box>
   )}
     }
-  renderInput={(params) => <TextField  error={typeof formState.errors.country?.message  === 'string'}  {...register('country',{required:'Country is required'})}      {...params}  label="*Country name here" />}/>
+  renderInput={(params) => <TextField  error={typeof formState.errors.country?.message  === 'string'}  {...register('country',{required:'Country is required'})}      {...params}  label={"*"+t("destination")} />}/>
   
    <FormHelperText sx={{color:'#d32f2f'}} >{formState.errors.country?.message}</FormHelperText>
   </FormControl>
@@ -154,7 +156,7 @@ const isMobile=useMediaQuery("(max-width:800px)")
   id="combo-box-demo"
   options={selectedCities}
   
-  renderInput={(params) => <TextField {...register('city')}       {...params}   label="City Name here" />}/>
+  renderInput={(params) => <TextField {...register('city')}       {...params}   label={t("city")} />}/>
   </FormControl>}
   </Box>
   </ToolTip>
@@ -163,24 +165,24 @@ const isMobile=useMediaQuery("(max-width:800px)")
 
 
 <Box  width={"600px"} maxWidth={"100%"} minWidth={"100%"} minHeight={"25vh"} height={"100%"} display={step===1? 'flex' : 'none'} flexDirection={"column"} justifyContent={"center"} rowGap={"25px"}>
-<ToolTip title='pick the dates of your trip'>
+<ToolTip title={t("datesTooltip")}>
 <Box width={'100%'} gap="10px" display={'flex'}  >
   <FormControl fullWidth>
-<DateInput control={control}   onChange={onStartDateChange}  name='start' label='*Start Date' />
+<DateInput control={control}   onChange={onStartDateChange}  name='start' label={'*'+t("startDate")} />
 
 </FormControl>
 {startDate && <FormControl fullWidth>
-<DateInput control={control}    start={startDate} name='end' label='*End Date' />
+<DateInput control={control}    start={startDate} name='end' label={'*'+t("endDate")} />
 </FormControl>
 }
 
 </Box>
 </ToolTip>
 <FormHelperText sx={{color:'#d32f2f'}} >{formState.errors.start?.message}</FormHelperText>
-<ToolTip title='Travel buddy will help you keep track of your budget'>
+<ToolTip title={t("budgetTooltip")}>
 <Box display={"flex"} width={"100%"}>
 <FormControl fullWidth sx={{flexBasis:'80%'}}>
-    <TextField   label="Budget"  error={typeof formState.errors.budget?.message  === 'string'||Number(getValues('budget'))<=0} type={'number'} {...register('budget',{valueAsNumber:true,min:{value:1,message:'We can not help you manage budget if you travel for free!'}})} />
+    <TextField   label={t("budget")}  error={typeof formState.errors.budget?.message  === 'string'||Number(getValues('budget'))<=0} type={'number'} {...register('budget',{valueAsNumber:true,min:{value:1,message:'We can not help you manage budget if you travel for free!'}})} />
     <FormHelperText sx={{color:'#d32f2f'}} >{formState.errors.budget?.message}</FormHelperText>
 </FormControl>
 <FormControl sx={{flexBasis:'20%'}} >
@@ -210,7 +212,7 @@ const isMobile=useMediaQuery("(max-width:800px)")
 <ImageInput setValue={setValue} country={`${getValues('city')},${getValues('country')}`} types={getValues('type')} />
 {getValues('image').length<=0&&formState.isSubmitted&& <FormHelperText sx={{color:'#d32f2f'}}>Image is Required</FormHelperText>}
 <>
-{isLoading?<CircularProgress size={'5rem'}/>: <UiButton disabled={!formState.isValid} submit className={styles.submitBtn} clickFn={()=>{}} size='large' color='blue'>Create Trip</UiButton>}
+{isLoading?<CircularProgress size={'5rem'}/>: <UiButton disabled={!formState.isValid} submit className={styles.submitBtn} clickFn={()=>{}} size='large' color='blue'>{t("createBtn")}</UiButton>}
 {submitError&& <FormHelperText>{typeof submitError === 'string'? submitError:''}</FormHelperText>}
 </>
 
@@ -222,8 +224,8 @@ const isMobile=useMediaQuery("(max-width:800px)")
 
 
 <ButtonGroup>
-<Button disabled={step===0} onClick={()=>{setStep((step)=>step-1)}}>Back</Button>
-<Button disabled={step===3} onClick={()=>{setStep((step)=>step+1)}}>Next</Button>
+<Button disabled={step===0} onClick={()=>{setStep((step)=>step-1)}}>{t("back")}</Button>
+<Button disabled={step===3} onClick={()=>{setStep((step)=>step+1)}}>{t("next")}</Button>
 </ButtonGroup>
 </form>
       </Card>

@@ -11,10 +11,11 @@ import GoogleMapReact from 'google-map-react'
 import Image from 'next/image'
 
 
-import React, { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react'
+import React, { useCallback, useContext, useEffect, useRef, useState } from 'react'
 import { RoutineItem } from './DayList'
 import { Days } from '@/components/pageCompnents/Schedule'
 import moment from 'moment'
+import { useTranslation } from 'next-i18next'
 
 type Props = {day:Days,index:number,start?:Flight["destination"]|IPlace,end?:Flight["origin"]|IPlace}
 
@@ -34,7 +35,7 @@ const DaySummery = (props: Props) => {
   const  [budget,setBudget]=useState<Number>(reduced(props.day.rutine))
   const  [mapRef,setMapRef]=useState<any>()
   const  [mapsRef,setMapsRef]=useState<any>()
-
+const {t}=useTranslation("day")
   const  [dailyBudget,setDailyBudget]=useState<Number>()
   const [defaultLocation,setDefaultLocation]=useState<{lat:number,lng:number}>()
   const [weather,setWeather]=useState<{rainProb:string,icon:string,temp:string,weatherType:string}>(props.day.weather)
@@ -189,10 +190,10 @@ onGoogleApiLoaded={({ map, maps }) =>{setMapRef(map);
 <Box >
  {diractionArr&& <Table  size={isMobile?"small":'medium'} {...isMobile? {padding:"none"}:''} >
         <TableHead  ><TableRow >
-            <TableCell  sx={{fontSize:!isMobile?"initial":'0.7rem'}}>Origin</TableCell>
-            <TableCell sx={{fontSize:!isMobile?"initial":'0.7rem'}}>Destination</TableCell>
-            <TableCell sx={{fontSize:!isMobile?"initial":'0.7rem'}}>Travel Time</TableCell>
-            <TableCell sx={{fontSize:!isMobile?"initial":'0.7rem'}}>Distance</TableCell>
+            <TableCell  sx={{fontSize:!isMobile?"initial":'0.7rem'}}>{t("origin")}</TableCell>
+            <TableCell sx={{fontSize:!isMobile?"initial":'0.7rem'}}>{t("destination")}</TableCell>
+            <TableCell sx={{fontSize:!isMobile?"initial":'0.7rem'}}>{t("travelTime")}</TableCell>
+            <TableCell sx={{fontSize:!isMobile?"initial":'0.7rem'}}>{t("distance")}</TableCell>
             </TableRow></TableHead>
         <TableBody>
 { diractionArr.legs.map((leg)=>{
@@ -210,14 +211,14 @@ onGoogleApiLoaded={({ map, maps }) =>{setMapRef(map);
     <Table >
     <TableHead><TableRow>
             <TableCell></TableCell>
-            <TableCell>Current</TableCell>
-            <TableCell>Daily</TableCell>
-            <TableCell>diff</TableCell>
+            <TableCell>{t("current")}</TableCell>
+            <TableCell>{t("daily")}</TableCell>
+            <TableCell>{t("diff")}</TableCell>
             
             </TableRow></TableHead>
         <TableBody>
             <TableRow>
-                <TableCell>Budget</TableCell>
+                <TableCell>{t("budget")}</TableCell>
                 <TableCell>{String(budget)+currency}</TableCell>
                 <TableCell>{String(dailyBudget)+currency}</TableCell>
                 <TableCell sx={{color:Number(dailyBudget) < Number(budget)?'red':'green'}} >{String(Number(dailyBudget)-Number(budget))+currency}</TableCell>

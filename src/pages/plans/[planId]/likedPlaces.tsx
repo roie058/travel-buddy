@@ -21,3 +21,16 @@ const likedPlaces = (props: Props) => {
 }
 
 export default likedPlaces
+
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+
+export async function getServerSideProps({ locale }) {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, [
+        "common","allLiked"
+      ])),
+      // Will be passed to the page component as props
+    },
+  }
+}

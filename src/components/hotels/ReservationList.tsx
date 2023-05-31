@@ -10,6 +10,7 @@ import React, { useCallback, useState } from 'react'
 import { Hotel, Plan } from '../pageCompnents/Schedule'
 import useSnackBar from '@/hooks/useSnackBar'
 import SnackBar from '../ui/SnackBar'
+import { useTranslation } from 'next-i18next'
 
 
 
@@ -17,7 +18,7 @@ type Props = {plan?:Plan,plans?:Plan[]}
 const ReservationList = (props: Props) => {
   const {setSnackBar,snackBarProps} =useSnackBar()
 const [, updateState] = useState<any>();
-
+const{t}=useTranslation("hotels")
   const forceUpdate = useCallback(() => updateState({}), []);
   let reservationList:Array<Hotel>=[]
   if(props.plan){
@@ -62,7 +63,7 @@ if(data.success){
     <>
     <Box width={'100%'} height="100%">
     <Card sx={{height:'100%',borderRadius:'0' }}>
-    <CardHeader sx={{textAlign:'center'}} title="My Reservations"></CardHeader>
+    <CardHeader sx={{textAlign:'center'}} title={t("header2")}></CardHeader>
     <Divider/>
     <CardContent sx={{minHeight:'50vh'}}>
     
@@ -77,8 +78,8 @@ if(data.success){
         
         <ListItemText sx={{flexGrow:"100%",flexBasis:"50%"}}>{moment(reservation.start).format('DD/MM/YYYY')=== moment(reservation.end).format('DD/MM/YYYY')?moment(reservation.start).format('DD/MM/YYYY'):moment(reservation.start).format('DD/MM/YYYY')}</ListItemText>
         <ListItemText sx={{flexGrow:"100%",flexBasis:"50%"}}>{ moment(reservation.end).format('DD/MM/YYYY')}</ListItemText>
-        <ListItemText sx={{flexGrow:"100%",flexBasis:"50%"}} >{reservation.nightPrice+(props.plan.budget.currency??'$')} Night</ListItemText>
-        <ListItemText sx={{flexGrow:"100%",flexBasis:"50%"}} >{moment(reservation.end).diff(moment(reservation.start),'days') } Nights</ListItemText>
+        <ListItemText sx={{flexGrow:"100%",flexBasis:"50%"}} >{reservation.nightPrice+(props.plan.budget.currency??'$')} {t("night")} </ListItemText>
+        <ListItemText sx={{flexGrow:"100%",flexBasis:"50%"}} >{moment(reservation.end).diff(moment(reservation.start),'days') } {t("nights")}</ListItemText>
         </Box>
         <ListItemButton onClick={()=>{deleteHotelHandler(reservation,index)}} sx={{flexGrow:'0',width:"30px",height:'30px',padding:'0',textAlign:'center',justifyContent:'center'}}><Image alt='delete' fill sizes='30px' src={DeleteIcon}/></ListItemButton>
         
