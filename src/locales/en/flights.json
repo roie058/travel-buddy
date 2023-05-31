@@ -1,0 +1,19 @@
+{
+    "header":"Add Flights Manualy",
+    "header2":"My Flights",
+    "origin":"Origin",
+    "destination":"Destination",
+    "departure":"Departure Time",
+    "arrival":"Arrival Time",
+    "airline":"Airline",
+    "flightNum":"Flight Number",
+   "price":"Price",
+    "type":"Type",
+    "start":"Start",
+    "end":"End",
+    "other":"Other",
+    "addBtn":"Add",
+    "departionTooltip":"takeoff airport",
+"arrivalTooltip":"landing airport",
+"positionTooltip":"select the flight position in trip flight in the start end or other for everything in the middle"
+}

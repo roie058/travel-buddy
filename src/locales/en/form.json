@@ -1,0 +1,37 @@
+{
+    "changeHeader":"Edit Plan",
+    "createHeader":"Create Plan",
+    "name":"Plan Name",
+    "editName":"Change Name",
+    "destination":"Country name here",
+    "city":"City name here",
+    "editDestination":"Change Destination",
+    "budget":"Budget",
+    "selected":"Selected",
+    "imageBtn":"Pick Image",
+    "changeBtn":"Change Plan",
+    "createBtn":"Create Plan",
+    "startDate":"Start Date",
+    "endDate":"End Date",
+    "type":"Pick Trip Type",
+    "next":"Next",
+    "back":"Back",
+"weather":{
+    "header":"Check the weather",
+    "location":"Enter a location",
+    "btn":"Check Weather",
+    "sunrise":"Sunrise",
+    "sunset":"Sunset",
+    "humidity":"humidity",
+    "rainProb":"Chance of rain",
+    "uv":"UV index"
+},
+
+    "nameTooltip":"name of the trip",
+        "destinationTooltip":"Pick a destination for the trip",
+        "datesTooltip":"pick the dates of your trip",
+        "budgetTooltip":"Travel buddy will help you keep track of your budget",
+        "imageTooltip":"pick an image to customize your trip",
+        "typeTooltip":"Pick the type of experience you are planning"
+
+}

@@ -1,0 +1,16 @@
+{
+"header":"Liked Hotels",
+"addBtn":"Add Reservation",
+"mapref":"Want to find more hotels? check out the",
+"mapLink":"Map",
+"form":{
+    "header":"Add Reservation for",
+    "startDate":"Start Date",
+    "endDate":"End Date",
+    "ppn":"Price per Night",
+    "button":"Add"
+},
+"header2":"My Reservations",
+"night":"Night",
+"nights":"Nights"
+}
