@@ -70,7 +70,7 @@ const router=useRouter()
   
     </ul>}
     
-   <Box >
+   <Box sx={{justifySelf:'flex-end',display:"flex"}} >
 
  {isMobile&&<Select onChange={(e)=>{ router.push(router.asPath,undefined,{locale:String(e.target.value)})  }} variant="standard" defaultValue={router.locale} >
     <MenuItem value={"he"}><Image width={20} height={15} alt={"hebrew"}    src={'https://flagcdn.com/40x30/il.webp'}  />  He</MenuItem>
@@ -83,7 +83,7 @@ const router=useRouter()
         aria-haspopup="true"
         aria-expanded={open ? 'true' : undefined}
         onClick={handleClickMenu }
-        sx={{justifySelf:'flex-end'}}
+        
       >
         {session.user?.image? <Image priority src={session.user?.image} alt='profile' style={{borderRadius:'45px'}} height={45} width={45}/>:<AccountIcon fillOpacity={0.4} height={45} width={45}/>}
       
