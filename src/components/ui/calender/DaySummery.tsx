@@ -16,6 +16,7 @@ import { RoutineItem } from './DayList'
 import { Days } from '@/components/pageCompnents/Schedule'
 import moment from 'moment'
 import { useTranslation } from 'next-i18next'
+import { useRouter } from 'next/router'
 
 type Props = {day:Days,index:number,start?:Flight["destination"]|IPlace,end?:Flight["origin"]|IPlace}
 
@@ -45,7 +46,7 @@ const planCtx=useContext(PlanContext)
 const [, updateState] = useState<any>();
 const forceUpdate = useCallback(() => updateState({}), []);
 const currency=planCtx.plan?.budget?.currency??"$"
-
+const {locale}=useRouter()
 useEffect(()=>{
 const getDefaultLocation=async ()=>{
   const geo=new google.maps.Geocoder()
@@ -58,14 +59,14 @@ const setNewWeather=async()=>{
   
   if(props.start&& isPlace(props.start) ){
 try {
-  const {data}=  await axios.get("/api/weather/getWeather",{params:{planId:planCtx?.plan._id,index:props.index,location:`${props.start?.latitude},${props.start?.longitude}`}})
+  const {data}=  await axios.get("/api/weather/getWeather",{params:{locale,planId:planCtx?.plan._id,index:props.index,location:`${props.start?.latitude},${props.start?.longitude}`}})
   setWeather(data.weather);
   setLiveWeather(data.liveWeather)
 } catch (error) {
   
 }}else if(props.start&& !isPlace(props.start)){
   try {
-  const {data}=  await axios.get("/api/weather/getWeather",{params:{planId:planCtx?.plan._id,index:props.index,location:`${props.start?.lat},${props.start?.lng}`}})
+  const {data}=  await axios.get("/api/weather/getWeather",{params:{locale,planId:planCtx?.plan._id,index:props.index,location:`${props.start?.lat},${props.start?.lng}`}})
   setWeather(data.weather);
   setLiveWeather(data.liveWeather)
 } catch (error) {

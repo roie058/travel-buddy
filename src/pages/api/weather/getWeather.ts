@@ -18,14 +18,14 @@ dbConnect().catch(err=>res.json(err))
 if(method==='GET'){
 if(!req.query)return res.status(400).json({error:'data is missing'})
 
-const {planId,index,location}=req.query
+const {planId,index,location,locale}=req.query
 try {
     // @ts-ignore
     const plan=await Plan.findById(planId)
  const date= moment(new Date(plan.days[Number(index)].date)).format('YYYY-MM-DD');
     
-const {data:curWeather}=await axios.get(`https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${location}/${date}?unitGroup=metric&elements=datetime%2Ctemp%2Cprecipprob%2Cconditions%2Cicon&include=days%2Ccurrent&key=${process.env.WEATHER_KEY}&contentType=json`)
-const {data:liveWeather}=await axios.get(`https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${location}/today?unitGroup=metric&elements=datetime%2Ctempmax%2Ctempmin%2Ctemp%2Cprecipprob%2Cconditions%2Cdescription%2Cicon&include=days%2Ccurrent&key=${process.env.WEATHER_KEY}&contentType=json`)
+const {data:curWeather}=await axios.get(`https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${location}/${date}?unitGroup=metric&elements=datetime%2Ctemp%2Cprecipprob%2Cconditions%2Cicon&include=days%2Ccurrent&key=${process.env.WEATHER_KEY}&lang=${locale}&contentType=json`)
+const {data:liveWeather}=await axios.get(`https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${location}/today?unitGroup=metric&elements=datetime%2Ctempmax%2Ctempmin%2Ctemp%2Cprecipprob%2Cconditions%2Cdescription%2Cicon&include=days%2Ccurrent&key=${process.env.WEATHER_KEY}&lang=${locale}&contentType=json`)
     
   const weather={temp:String(Math.round(curWeather.days[0].temp)),rainProb:String(curWeather.days[0].precipprob),icon:curWeather.days[0].icon,weatherType:curWeather.days[0].conditions}   
   const weatherLive={temp:String(Math.round(liveWeather.currentConditions.temp)),rainProb:String(liveWeather.currentConditions.precipprob),icon:liveWeather.currentConditions.icon,weatherType:liveWeather.currentConditions.conditions}   

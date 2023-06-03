@@ -9,6 +9,7 @@ import axios from 'axios'
 import Image from 'next/image'
 import UiButton from '../ui/buttons/UiButton'
 import { useTranslation } from 'next-i18next'
+import { useRouter } from 'next/router'
 
 type hour={
     cloudcover: number
@@ -91,7 +92,7 @@ const [isLoading, setIsLoading] = useState(false)
 const [days, setDays] = useState<Weather[]>()
 const {t}=useTranslation("form")
 const onLoad=(autoC: google.maps.places.Autocomplete)=>{ setAutocomplete(autoC)}
-
+const {locale}=useRouter()
 const onPlaceChanged=()=>{
 const lat=autocomplete?.getPlace().geometry?.location?.lat()
 const lng=autocomplete?.getPlace().geometry?.location?.lng()
@@ -103,7 +104,7 @@ setLocation({lng,lat})
 const onClickHandler=async()=>{
 if(endDate&&startDate&&location){
     setIsLoading(true)
-   const {data} =await axios.get("/api/weather/getWeatherByDates",{params:{start:startDate,end:endDate,location:`${location.lat},${location.lng}`}})
+   const {data} =await axios.get("/api/weather/getWeatherByDates",{params:{start:startDate,end:endDate,location:`${location.lat},${location.lng}`,locale}})
 if(data.success){
     console.log(data);
     setDays(data.weather)
