@@ -22,7 +22,6 @@ try {
     // @ts-ignore
 const plan=await Plan.findById(planId)
 
-
  plan.flights.push(flight)
 
  await plan.save()

@@ -11,5 +11,9 @@
         "logout":"Logout",
         "login":"Login",
         "edit":"Edit"
+    },
+    "errorMsg":{
+        "deletePlan":"Plan Removed!",
+        "fetchPlans":"Error! please refresh and try again..."
     }
 }

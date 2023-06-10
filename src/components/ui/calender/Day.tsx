@@ -1,12 +1,12 @@
 
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import DayBar from './DayBar'
 import styles from './Day.module.css'
 
 import DayList from './DayList'
 
 import DaySummery from './DaySummery'
-import { Box, Grid } from '@mui/material'
+import { Box } from '@mui/material'
 import { Flight } from '@/components/flights/AddFlightModal'
 
 import FlightCard from '@/components/flights/FlightCard'
@@ -24,8 +24,7 @@ const [startFlight, setStartFlight] = useState<Flight>()
 const [endFlight, setEndFlight] = useState<Flight>()
 const [hotel, setHotel] = useState<Hotel>()
 const [endHotel, setendHotel] = useState<boolean>(false)
-const [, updateState] = useState<any>();
-const forceUpdate = useCallback(() => updateState({}), []);
+
 const [middleFlight, setMiddleFlight] = useState<Flight[]>()
 
 
@@ -82,7 +81,7 @@ useEffect(() => {
     {props.index!==0&&hotel &&<HotelCard    listItem={hotel?.place}  />}  
  {startFlight&&props.index===0 && <FlightCard flight={startFlight}/>}     
  </Box>
-<DayList  position='rutine' date={props.index} flights={(middleFlight&&middleFlight.length>0)?middleFlight:undefined}  list={day.rutine}  /> 
+<DayList plan={props.plan}  position='rutine' date={props.index} flights={(middleFlight&&middleFlight.length>0)?middleFlight:undefined}  list={day.rutine}  /> 
 
 <Box width={"100%"} marginTop={'auto'}>
 
@@ -92,11 +91,7 @@ useEffect(() => {
  </div>
  
 {open&&
-
-
-
-  <DaySummery   index={props.index} start={props.index===0 &&startFlight? startFlight.destination : props.index!==0&&hotel?hotel.place:undefined } end={endFlight&&props.index===props.plan.days.length-1 ?endFlight.origin:endHotel?undefined:hotel?.place} day={props.day}/>
-
+  <DaySummery  plan={props.plan}  index={props.index} start={props.index===0 &&startFlight? startFlight.destination : props.index!==0&&hotel?hotel.place:undefined } end={endFlight&&props.index===props.plan.days.length-1 ?endFlight.origin:endHotel?undefined:hotel?.place} day={props.day}/>
 }
 
 

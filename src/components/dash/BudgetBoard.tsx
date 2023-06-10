@@ -1,10 +1,10 @@
 
 import { Box, List, ListItem, ListItemButton, ListItemText, Paper, Typography, useMediaQuery } from '@mui/material'
-import axios from 'axios'
+
 import moment from 'moment'
 import Image from 'next/image'
 
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import UiButton from '../ui/buttons/UiButton'
 import AddExpenseModal from './AddExpenseModal'
@@ -15,7 +15,10 @@ import DeleteIcon from '../../../public/images/delete.svg'
 import SnackBar from '../ui/SnackBar'
 import useSnackBar from '@/hooks/useSnackBar'
 import { useTranslation } from 'next-i18next'
-type Props = {plan:Plan,setList:React.Dispatch<React.SetStateAction<Plan|undefined>>}
+import {useMutation} from "@tanstack/react-query"
+import { deleteExpense } from '@/util/fetchers'
+import { queryClient } from '@/pages/_app'
+type Props = {plan:Plan}
 
 
 const BudgetBoard = (props: Props) => {
@@ -24,11 +27,10 @@ const BudgetBoard = (props: Props) => {
   const [stopsBudget, setStopsBudget] = useState<Array<Expense>>()
   const [open, setOpen] = useState<boolean>(false)
   const {setSnackBar,snackBarProps}=useSnackBar()
-  const [, updateState] = useState<any>();
-  
   const {t}=useTranslation("plan")
-const forceUpdate = useCallback(() => updateState({}), []);
-const currency=props.plan.budget.currency??'$'
+
+const currency=props.plan?.budget?.currency??'$'
+
 useEffect(() => {
     if(props.plan){
       const rutineExpenses=props.plan.days.flatMap((day)=> (day.rutine.reduce((prv:Expense[],cur)=>{
@@ -46,29 +48,20 @@ useEffect(() => {
         }
         setBudget(sumBudget)
     setTotalCost( sumBudget?.expenses+ sumBudget?.hotels+sumBudget?.transportation+sumBudget?.stops)
-
     }
-  
 }, [props])
+
+const {mutate}=useMutation({mutationFn:deleteExpense,onSuccess:()=>{
+  setSnackBar(t("snack.expenseRemoved"),"error")
+queryClient.invalidateQueries(["plan",props.plan._id])
+
+}})
 
 const deleteExpenseHandler=async (id:string|undefined,type:"transportation"|'expenses')=>{
   if(!id)return;
-try {
-const {data}= await axios.delete('/api/budget/deleteBudget',{params:{planId:props.plan._id,expenseId:id,expenseType:type}})
-if(data.success){
-  setSnackBar('Expense Removed',"error")
-props.setList((plan)=> {
-  const index=plan?.budget[type].findIndex((expense)=>expense._id===id)
-plan?.budget[type].splice(Number(index),1)
-return plan
-})
-forceUpdate()
-}
-} catch (error) {
-  
+  mutate({planId:props?.plan?._id,expenseId:id,expenseType:type})
 }
 
-}
 
 
 const isMobile=useMediaQuery('(max-width:600px)')

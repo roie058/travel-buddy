@@ -8,6 +8,10 @@ import styles from './NewHero.module.css'
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/router'
 import { TFunction } from 'i18next'
+
+import { NewSesstion } from '@/pages/api/auth/signup'
+import { useQuery } from '@tanstack/react-query'
+import { getPlans } from '@/util/fetchers'
 type Props = {t: TFunction<"home", undefined, "home">}
 
 
@@ -15,7 +19,8 @@ type Props = {t: TFunction<"home", undefined, "home">}
 const heebo=Heebo({subsets:["latin","hebrew"]})
 const NewHero = ({t}: Props) => {
 const {locale}=useRouter()
-   const {data:session} =useSession()
+const {data:session}:{data:NewSesstion}=useSession()
+ useQuery(['plans'],()=>getPlans(session),{enabled:!!session})
 const router=useRouter()
 const isXl=useMediaQuery("(max-width:1350px)")
 const isLg=useMediaQuery("(max-width:900px)")
@@ -24,7 +29,7 @@ const isSmall=useMediaQuery("(max-width:600px)")
 
 
   return (
-      <Box minHeight={"100vh"}    >
+      <Box minHeight={"100vh"}     >
         
 
         <Box height={"100%"}  display={'flex'} justifyContent={"center"} alignItems={"center"} flexDirection={"column"} px={isSmall?'10%':"0"}  >

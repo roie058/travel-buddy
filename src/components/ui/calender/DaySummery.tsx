@@ -1,24 +1,24 @@
 
 import { Flight } from '@/components/flights/AddFlightModal'
-import { PlanContext } from '@/context/plan-context'
+
 import { IPlace } from '@/dummyData'
 
 import {  Paper, Table, TableBody, TableCell, TableHead, TableRow, Typography, useMediaQuery } from '@mui/material'
 import { Box } from '@mui/system'
-import axios from 'axios'
 
 import GoogleMapReact from 'google-map-react'
 import Image from 'next/image'
 
 
-import React, { useCallback, useContext, useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { RoutineItem } from './DayList'
-import { Days } from '@/components/pageCompnents/Schedule'
+import { Days, Plan } from '@/components/pageCompnents/Schedule'
 import moment from 'moment'
 import { useTranslation } from 'next-i18next'
 import { useRouter } from 'next/router'
-
-type Props = {day:Days,index:number,start?:Flight["destination"]|IPlace,end?:Flight["origin"]|IPlace}
+import {useQuery} from '@tanstack/react-query'
+import { getWeather, isPlace } from '@/util/fetchers'
+type Props = {day:Days,index:number,start?:Flight["destination"]|IPlace,end?:Flight["origin"]|IPlace,plan:Plan}
 
 const reduced=(array:RoutineItem[])=>{
     const  budget=array.reduce((prev,cur)=>{
@@ -27,9 +27,7 @@ const reduced=(array:RoutineItem[])=>{
     return budget
 }
 
-function isPlace(selected: IPlace|Flight['destination']): selected is IPlace {
-  return (selected as IPlace).latitude !== undefined;
-}
+
 
 const DaySummery = (props: Props) => {
   const  [diractionArr,setDiractionsArr]=useState< google.maps.DirectionsRoute | undefined>()
@@ -39,59 +37,38 @@ const DaySummery = (props: Props) => {
 const {t}=useTranslation("day")
   const  [dailyBudget,setDailyBudget]=useState<Number>()
   const [defaultLocation,setDefaultLocation]=useState<{lat:number,lng:number}>()
-  const [weather,setWeather]=useState<{rainProb:string,icon:string,temp:string,weatherType:string}>(props.day.weather)
-  const [liveWeather,setLiveWeather]=useState<{rainProb:string,icon:string,temp:string,weatherType:string}>()
   const cardRef=useRef<HTMLDivElement | null>(null)
-const planCtx=useContext(PlanContext)
-const [, updateState] = useState<any>();
-const forceUpdate = useCallback(() => updateState({}), []);
-const currency=planCtx.plan?.budget?.currency??"$"
-const {locale}=useRouter()
+
+
+const currency=props.plan?.budget?.currency??"$"
+const {locale,query}=useRouter()
+const {data,isFetched}=useQuery(["weather",props.day.date],()=>getWeather({locale,planId:String(query.planId),index:props.index,rutine:props.day.rutine,start:props.start}))
+let weather:{rainProb:string,icon:string,temp:string,weatherType:string};
+let liveWeather:{rainProb:string,icon:string,temp:string,weatherType:string};
+
+if(isFetched){
+  if(data){
+    const {weather:dataWeather,liveWeather:dataLiveWeather}:{weather:{rainProb:string,icon:string,temp:string,weatherType:string},liveWeather:{rainProb:string,icon:string,temp:string,weatherType:string}}=data
+    weather=dataWeather
+    liveWeather=dataLiveWeather
+  }else{
+    weather=props.day.weather
+
+  }
+}
+
 useEffect(()=>{
 const getDefaultLocation=async ()=>{
   const geo=new google.maps.Geocoder()
-const res =await geo.geocode({address:planCtx?.plan.country})
+const res =await geo.geocode({address:props?.plan.country})
   setDefaultLocation({lat:res.results[0].geometry.location.lat(),lng:res.results[0].geometry.location.lat()})
 
 }
-
-const setNewWeather=async()=>{
-  
-  if(props.start&& isPlace(props.start) ){
-try {
-  const {data}=  await axios.get("/api/weather/getWeather",{params:{locale,planId:planCtx?.plan._id,index:props.index,location:`${props.start?.latitude},${props.start?.longitude}`}})
-  setWeather(data.weather);
-  setLiveWeather(data.liveWeather)
-} catch (error) {
-  
-}}else if(props.start&& !isPlace(props.start)){
-  try {
-  const {data}=  await axios.get("/api/weather/getWeather",{params:{locale,planId:planCtx?.plan._id,index:props.index,location:`${props.start?.lat},${props.start?.lng}`}})
-  setWeather(data.weather);
-  setLiveWeather(data.liveWeather)
-} catch (error) {
-  
-}
-}else if(props.day.rutine.length>0){
-  try {
-    const {data}=await axios.get("/api/weather/getWeather",{params:{planId:planCtx?.plan._id,index:props.index,location:`${props.day.rutine[0].place.latitude},${props.day.rutine[0].place.longitude}`}})
- setWeather(data.weather);
- setLiveWeather(data.liveWeather)
- 
-  } catch (error) {
-    
-  }
-
-}else {return}
-
-}
-
-setNewWeather()
 getDefaultLocation()
-const totalDayBudget=Math.round((planCtx.plan.budget.budget - 
-  planCtx.plan.hotels.reduce((prv,cur)=>{return prv+ ((moment(cur.end).dayOfYear() - moment(cur.start).dayOfYear())*cur.nightPrice)},0) -
-   planCtx.plan.flights.reduce((prv,cur)=>{return prv+ cur.price},0)-planCtx.plan.budget.expenses.reduce((prv,cur)=> prv+cur.price ,0)-planCtx.plan.budget.transportation.reduce((prv,cur)=> prv+cur.price ,0) )
-/ planCtx.plan.days.length)
+const totalDayBudget=Math.round((props.plan.budget.budget - 
+  props.plan.hotels.reduce((prv,cur)=>{return prv+ ((moment(cur.end).dayOfYear() - moment(cur.start).dayOfYear())*cur.nightPrice)},0) -
+   props.plan.flights.reduce((prv,cur)=>{return prv+ cur.price},0)-props.plan.budget.expenses.reduce((prv,cur)=> prv+cur.price ,0)-props.plan.budget.transportation.reduce((prv,cur)=> prv+cur.price ,0) )
+/ props.plan.days.length)
 setDailyBudget(totalDayBudget)
 
   cardRef.current?.scrollIntoView({ behavior:"smooth" })
@@ -100,15 +77,14 @@ if(mapRef&&mapsRef){
   apiIsLoaded(mapRef,mapsRef)
 }
   
-
-},[planCtx,props.day.rutine])
+},[props.plan,props.day.rutine])
 
 const apiIsLoaded = (map:any, maps:any) => {
 
   const directionsService = new google.maps.DirectionsService();
   const directionsRenderer = new google.maps.DirectionsRenderer();
 
-// const newMap=new google.maps.Map()
+
   directionsRenderer.setMap(map);
   let origin;
   let destination;

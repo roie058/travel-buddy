@@ -26,7 +26,19 @@
     "rainProb":"Chance of rain",
     "uv":"UV index"
 },
-
+"errors":{
+    "nameReq":"Trip name is required",
+    "nameMax":"Name must be max 25 cheracters",
+    "countryReq":"Country is required",
+    "destinationReq":"Destination is required",
+    "budgetReq":"We can not help you manage budget if you travel for free!",
+    "imgReq":"Image is Required",
+    "typeMax":"Pick 3 types max",
+    "sameData":"No Changes Have Been Made"
+},
+"snack":{
+  "edit":"Plan Changed" 
+},
     "nameTooltip":"name of the trip",
         "destinationTooltip":"Pick a destination for the trip",
         "datesTooltip":"pick the dates of your trip",

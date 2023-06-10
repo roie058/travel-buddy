@@ -1,10 +1,10 @@
 
 import { NewSesstion } from '@/pages/api/auth/signup'
-import { Box, Card, CircularProgress, Container, Dialog, List, ListItem, ListItemAvatar, ListItemButton, ListItemSecondaryAction, ListItemText, MenuItem, Select, SelectChangeEvent, Typography } from '@mui/material'
-import axios, { AxiosError } from 'axios'
+import { Box, Card, CircularProgress, Container, Dialog, List, ListItem, ListItemAvatar, ListItemButton, MenuItem, Select, SelectChangeEvent, Typography } from '@mui/material'
+
 import { useSession } from 'next-auth/react'
-import { useRouter } from 'next/router'
-import React, { useEffect, useState } from 'react'
+
+import React, {  useState } from 'react'
 import { IPlace } from '@/dummyData'
 import Image from 'next/image'
 import DeleteIcon from '../../../public/images/delete.svg'
@@ -14,67 +14,46 @@ import { LoadScriptNext } from '@react-google-maps/api'
 import useSnackBar from '@/hooks/useSnackBar'
 import SnackBar from '../ui/SnackBar'
 import { useTranslation } from 'next-i18next'
-type Props = {}
+import { useMutation, useQuery } from '@tanstack/react-query'
+import { getPlanById, removePlace } from '@/util/fetchers'
+import { Plan } from './Schedule'
+type Props = {planId:string}
 
 const LikedList = (props: Props) => {
-    const [isLoading, setIsLoading] = useState(false)
     const [open, setOpen] = useState(false)
     const [viewedPlace, setViewedPlace] = useState<IPlace>()
     const [category, setCategory] = useState<"all"|"restaurants"|'hotels'|'attractions'>('all')
-    const [plan, setPlan] = useState<{restaurants:IPlace[],hotels:IPlace[],attractions:IPlace[]}>()
     const [list, setList] = useState<IPlace[]>()
     const {t}=useTranslation("allLiked")
 const {setSnackBar,snackBarProps}=useSnackBar()
-const {query}=useRouter()
+
 const {data:session}=useSession()
+const newSession:NewSesstion={...session}
 
-useEffect(() => {
-    const getPlan=async ()=>{
-      const newSession:NewSesstion={...session}
-     try {
-       setIsLoading(true)
-     const {data} =await axios.get('/api/plan/getPlan',{params:{userId:newSession.user?.id,planId:query.planId}})
-     if(data.success){
-        const liked:{restaurants:IPlace[],hotels:IPlace[],attractions:IPlace[]}=data.plan.liked
-       setPlan(liked)
+const {isLoading,data:plan,refetch}=useQuery(["plan",props.planId,"liked"],()=>(getPlanById(newSession,props.planId)).then((value:Plan)=> {setList(Object.values(value.liked).flat());   return value.liked} ),{enabled:!!session})
 
-setList(Object.values(liked).flat())    
-     }
-     } catch (error) {
-       if(error instanceof AxiosError){
-         const errorMsg=error.response?.data?.error
-         console.log(errorMsg);
-       }
-     }
-   setIsLoading(false)
-    }
-    if(session){
-      getPlan()
-    }
-
-   }, [session])
-
-
-   const deletetHandler=async (place:IPlace)=>{
-    try {
-      setIsLoading(true)
-      const {data} = await axios.patch('/api/place/newPlace',{place:place,category:(place.category?.key??'hotel')+'s',planId:query.planId})
-      if(data.success){
-        setSnackBar('Place removed from plan',"error")
-     setList(()=> list.filter((indexPlace)=>indexPlace.location_id!==place.location_id))
-      }else{
-        console.log(data.error); 
-      }
-      
-    } catch (error) {
-      console.log(error);
-    }
-    setIsLoading(false)
-  }
-
-const onClose=()=>{
-    setOpen(false)
+const {mutate}=useMutation(removePlace,{
+  onMutate:({place})=>{
+    setList(()=> list.filter((indexPlace)=>indexPlace.location_id!==place.location_id))
+  },
+  onSuccess:()=>{
+  setSnackBar(t("snack.remove"),"error")
+refetch()
+},
+onError:()=>{
+  setSnackBar(t("snack.serverError"),"error")
+  refetch()
 }
+
+})
+
+    const deletetHandler=async (place:IPlace)=>{
+      mutate({place,planId:props.planId,category:(place.category?.key??'hotel')+'s'})
+   }
+
+ const onClose=()=>{
+    setOpen(false)
+ }
 
 
  const  changeHandler:(event: SelectChangeEvent<"all" | "restaurants" | "hotels" | "attractions">, child: React.ReactNode) => void = (e)=>{

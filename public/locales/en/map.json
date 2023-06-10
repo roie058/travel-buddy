@@ -8,6 +8,12 @@
     "searchBar":"Search...",
     "filterPlan":"Plan filter",
     "filterType":"Type filter",
-    "all":"All"
-    
+    "all":"All",
+    "snack":{
+"serverError":"Server Error",
+"addedPlace":"Place added to plan",
+"placeRemoved":"Place Removed from plan",
+"searching":"Searching...",
+"success":"Success!"
+    }
 }

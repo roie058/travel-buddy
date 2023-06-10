@@ -12,7 +12,6 @@ import UiButton from '../ui/buttons/UiButton'
 import AddReservationModal from './AddReservationModal'
 
 import { IPlace } from '@/dummyData'
-import axios from 'axios'
 
 import Link from 'next/link'
 import { Plan } from '../pageCompnents/Schedule'
@@ -21,31 +20,33 @@ import { Pin } from '../svgComponents'
 import useSnackBar from '@/hooks/useSnackBar'
 import SnackBar from '../ui/SnackBar'
 import { useTranslation } from 'next-i18next'
+import { useMutation } from '@tanstack/react-query'
+import { removePlace } from '@/util/fetchers'
+import { queryClient } from '@/pages/_app'
 
 type Props = {plan:Plan}
 
 const HotelAdd = (props: Props) => {
    const [open, setOpen] = useState<boolean>(false)
-   const [isLoading, setIsLoading] = useState<boolean>(false)
    const [openIndex, setOpenIndex] = useState<number>()
    const {t}=useTranslation("hotels")
     const {setSnackBar,snackBarProps}=useSnackBar()
+
+    const {isLoading,mutate}=useMutation(removePlace,{onMutate:({place})=>{
+      const dataI=props.plan.liked.hotels.findIndex((places)=>places.location_id==place.location_id)
+         props.plan.liked.hotels.splice(dataI,1)
+
+    },onSuccess:()=>{
+      setSnackBar(t("snack.deleteHotel"),'error')
+queryClient.invalidateQueries(["plan",props.plan._id])
+    },onError:()=>{
+      setSnackBar(t("snack.serverError"),'error')
+      queryClient.invalidateQueries(["plan",props.plan._id])
+    }})
+
    const deletetHandler=async (hotel:IPlace)=>{
-      try {
-        setIsLoading(true)
-        const {data} = await axios.patch('/api/place/newPlace',{place:hotel,category:'hotels',planId:props.plan._id})
-        if(data.success){
-          setSnackBar('Hotel Removed From Plan','error')
-          const dataI=props.plan.liked.hotels.findIndex((place)=>place.location_id==hotel.location_id)
-        props.plan.liked.hotels.splice(dataI,1)
-        }else{
-          console.log(data.error); 
-        }
-        
-      } catch (error) {
-        console.log(error);
-      }
-      setIsLoading(false)
+    mutate({place:hotel,planId:props.plan._id,category:"hotels"})
+     
     }
 
 

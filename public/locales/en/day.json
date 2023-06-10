@@ -1,8 +1,17 @@
 {
 "infoBtn":"More Info",
 "nextStop":"Add next stop",
-"daysOfWeek":{},
-"weatherTypes":{},
+
+"snack":{
+    "removeItem":"Item Removed",
+    "error":"Error",
+    "newStop":"New stop added"
+},
+"errors":{
+    "realAddress":"please write a real address",
+    "titleReq":"Title is required",
+    "addressReq":"address is required" 
+},
 "budget":"Budget",
 "current":"Current",
 "daily":"Daily",

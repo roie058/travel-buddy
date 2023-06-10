@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-import { Box, CircularProgress, Dialog, List, ListItem, ListItemAvatar, ListItemButton, ListItemText, Typography } from '@mui/material'
+import { Box, CircularProgress, Dialog, List, ListItem, ListItemAvatar, ListItemButton, Typography } from '@mui/material'
 import { IPlace } from '@/dummyData'
 import Image from 'next/image'
 import PlaceItemDetailCard from '../ui/calender/PlaceItemDetailCard'
@@ -10,6 +10,9 @@ import { AddedIcon } from '../svgComponents'
 import useSnackBar from '@/hooks/useSnackBar'
 import SnackBar from '../ui/SnackBar'
 import { useTranslation } from 'next-i18next'
+import { useMutation } from '@tanstack/react-query'
+import { newLikedPlace, newPlace } from '@/util/fetchers'
+import { queryClient } from '@/pages/_app'
 
 type Props = {list:IPlace[],likedList:Set<string>,setList:React.Dispatch<React.SetStateAction<IPlace[]>>}
 
@@ -42,40 +45,38 @@ export const getPlaceDetails=async(locationId:string)=>{
 const AttracrionList = (props: Props) => {
   const [viewedPlace,setViewedPlace]=useState<IPlace>()
   const [open,setOpen]=useState<boolean>(false)
-  const [isLoading,setIsLoading]=useState<boolean>(false)
+
   const {t}=useTranslation("allLiked")
 const {setSnackBar,snackBarProps}=useSnackBar()
   const {query}=useRouter()
 
 
+const {mutate,isLoading}=useMutation(newLikedPlace,{onSuccess:()=>{
+  setSnackBar(t("snack.add"),"success") 
+queryClient.invalidateQueries(["plan",query.planId,"liked"])
+},
+onError:()=>{
+  setSnackBar(t("snack.serverError"),"error") 
+}
 
+})
     
 
   const addHandler= async(locationId:string)=>{
-    setIsLoading(true)
-    const place=await getPlaceDetails(locationId)
-    try {
-     const categories=new Set(['attractions','hotels','restaurants'])
-     const {data} = await axios.post('/api/place/newPlace',{place:place,category:categories.has(`${place?.category?.key??'hotel'}s`)? `${place?.category?.key??'hotel'}s`  : 'attractions',planId:query.planId})
-  if(data.success){
-    setSnackBar('Place added to plan',"success")
-   props.setList((list)=>[...list,data.newPlace])
-
-  }
- 
-   } catch (error) {
-       console.log(error);
-       
-     }
-   setIsLoading(false)
+    const place:IPlace=await getPlaceDetails(locationId)
+    console.log(place);
+    
+    const categories=new Set(['attractions','hotels','restaurants'])
+    mutate({place:place,category:categories.has(`${place?.category?.key??'hotel'}s`)? `${place?.category?.key??'hotel'}s`  : 'attractions',planId:String(query.planId)})
    }
    
    const viewHandler= async(locationId:string)=>{
-    if(locationId!==viewedPlace.location_id){
+    console.log(locationId);
+    
+    if(locationId!==viewedPlace?.location_id){
       const place=await getPlaceDetails(locationId)
       setViewedPlace(place)
     }
-     setIsLoading(false)
      setOpen(true)
     }
    

@@ -1,5 +1,4 @@
 
-import { UserContext } from '@/context/auth-context'
 import { MapContext } from '@/context/map-context'
 import { IPlace } from '@/dummyData'
 import { Card, CardContent, CardMedia, Typography,Box, Chip, CardActions, Button, Rating, Badge } from '@mui/material'
@@ -12,6 +11,8 @@ import LikeModal from '../list/LikeModal'
 import { Pin } from '@/components/svgComponents'
 import useSnackBar from '@/hooks/useSnackBar'
 import SnackBar from '../SnackBar'
+import { useQuery } from '@tanstack/react-query'
+import { Plan } from '@/components/pageCompnents/Schedule'
 
 
 
@@ -31,16 +32,13 @@ function isType(selected:string| "restaurants" | "hotels" | "attractions" ): sel
 const PlaceCard = (props: Props) => {
 const [open, setOpen] = useState(false)
   const [liked,setLiked]=useState(props.liked)
-  const userCtx=useContext(UserContext)
   const mapCtx=useContext(MapContext)
 const {data:session}=useSession()
   const {setSnackBar,snackBarProps}=useSnackBar()
-  
+  const {data:plans}:{data:Plan[]}=useQuery(["plans",{populate:true}])
   const clickHandler=()=>{
-    if(!session){signIn(); return;}
-   
+    if(!session){signIn(); return;}  
     setOpen(true)
-
   }
 
  const closeHandler=()=>{
@@ -83,7 +81,7 @@ const type:"restaurants" | "hotels" | "attractions"|string=(props.place?.categor
     <CardContent sx={{width:'60%'}}  >
       <Box onClick={coordinatesHandler} sx={{cursor:'pointer'}} display={"flex"} justifyContent="space-between">
       <Typography  fontSize={'1.3rem'} fontWeight={'bold'}>{props.place.name} </Typography>
-      <Badge  anchorOrigin={{vertical:'top',horizontal:'right'}} badgeContent={userCtx?.plans.map((plan)=>{
+      <Badge  anchorOrigin={{vertical:'top',horizontal:'right'}} badgeContent={plans.map((plan)=>{
         const placeArr=plan.liked[(props.place?.category?.key??'hotel')+'s']
        if(!placeArr) return;
         const place=placeArr.find((place:IPlace)=>place.location_id===props.place.location_id)

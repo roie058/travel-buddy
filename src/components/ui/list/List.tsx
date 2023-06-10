@@ -169,14 +169,14 @@ mapCtx?.setIsLoading(false)})
       </TabPanel>
       <TabPanel   value={value} index={1}>
      
-      {mapCtx?.placeList.length===0&&!mapCtx?.isLoading&&<Button onClick={loadHandler} size='small' color="primary" sx={{textTransform:"capitalize",border:'1px solid'}} >Load Places...</Button>}
+      {mapCtx?.placeList.length===0&&!mapCtx?.isLoading&&<Button onClick={loadHandler} size='small' color="primary" sx={{textTransform:"capitalize",border:'1px solid'}} >{t('loadBtn')}</Button>}
           { 
        mapCtx?.placeList?.filter((place)=>place.name).map((place,i)=><Box sx={{margin:'10px 0'}} width={'100%'} key={place.location_id+place.name}><PlaceCard liked={props.likedIds.has(place.name+place.location_id)} index={i} refEl={refs[i]} selected={Number(mapCtx?.childClicked)===i} type='restaurants' key={place.location_id+place.name} place={place} /></Box> )
 }
 
       </TabPanel>
       <TabPanel  value={value} index={2}>
-      {mapCtx?.placeList.length===0&&!mapCtx?.isLoading&&<Button onClick={loadHandler} size='small' color="primary" sx={{textTransform:"capitalize",border:'1px solid'}} >Load Places...</Button>}
+      {mapCtx?.placeList.length===0&&!mapCtx?.isLoading&&<Button onClick={loadHandler} size='small' color="primary" sx={{textTransform:"capitalize",border:'1px solid'}} >{t('loadBtn')}</Button>}
           { 
        mapCtx?.placeList?.filter((place)=>place.name).map((place,i)=><Box sx={{margin:'10px 0'}} width={'100%'} key={place.location_id+place.name}><PlaceCard liked={props.likedIds.has(place.name+place.location_id)} index={i} refEl={refs[i]} selected={Number(mapCtx?.childClicked)===i} type='restaurants' key={place.location_id+place.name} place={place} /> </Box> )
 }

@@ -170,9 +170,9 @@ const lng=autocomplete?.getPlace().geometry?.location?.lng()
 const query=autocomplete?.getPlace().name 
 
 
-setSnackBar('Searching...',"info")
+setSnackBar(t('snack.searching'),"info")
 const results= await searchFn(query,"https://travel-advisor.p.rapidapi.com/locations/auto-complete")
-setSnackBar('Success!',"success")
+setSnackBar(t('snack.success'),"success")
  const place =results.reduce((prv,cur)=>{
 const prvDistense=getDistanceFromLatLonInKm({latitude:lat,longitude:lng},{latitude:prv?.latitude,longitude:prv?.longitude});
 const curDistense=getDistanceFromLatLonInKm({latitude:lat,longitude:lng},{latitude:Number(cur?.latitude),longitude:Number(cur?.longitude)});

@@ -10,6 +10,7 @@ import AttracrionList from './AttracrionList'
 import { IPlace } from '@/dummyData'
 import { SearchIcon } from '../svgComponents'
 import { useTranslation } from 'next-i18next'
+import { useQuery } from '@tanstack/react-query'
 
 export const  searchFn=async(query:string,url)=>{
   const options = {
@@ -42,21 +43,16 @@ export const  searchFn=async(query:string,url)=>{
 type Props = {likedList:IPlace[],setList: React.Dispatch<React.SetStateAction<IPlace[]>>}
 
 const AttractionSearch = (props: Props) => {
-  const [resultList,setResultList]=useState<any[]>()
-  const [isLoading,setIsLoading]=useState<boolean>(false)
+
+  const [search,setSearch]=useState<string>()
 const {handleSubmit,register}=useForm()
 const {t}=useTranslation("allLiked")
 
+const {data:resultList,isFetching:isLoading}=useQuery(['searchAttr',search],()=>searchFn(search,'https://travel-advisor.p.rapidapi.com/locations/auto-complete').then((value)=>value.filter((v,i,a)=>a.findIndex(v2=>(v2.location_id===v.location_id))===i)),{enabled:!!search,})
+
 const searchHandler:SubmitHandler<FieldValues>= async (data)=>{
-  setIsLoading(true)
- const results=await searchFn(data.search,'https://travel-advisor.p.rapidapi.com/locations/auto-complete')
- if(results){
-   setResultList(results.filter((v,i,a)=>a.findIndex(v2=>(v2.location_id===v.location_id))===i))
- }
-  setIsLoading(false)
+  setSearch(data.search)
 }
-
-
 
   return (
     <Card  >
@@ -67,7 +63,7 @@ const searchHandler:SubmitHandler<FieldValues>= async (data)=>{
 <Box display={'flex'}>
 <FormControl fullWidth>
 <Autocomplete>
-  <TextField fullWidth {...register('search',{required:'Search term is required'})} placeholder={t('searchHeader')}/>
+  <TextField fullWidth {...register('search',{required:t("searchReq")})} placeholder={t('searchHeader')}/>
 </Autocomplete>
 </FormControl>
   

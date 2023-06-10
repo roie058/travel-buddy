@@ -39,7 +39,7 @@ const [value,setValue]=useState<undefined|string[]>()
     }
    />
    </ToolTip>
-  <FormHelperText sx={{color:'#d32f2f'}}>{(value?.length>3)?'Pick 3 types max':''}</FormHelperText>
+  <FormHelperText sx={{color:'#d32f2f'}}>{(value?.length>3)?t("errors.typeMax"):''}</FormHelperText>
   </FormControl>
 
   )

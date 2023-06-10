@@ -1,7 +1,6 @@
 
 import { IPlace } from '@/dummyData';
 import { AlertColor, Box, CircularProgress,  FormControl,  FormHelperText, Modal, TextField, Typography } from '@mui/material';
-import axios from 'axios';
 import React, { useState } from 'react'
 import { FieldValues, useForm } from 'react-hook-form';
 import UiButton from '../ui/buttons/UiButton';
@@ -9,6 +8,9 @@ import DateInput from '../ui/inputs/DateInput';
 import styles from '../form/EditPlan.module.css'
 import { Plan } from '../pageCompnents/Schedule';
 import { useTranslation } from 'next-i18next';
+import { useMutation } from '@tanstack/react-query';
+import { addReservation } from '@/util/fetchers';
+import { queryClient } from '@/pages/_app';
 
 type Props = {onClose:()=>void,open:boolean,hotel:IPlace,plan:Plan,setSnackBar: (message: string, severity: AlertColor) => void}
 
@@ -16,35 +18,27 @@ const AddReservationModal = (props: Props) => {
 
     const {register,formState,getValues,handleSubmit,control}=useForm({defaultValues:{start:new Date(props.plan.start)?? new Date(),end:new Date(props.plan.start)?? new Date(),nightPrice:0,place:props.hotel}})
     const [submitError, setSubmitError] = useState<undefined|string|unknown>()
-    const [isLoading, setIsLoading] = useState<boolean>(false)
    const {t}=useTranslation("hotels")
- 
+
     const [startDate,setStartDate]=useState<null|Date>(props.plan.start?? new Date())
-   
+    const {mutate,isLoading}=useMutation(addReservation,{
+onSuccess:()=>{
+  props.setSnackBar(t("snack.addReservation"),'success')
+  props.onClose()
+  queryClient.invalidateQueries(["plan",props.plan._id])
+},
+onError:()=>{
+  setSubmitError(t("snack.serverError"))
+}
+
+    })
     const onStartDateChange=(e:any)=>{
         setStartDate(e._d)
       
        }
 
     const onSubmit=async(data:FieldValues)=>{
-    
-         try {
-             setIsLoading(true)
-         const {data:res} =await  axios.patch('/api/hotel/addReservation',{planId:props.plan._id,data})
-         if(res.success){
-          props.setSnackBar('Reservation Added','success')
-             if(!props.plan){props.onClose();setIsLoading(false);   return}
-        props.plan?.hotels.push(res.reservation);
-         props.onClose()
-         }
-        
-         else{
-             setSubmitError('Error try again')
-         }
-         } catch (error) {
-             setSubmitError(error)
-         }
-         setIsLoading(false)
+    mutate({data,planId:props.plan._id})   
         }
 
 
@@ -77,7 +71,7 @@ const AddReservationModal = (props: Props) => {
 </Box>}
 
       <FormControl fullWidth>
-<TextField   label={`${t("form.ppn")} ${props.plan.budget.currency??'$'}`}  error={typeof formState.errors.nightPrice?.message  === 'string'||Number(getValues('nightPrice'))<=0} type={'number'} {...register('nightPrice',{valueAsNumber:true,min:{value:1,message:'We can not help you manage price if you travel for free!'}})} />
+<TextField   label={`${t("form.ppn")} ${props.plan.budget.currency??'$'}`}  error={typeof formState.errors.nightPrice?.message  === 'string'||Number(getValues('nightPrice'))<=0} type={'number'} {...register('nightPrice',{valueAsNumber:true,min:{value:1,message:t("form.priceMin")}})} />
     <FormHelperText sx={{color:'#d32f2f'}} >{formState.errors.nightPrice?.message}</FormHelperText>
 </FormControl>
 

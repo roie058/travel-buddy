@@ -9,6 +9,7 @@ display: flex;
 flex-direction: column;
 box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
 width: 300px;
+height: 530px;
 transition: 0.3s ease transform;
 position: relative;
 }
@@ -28,7 +29,7 @@ position: relative;
   align-items: center;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
     width: 300px;
-    height: 471px;
+    height: 530px;
     transition: 0.3s ease transform;
 }
 
@@ -70,11 +71,11 @@ border-radius: 30px;
     .tags{
     
 display: flex;
-gap: 5%;
+gap: 3%;
 flex-wrap: wrap;
 height: 75px;
 
-margin: 0 10% 5% 10%;
+margin: 0 5% 5% 10%;
     }
 
     .deleteBtn{
@@ -95,8 +96,4 @@ margin: 0 10% 5% 10%;
       
     transform: scale(1.1);
     }
-
-    .deleteBtn:hover img{
-        
    
-      }

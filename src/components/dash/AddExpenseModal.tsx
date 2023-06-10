@@ -1,43 +1,38 @@
 
 import { AlertColor, Box, CircularProgress, FormControl, FormControlLabel, FormHelperText, FormLabel, InputLabel, MenuItem, Modal, Radio, RadioGroup, Select, TextField, Typography } from '@mui/material'
-import React, { useContext, useState } from 'react'
+import React, { useState } from 'react'
 import { FieldValues, useForm } from 'react-hook-form'
 import UiButton from '../ui/buttons/UiButton'
 import styles from '../form/EditPlan.module.css'
-import axios from 'axios'
-import { PlanContext } from '@/context/plan-context'
+
 import ToolTip from '../ui/ToolTip'
 import { useTranslation } from 'next-i18next'
+import {useMutation} from '@tanstack/react-query'
+import { addExpense } from '@/util/fetchers'
+import { useRouter } from 'next/router'
+import { queryClient } from '@/pages/_app'
 
 type Props = {open:boolean,onClose:()=>void,openSnackBar:(message: string, severity: AlertColor) => void}
 const options=['car','public transport',"insurance","gifts","shopping","attractions","food","restaurants","other"]
 const AddExpenseModal = (props: Props) => {
     const {register,formState,getValues,handleSubmit}=useForm({defaultValues:{name:'',category:'other',price:0,position:''}})
 const [submitError, setSubmitError] = useState<undefined|string|unknown>()
-const [isLoading, setIsLoading] = useState<boolean>(false)
 const {t}=useTranslation('plan')
+const {query}=useRouter()
 
-const planCtx = useContext(PlanContext)
+ const {mutate,isLoading}=useMutation(addExpense,{onSuccess:(data,v)=>{
+   props.openSnackBar(t("snack.expenseAdd"),"success")
+   queryClient.invalidateQueries(["plan",v.planId])
+   props.onClose()
+
+ },onError:()=>{
+  setSubmitError(t("form.errors.submitError"))
+ }
+})
 
 const onSubmit=async(data:FieldValues)=>{
-try {
-    setIsLoading(true)
-const {data:res} =await  axios.patch('/api/budget/addBudget',{planId:planCtx?.plan._id,data})
-if(res.success){
-    if(!planCtx?.plan){props.onClose();setIsLoading(false);   return}
-    const position:'transportation'|'expenses'=data.position
-planCtx?.plan?.budget[position].push(res.budget);
-props.openSnackBar('Expense Added',"success")
-props.onClose()
-}
+mutate({data,planId:String(query.planId)})
 
-else{
-    setSubmitError('Error try again')
-}
-} catch (error) {
-    setSubmitError(error)
-}
-setIsLoading(false)
 }
 
 
@@ -58,7 +53,7 @@ setIsLoading(false)
       <form  className={styles.form}  onSubmit={handleSubmit((data)=>{onSubmit(data);
       })}>
       <FormControl fullWidth>
-  <TextField fullWidth error={ typeof formState.errors.name?.message  === 'string'} {...register('name',{required:'Expense name is required',maxLength:{value:25,message:'Name must be max 25 cheracters'}})}  defaultValue={getValues('name')} label={ t("budget.form.input1")} />
+  <TextField fullWidth error={ typeof formState.errors.name?.message  === 'string'} {...register('name',{required:t("form.errors.nameReq"),maxLength:{value:25,message:t("form.errors.nameMax")}})}  defaultValue={getValues('name')} label={ t("budget.form.input1")} />
   <FormHelperText sx={{color:'#d32f2f'}} >{formState.errors.name?.message}</FormHelperText>
 </FormControl>
 
@@ -74,7 +69,7 @@ setIsLoading(false)
 </FormControl>
 
 <FormControl fullWidth>
-<TextField   label={t("budget.form.input3")}  error={typeof formState.errors.price?.message  === 'string'||Number(getValues('price'))<=0} type={'number'} {...register('price',{valueAsNumber:true,min:{value:1,message:'We can not help you manage price if you travel for free!'}})} />
+<TextField   label={t("budget.form.input3")}  error={typeof formState.errors.price?.message  === 'string'||Number(getValues('price'))<=0} type={'number'} {...register('price',{valueAsNumber:true,min:{value:1,message:t("form.errors.budget")}})} />
     <FormHelperText sx={{color:'#d32f2f'}} >{formState.errors.price?.message}</FormHelperText>
 </FormControl>
 <FormControl fullWidth    >

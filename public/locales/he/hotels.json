@@ -8,10 +8,17 @@
     "startDate":"תאריך כניסה",
     "endDate":"תאריך יציאה",
     "ppn":"מחיר ללילה",
-    "button":"הוספה"
+    "button":"הוספה",
+    "priceMin":"לא נוכל לעזור לך לעקוב אחרי התקציב עם זה בחינם"
 },
 "header2":"ההזמנות שלי",
 "night":"ללילה",
-"nights":"לילות"
+"nights":"לילות",
+"snack":{
+    "deleteHotel":"מלון הוסר מהתוכנית",
+    "serverError":"שגיאת שרת, אנא נסה שנית",
+    "addReservation":"הזמנה נוספה בהצלחה",
+    "removeReservation":"הזמנה הוסרה"
+    }
 
 }

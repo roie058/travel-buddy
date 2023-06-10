@@ -3,7 +3,7 @@ import Flights from '@/components/pageCompnents/Flights'
 
 import Head from 'next/head'
 import Script from 'next/script'
-import React, { useState } from 'react'
+import React from 'react'
 
 type Props = {}
 
@@ -34,6 +34,7 @@ export default flights
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
 export async function getStaticProps({ locale }) {
+
   return {
     props: {
       ...(await serverSideTranslations(locale, [

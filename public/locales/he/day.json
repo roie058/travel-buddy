@@ -1,8 +1,16 @@
 {
 "infoBtn":"מידע נוסף",
 "nextStop":"הוסף עצירה",
-"daysOfWeek":{},
-"weatherTypes":{},
+"snack":{
+    "removeItem":"פריט הוסר",
+    "error":"שגיאה",
+    "newStop":"עצירה נוספה בהצלחה"
+},
+"errors":{
+    "realAddress":"כתוב בבקשה כתובת אמיתית",
+    "titleReq":"כותרת הינו שדה חובה",
+    "addressReq":"כתובת הינו שדה חובה"
+},
 "budget":"תקציב",
 "current":"תקציב נוכחי",
 "daily":"תקציב יומי",

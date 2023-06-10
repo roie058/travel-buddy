@@ -22,7 +22,6 @@ type Props = {
  onClick:(id:string)=>void,
 static?:boolean,
 position?:string,
-forceUpdate:()=>void,
 minify:boolean,
 }
 
@@ -38,7 +37,7 @@ setOpen(true)
 }
 const closeHandler=()=>{
   setOpen(false)
-  props.forceUpdate()
+
   }
   
 
@@ -58,7 +57,6 @@ const typeInDay={breakfest:<BreakfestIcon  width={75} height={75}/>,lunch:<Lunch
       <Button className={styles.deleteButton} onClick={clickHandler} sx={{position:props.minify? 'static':'absolute',top:0,right:0,paddingX:1,minWidth:'max-content',zIndex:3}}>{<XIcon height={20} width={20}/>}</Button>
       
       {!props.minify&& props.position&& Number(props.position)!==0 && <Icon sx={{position:'absolute',bottom:0,right:0,width:75,height:60,padding:1}}>{typeInDay[props.position]}</Icon>}
-     {/* props.position&& Number(props.position)!==0 && <CardHeader  sx={{height:'10px',background:'linear-gradient(60deg, rgba(35,58,102,1) 0%, rgba(36,53,98,1) 100%)',color:'white'}}  titleTypographyProps={{variant:'body1',textTransform:'capitalize'}}  title={props.position==='mainAttraction'?'Main Attraction':props.position}/> */}
      {!props.minify&&  <Image style={{objectFit:"cover",borderRadius:'10px'}} width={100} height={100}  src={props.listItem.place.photo?props.listItem.place.photo.images.small.url:'/images/placeholder.png'} alt={""}/>}
         <CardContent sx={{margin: '3%', marginRight:'0', width:props.minify?"100%":"auto", padding:'0', paddingBottom:'0 !important',display:!props.minify?"block":'flex',flexDirection:!props.minify?'column':'row',justifyContent:!props.minify?'center':"space-between",alignItems:props.minify? "center" :""}}>
             <Typography variant='h5' fontSize={"1rem"} fontWeight="bold">{props.listItem.place.name} </Typography>

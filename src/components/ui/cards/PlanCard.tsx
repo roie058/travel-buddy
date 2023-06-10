@@ -12,6 +12,10 @@ import styles from './PlanCard.module.css'
 import { Plan } from '@/components/pageCompnents/Schedule'
 import DeleteIcon from '../../../../public/images/delete.svg'
 import { useTranslation } from 'next-i18next'
+import { queryClient } from '@/pages/_app'
+import { getPlanById } from '@/util/fetchers'
+import { useSession } from 'next-auth/react'
+import { NewSesstion } from '@/pages/api/auth/signup'
 
 
 type Props = {
@@ -27,6 +31,8 @@ deleteHandler?:(id:string)=>void
 
 const PlanCard = (props: Props) => {
 const router=useRouter()
+const { data:session}:{data:NewSesstion}=useSession()
+
 const dates= moment(props.plan?.start).format('DD/MM/YYYY')+'-'+ moment(props.plan?.end).format('DD/MM/YYYY') ;
   const newtripHandler=()=>{
     router.push("/newplan")
@@ -37,7 +43,10 @@ const {t}=useTranslation('common')
   }
 
  
+const prefetch=async()=>{
+await queryClient.prefetchQuery(["plan",props.plan._id],()=>getPlanById(session,props.plan._id))
 
+  }
 
 
  let card= <div className={styles.new_card}>
@@ -45,9 +54,9 @@ const {t}=useTranslation('common')
  </div>
 
 if(!props.new&&props.plan&&props.deleteHandler){
-card=<Box className={styles.card}>
+card=<Box className={styles.card} onMouseEnter={prefetch}  >
 
-<div className={styles.main_img}>
+<div className={styles.main_img}  >
 <Image priority style={{objectFit:"cover",objectPosition:'0 30%',borderTopLeftRadius:'12px',borderTopRightRadius:'12px'}} width={300} height={150} alt={props.plan?props.plan.country:'place'} src={props?.plan.image} />
 
 </div>
@@ -66,7 +75,7 @@ card=<Box className={styles.card}>
 }):''}      
 </div>
 
-<Box display={'flex'} justifyContent='center' paddingBottom={3} >
+<Box display={'flex'} justifyContent='center' paddingBottom={3}  >
 
 <UiButton className={styles.btn}  size="small" clickFn={edittripHandler} color='blue' >{t('profile.edit')}</UiButton>
 

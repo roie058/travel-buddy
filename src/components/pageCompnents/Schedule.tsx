@@ -3,21 +3,22 @@ import Day from '@/components/ui/calender/Day'
 import { RoutineItem } from '@/components/ui/calender/DayList'
 
 
-import { PlanContext } from '@/context/plan-context'
+
 import { IPlace } from '@/dummyData'
 import { NewSesstion } from '@/pages/api/auth/signup'
-import {  Box, Grid} from '@mui/material'
-import { LoadScript, LoadScriptNext } from '@react-google-maps/api'
+import {  Box} from '@mui/material'
+import  {LoadScriptNext}  from '@react-google-maps/api'
 
-import axios, { AxiosError } from 'axios'
+
 import { useSession } from 'next-auth/react'
 
 
 import { useRouter } from 'next/router'
 
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { DragDropContext, OnDragEndResponder } from 'react-beautiful-dnd'
-
+import {useQuery,useMutation} from '@tanstack/react-query'
+import { getPlanById, listChange } from '@/util/fetchers'
 type Props = {}
 
 
@@ -68,35 +69,20 @@ const Schedule = (props: Props) => {
   const router=useRouter()
   const {planId}=router.query
   const [list,setList ] =useState<Plan|undefined>()
-  const [, updateState] = useState<any>();
-const forceUpdate = useCallback(() => updateState({}), []);
-  const [isLoading,setIsLoading]=useState(false)
+
   const {data:session}=useSession()
 const newSession:NewSesstion={...session}
 
-  useEffect(() => {
-    const getPlan=async ()=>{
-     try {
-       setIsLoading(true)
-     const {data} =await axios.get('/api/plan/getPlan',{params:{userId:newSession.user?.id,planId:planId}})
-     if(data.success){
-       setList(data.plan)
+const {data,refetch}=useQuery(["plan",planId],()=>getPlanById(newSession,String(planId)),{enabled:!!session})
+const {mutate}=useMutation({mutationFn:listChange,onSuccess:()=>{
+  refetch()
+}})
+useEffect(()=>{
+if(data){
+  setList(data)
+}
+},[data])
 
-       
-     }
-     } catch (error) {
-       if(error instanceof AxiosError){
-         const errorMsg=error.response?.data?.error
-         console.log(errorMsg);
-       }
-     }
-   setIsLoading(false)
-    }
-    if(session){
-      getPlan()
-    }
-
-   }, [session,planId])
 
   
  
@@ -106,6 +92,7 @@ const handleDragEnd:OnDragEndResponder=async(result)=>{
   const {source,destination}=result
   const {droppableId:srcDropId,index:srcIndex }=source
   const {index:dstIndex,droppableId:dstDropId}=destination
+
 
   
  const  dstArr=list.days[Number(dstDropId.split('/')[0])].rutine;
@@ -128,26 +115,14 @@ srcArr.splice(srcIndex,1)
 srcArr.splice(dstIndex,0,item)
 }
 
+mutate(list)
 
-try {
-const {data} = await axios.patch('/api/plan/daysChange',{plan:list})
-if(data.success){
-  
-}
-} catch (error) {
-  throw new Error('Bad Request')
-}
-setList((list)=> list )
-  
-  forceUpdate()
-   
    }
 
 
   return (<>
-   <LoadScriptNext  googleMapsApiKey={`${process.env.MAPS_API_KEY}`}
-  libraries={libraries}> 
-    {list&&  <PlanContext.Provider value={{plan:list,setPlan:setList}}>
+   <LoadScriptNext  googleMapsApiKey={`${process.env.MAPS_API_KEY}`} libraries={libraries}> 
+    {list&&  
      <main style={{alignContent:"flex-start",display:"block",padding:'0 5%'}}>
     
      <DragDropContext onDragEnd={handleDragEnd} >
@@ -163,7 +138,7 @@ setList((list)=> list )
         </DragDropContext>
         
         </main>
-        </PlanContext.Provider>}
+      }
          </LoadScriptNext> 
       </>
   )

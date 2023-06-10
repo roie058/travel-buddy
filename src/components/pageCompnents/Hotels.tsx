@@ -2,14 +2,14 @@ import HotelAdd from '@/components/hotels/HotelAdd'
 import ReservationList from '@/components/hotels/ReservationList'
 import { Grid } from '@mui/material'
 import { useRouter } from 'next/router'
-import React, {  useEffect, useState } from 'react'
+import React from 'react'
 
-import axios, { AxiosError } from 'axios'
+
 import { useSession } from 'next-auth/react'
-import { Plan } from './Schedule'
+
 import { NewSesstion } from '@/pages/api/auth/signup'
-import SearchHotels from '../hotels/SearchHotels'
-import { LoadScriptNext } from '@react-google-maps/api'
+import { useQuery } from '@tanstack/react-query'
+import { getPlanById } from '@/util/fetchers'
 
 
 
@@ -20,37 +20,11 @@ const Hotels = (props: Props) => {
 
     const {query}=useRouter()
 
-    const [plan, setPlan] = useState<Plan>()
-    const [isLoading,setIsLoading]=useState(false)
       const {data:session}=useSession()
-
+      const newSession:NewSesstion={...session}
     
-
-      useEffect(() => {
-        const getPlan=async ()=>{
-          const newSession:NewSesstion={...session}
-         try {
-           setIsLoading(true)
-         const {data} =await axios.get('/api/plan/getPlan',{params:{userId:newSession.user?.id,planId:query.planId}})
-         if(data.success){
-           setPlan(data.plan)
-
-           
-         }
-         } catch (error) {
-           if(error instanceof AxiosError){
-             const errorMsg=error.response?.data?.error
-             console.log(errorMsg);
-           }
-         }
-       setIsLoading(false)
-        }
-        if(session){
-          getPlan()
-        }
-    
-       }, [session])
-
+const {data:plan,isLoading}=useQuery(["plan",query.planId],()=>getPlanById(newSession,String(query.planId)),{enabled:!!session})
+     
     return (
         <>
 

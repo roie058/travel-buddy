@@ -13,9 +13,17 @@
     "input3":"Price",
     "input4":"Type",
     "button":"Add",
-    "errors":{}
+    "errors":{
+        "submitError":"Error try again",
+"nameReq":"Expense name is required",
+"nameMax":"Name must be max 25 cheracters",
+"budget":"Its not an expense if it was free!"
+    }
 }
-
+    },
+    "snack":{
+"expenseAdd":"Expense Added",
+"expenseRemoved":"Expense Removed"
     },
     "schedule":"Schedule",
     "edit":"Edit Plan",

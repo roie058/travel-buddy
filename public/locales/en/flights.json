@@ -13,6 +13,20 @@
     "end":"End",
     "other":"Other",
     "addBtn":"Add",
+    "snack":{
+        "removed":"Flight Removed",
+       "error": "server error, try again",
+       "added":"Flight Added"
+    },
+    "errors":{
+        "startTimeReq":"Departure Time Is Required",
+        "endTimeReq" :"Arrival Time Is Required",
+       "typeReq" :"Type Is Required",
+        "originReq":"Origin Is Required",
+        "dstReq":"Destination Is Required",
+        "airlineReq":"Airline Is Required",
+        "flightNumReq":"Flight Number Is Required"
+    },
     "departionTooltip":"takeoff airport",
 "arrivalTooltip":"landing airport",
 "positionTooltip":"select the flight position in trip flight in the start end or other for everything in the middle"

@@ -27,7 +27,7 @@ type Props = {
  onClick:(id:string)=>void,
 index:number,
 position?:string
-forceUpdate:()=>void
+
 minify:boolean,
 
 }
@@ -46,7 +46,7 @@ setOpen(true)
 
   }
   const  closeHandler=()=>{
-    props.forceUpdate()
+  
 setOpen(false)
 }
 
@@ -54,7 +54,7 @@ setOpen(false)
 
       return (
         <>
-        <PlaceDescriptionModal listItem={props.listItem} index={props.index} place={props.listItem.place} close={closeHandler} open={open} />
+        <PlaceDescriptionModal listItem={props.listItem} index={props.index} place={props.listItem?.place} close={closeHandler} open={open} />
         <Card className={styles.item} sx={{height:!props.minify ?'150px':'60px',paddingX:props.minify?'10px':'0',backgroundColor:"#FFFDF2CC",borderRadius:0 ,fontFamily: "Heebo, sans-serif",display:'flex',flexDirection:props.minify?'row-reverse':"row",alignItems:'center',position:'relative'}}     >
         <Button className={styles.deleteButton} onClick={clickHandler} sx={{position:props.minify? "static":'absolute',top:0,right:0,paddingX:1,minWidth:'max-content',zIndex:3}}>{<XIcon height={20} width={20}/>}</Button>
         {!props.minify && props.position&& Number(props.position)!==0 && <Icon sx={{position:'absolute',bottom:0,right:0,width:75,height:60,padding:1}}>{typeInDay[props.position]}</Icon>}
@@ -63,8 +63,8 @@ setOpen(false)
             <CardContent   sx={{zIndex:2,marginLeft: '25px',width:props.minify?"100%":"auto",  height:'100%',padding:'5%',paddingRight:props.minify? '0':'initial',paddingTop:props.minify?0:'', paddingBottom:'0 !important',borderLeft:'1px solid #B4050573',display:'flex',flexDirection:!props.minify?'column':'row',justifyContent:!props.minify?'center':"space-between",alignItems:props.minify? "center" :""}}>
            
                
-                <Typography variant='h4' textTransform={"capitalize"} fontSize={"1rem"} fontWeight="bold">{props.listItem.place.name} </Typography>
-                {!props.minify && <Typography variant="subtitle1" className={styles.address}><Pin height={10} width={10} /> {props.listItem.place.address}</Typography>  }
+                <Typography variant='h4' textTransform={"capitalize"} fontSize={"1rem"} fontWeight="bold">{props.listItem?.place.name} </Typography>
+                {!props.minify && <Typography variant="subtitle1" className={styles.address}><Pin height={10} width={10} /> {props.listItem?.place.address}</Typography>  }
                <Button sx={{textTransform:'capitalize',backgroundColor:'white',border:`1px solid #95760A`,borderRadius:'30px',paddingX:2,fontWeight:'bold',color:'#95760A', maxWidth:'max-content'}} onClick={openHandler}>{t("infoBtn")}</Button>
             </CardContent>
 

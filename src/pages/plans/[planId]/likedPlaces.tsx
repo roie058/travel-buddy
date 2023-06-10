@@ -2,9 +2,9 @@ import LikedList from '@/components/pageCompnents/LikedList'
 import Head from 'next/head'
 import React from 'react'
 
-type Props = {}
+type Props = {planId:string}
 
-const likedPlaces = (props: Props) => {
+const likedPlaces = ({planId}: Props) => {
   return (
     <>
      <Head>
@@ -14,7 +14,7 @@ const likedPlaces = (props: Props) => {
         <link rel="icon" href="/favicon.ico" />
         
       </Head>
-    <LikedList/>
+    <LikedList planId={planId} />
     
     </>
   )
@@ -23,14 +23,16 @@ const likedPlaces = (props: Props) => {
 export default likedPlaces
 
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import { GetServerSidePropsContext } from 'next'
 
-export async function getServerSideProps({ locale }) {
+export async function getServerSideProps({ locale,query }:GetServerSidePropsContext) {
   return {
     props: {
       ...(await serverSideTranslations(locale, [
         "common","allLiked"
       ])),
       // Will be passed to the page component as props
+      planId:query.planId
     },
   }
 }

@@ -8,6 +8,13 @@
     "searchBar":"חפש",
     "filterPlan":"סנן תוכנית",
     "filterType":"סוג המקום",
-    "all":"הכל"
+    "all":"הכל",
+    "snack":{
+        "serverError":"שגיאת שרת",
+        "addedPlace":"פריט הוסף לתוכנית בהצלחה",
+        "placeRemoved":"פריט הוסר מהתוכנית",
+        "searching":"...מחפש",
+"success":"!מקום נמצא בהצלחה"
+            }
     
 }

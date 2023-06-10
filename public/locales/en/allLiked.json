@@ -8,6 +8,12 @@
         "hotels":"Hotels",
         "attractions":"Attractions"
     },
+    "snack":{
+        "remove":"Place removed from plan",
+        "serverError":"Server error",
+        "add":"Place added to plan"
+    },
+    "searchReq":"Search term is required",
 "view":"View",
 "add":"Add"
 }
