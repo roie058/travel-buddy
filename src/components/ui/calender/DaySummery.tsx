@@ -42,7 +42,7 @@ const {t}=useTranslation("day")
 
 const currency=props.plan?.budget?.currency??"$"
 const {locale,query}=useRouter()
-const {data,isFetched}=useQuery(["weather",props.day.date],()=>getWeather({locale,planId:String(query.planId),index:props.index,rutine:props.day.rutine,start:props.start}))
+const {data,isFetched}=useQuery({queryKey:["weather",props.day.date],queryFn:()=>getWeather({locale,planId:String(query.planId),index:props.index,rutine:props.day.rutine,start:props.start})})
 let weather:{rainProb:string,icon:string,temp:string,weatherType:string};
 let liveWeather:{rainProb:string,icon:string,temp:string,weatherType:string};
 

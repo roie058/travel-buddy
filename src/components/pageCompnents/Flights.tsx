@@ -17,7 +17,7 @@ const Flights = (props: Props) => {
 
   const {data:session,}=useSession()
   const newSession:NewSesstion={...session}
- const {data:plans,isLoading}=useQuery(["plans"],()=>getPlans(newSession),{enabled:!!session})
+ const {data:plans,isLoading}=useQuery({queryKey:["plans"],queryFn:()=>getPlans(newSession),enabled:!!session})
  
    
   return (

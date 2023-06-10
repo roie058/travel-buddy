@@ -35,7 +35,7 @@ const [open, setOpen] = useState(false)
   const mapCtx=useContext(MapContext)
 const {data:session}=useSession()
   const {setSnackBar,snackBarProps}=useSnackBar()
-  const {data:plans}:{data:Plan[]}=useQuery(["plans",{populate:true}])
+  const {data:plans}:{data:Plan[]}=useQuery({queryKey:["plans",{populate:true}]})
   const clickHandler=()=>{
     if(!session){signIn(); return;}  
     setOpen(true)

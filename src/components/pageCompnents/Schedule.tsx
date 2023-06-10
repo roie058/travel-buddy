@@ -70,10 +70,10 @@ const Schedule = (props: Props) => {
   const {planId}=router.query
   const [list,setList ] =useState<Plan|undefined>()
 
-  const {data:session}=useSession()
-const newSession:NewSesstion={...session}
+  const {data:session}:{data:NewSesstion}=useSession()
 
-const {data,refetch}=useQuery(["plan",planId],()=>getPlanById(newSession,String(planId)),{enabled:!!session})
+
+const {data,refetch}=useQuery({queryKey:["plan",planId],queryFn:()=>getPlanById(session,String(planId)),enabled:!!session})
 const {mutate}=useMutation({mutationFn:listChange,onSuccess:()=>{
   refetch()
 }})

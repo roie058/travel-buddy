@@ -6,9 +6,10 @@ import {Heebo} from 'next/font/google'
 type Props = {t: TFunction<"home", undefined, "home">}
 
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 const heebo=Heebo({subsets:["latin","hebrew"]})
 const GuideLink = ({t}:Props) => {
-
+  const {locale}=useRouter()
 
   return (
       <Box minHeight={"40vh"}    >
@@ -17,7 +18,7 @@ const GuideLink = ({t}:Props) => {
 <Box display={'flex'}  flexDirection={"column"} >
 <Typography className={heebo.className} variant='h3' fontWeight={"bold"} >{t('docs.header')}</Typography>
 <Typography className={heebo.className} variant='body1'>{t('docs.sub')}</Typography>
-    <Link className={heebo.className} href={'/docs'}>{t('docs.link')}</Link>
+    <Link className={heebo.className}  href={'/docs'}><Typography textAlign={locale=="he"? "right":"left"}>{t('docs.link')}</Typography></Link>
 
 
 </Box>

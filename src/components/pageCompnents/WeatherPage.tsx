@@ -94,7 +94,7 @@ const {t}=useTranslation("form")
 const onLoad=(autoC: google.maps.places.Autocomplete)=>{ setAutocomplete(autoC)}
 const {locale}=useRouter()
 
-const {isLoading,data:days,mutate}=useMutation(["weather"],getWeatherByDates)
+const {isLoading,data:days,mutate}=useMutation({mutationKey:["weather"],mutationFn:getWeatherByDates})
 
 const onPlaceChanged=()=>{
 const lat=autocomplete?.getPlace().geometry?.location?.lat()

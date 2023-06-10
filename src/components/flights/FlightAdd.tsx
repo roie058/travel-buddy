@@ -23,11 +23,7 @@ import { queryClient } from '@/pages/_app'
 
 type Props = {plan?:Plan,plans?:Plan[]}
 
-const allAirlines=airLines.reduce((prev:any,cur)=>{
-if(cur.active==="Y"&&cur.iata.length>1){
-    return  [...prev,{name:cur.name,iata:cur.iata,country:cur.country}]
-}else return prev
-},[])
+const allAirlines=Object.keys(airLines).map((id)=>airLines[id])
 
 function getAirportLocation(iata:string){
 const newAirports=JSON.parse(JSON.stringify(airports))

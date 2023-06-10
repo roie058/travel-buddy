@@ -15,8 +15,8 @@ type Props = {setSnackBar: (message: string, severity: AlertColor) => void,open:
 
 const LikeModal = (props: Props) => {
   const {t}=useTranslation("map")
-const {data:plans}:{data:Plan[]}=useQuery(["plans",{populate:true}])
-const {mutate:remove,isLoading:removeLoading}=useMutation(removePlace,{onSuccess:()=>{
+const {data:plans}:{data:Plan[]}=useQuery({queryKey:["plans",{populate:true}]})
+const {mutate:remove,isLoading:removeLoading}=useMutation({mutationFn: removePlace,onSuccess:()=>{
   props.setSnackBar(t("snack.placeRemoved"),"error")
 queryClient.invalidateQueries(["plans",{populate:true}])
 },
@@ -24,7 +24,7 @@ onError:()=>{
   props.setSnackBar(t("snack.serverError"),"error")
   queryClient.invalidateQueries(["plans",{populate:true}])
 }})
-const {mutate:addPlace,isLoading}=useMutation(newLikedPlace,{onSuccess:()=>{
+const {mutate:addPlace,isLoading}=useMutation({mutationFn: newLikedPlace,onSuccess:()=>{
   props.setSnackBar(t("snack.addedPlace"),'success')
   queryClient.invalidateQueries(["plans",{populate:true}])
   props.likeHandler()

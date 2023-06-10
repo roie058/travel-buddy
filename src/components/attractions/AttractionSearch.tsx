@@ -48,7 +48,7 @@ const AttractionSearch = (props: Props) => {
 const {handleSubmit,register}=useForm()
 const {t}=useTranslation("allLiked")
 
-const {data:resultList,isFetching:isLoading}=useQuery(['searchAttr',search],()=>searchFn(search,'https://travel-advisor.p.rapidapi.com/locations/auto-complete').then((value)=>value.filter((v,i,a)=>a.findIndex(v2=>(v2.location_id===v.location_id))===i)),{enabled:!!search,})
+const {data:resultList,isFetching:isLoading}=useQuery({queryKey:['searchAttr',search],queryFn:()=>searchFn(search,'https://travel-advisor.p.rapidapi.com/locations/auto-complete').then((value)=>value.filter((v,i,a)=>a.findIndex(v2=>(v2.location_id===v.location_id))===i)),enabled:!!search})
 
 const searchHandler:SubmitHandler<FieldValues>= async (data)=>{
   setSearch(data.search)

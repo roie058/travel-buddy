@@ -23,7 +23,7 @@ const Hotels = (props: Props) => {
       const {data:session}=useSession()
       const newSession:NewSesstion={...session}
     
-const {data:plan,isLoading}=useQuery(["plan",query.planId],()=>getPlanById(newSession,String(query.planId)),{enabled:!!session})
+const {data:plan,isLoading}=useQuery({queryKey:["plan",query.planId],queryFn:()=>getPlanById(newSession,String(query.planId)),enabled:!!session})
      
     return (
         <>

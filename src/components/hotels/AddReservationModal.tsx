@@ -21,7 +21,7 @@ const AddReservationModal = (props: Props) => {
    const {t}=useTranslation("hotels")
 
     const [startDate,setStartDate]=useState<null|Date>(props.plan.start?? new Date())
-    const {mutate,isLoading}=useMutation(addReservation,{
+    const {mutate,isLoading}=useMutation({mutationFn: addReservation,
 onSuccess:()=>{
   props.setSnackBar(t("snack.addReservation"),'success')
   props.onClose()

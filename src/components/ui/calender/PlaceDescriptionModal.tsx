@@ -24,7 +24,7 @@ const {t}=useTranslation("day")
 
 const {register,handleSubmit,formState}=useForm({defaultValues:{budget:props.listItem?.budget,dayType:props.listItem?.position,description:props.listItem?.description}});
 
-const {mutate,isLoading}=useMutation(editPlace,{onSuccess:()=>{
+const {mutate,isLoading}=useMutation({mutationFn:editPlace,onSuccess:()=>{
   props.close()
   queryClient.invalidateQueries(["plan",query.planId])
 },onError:()=>{

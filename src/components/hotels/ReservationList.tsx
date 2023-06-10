@@ -29,7 +29,7 @@ const{t}=useTranslation("hotels")
   }else if(props.plans){
     reservationList=props.plans.flatMap((plan)=>plan.hotels)
   }
-const {mutate}=useMutation(deleteReservation,{
+const {mutate}=useMutation({mutationFn: deleteReservation,
   onMutate:({index})=>{
     props.plan?.hotels.splice(index,1)
 

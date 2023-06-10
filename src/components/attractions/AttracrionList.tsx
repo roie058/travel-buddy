@@ -51,7 +51,7 @@ const {setSnackBar,snackBarProps}=useSnackBar()
   const {query}=useRouter()
 
 
-const {mutate,isLoading}=useMutation(newLikedPlace,{onSuccess:()=>{
+const {mutate,isLoading}=useMutation({mutationFn: newLikedPlace,onSuccess:()=>{
   setSnackBar(t("snack.add"),"success") 
 queryClient.invalidateQueries(["plan",query.planId,"liked"])
 },

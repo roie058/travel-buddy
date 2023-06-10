@@ -32,7 +32,7 @@ export default function MapPage() {
 const {data:session}=useSession()
 const newSession:NewSesstion={...session}
 
-const {data:plans}=useQuery(["plans",{populate:true}],()=>getPlans(newSession,true),{enabled:!!session})
+const {data:plans}=useQuery({queryKey:["plans",{populate:true}],queryFn:()=>getPlans(newSession,true),enabled:!!session})
  
 
   useEffect(()=>{

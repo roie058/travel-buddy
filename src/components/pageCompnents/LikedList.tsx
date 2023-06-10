@@ -30,9 +30,9 @@ const {setSnackBar,snackBarProps}=useSnackBar()
 const {data:session}=useSession()
 const newSession:NewSesstion={...session}
 
-const {isLoading,data:plan,refetch}=useQuery(["plan",props.planId,"liked"],()=>(getPlanById(newSession,props.planId)).then((value:Plan)=> {setList(Object.values(value.liked).flat());   return value.liked} ),{enabled:!!session})
+const {isLoading,data:plan,refetch}=useQuery({queryKey:["plan",props.planId,"liked"],queryFn:()=>(getPlanById(newSession,props.planId)).then((value:Plan)=> {setList(Object.values(value.liked).flat());   return value.liked} ),enabled:!!session})
 
-const {mutate}=useMutation(removePlace,{
+const {mutate}=useMutation({mutationFn:removePlace,
   onMutate:({place})=>{
     setList(()=> list.filter((indexPlace)=>indexPlace.location_id!==place.location_id))
   },

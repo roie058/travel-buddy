@@ -20,7 +20,7 @@ const PlanPage = (props: Props) => {
 
   const newSession:NewSesstion={...session}
 
-const {isLoading,data:list}=useQuery(["plan",planId],()=>getPlanById(newSession,planId),{enabled:!!session})
+const {isLoading,data:list}=useQuery({queryKey:["plan",planId],queryFn:()=>getPlanById(newSession,planId),enabled:!!session})
    
 
 const isMobile=useMediaQuery("(max-width:900px)")

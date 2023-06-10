@@ -32,7 +32,7 @@ const {t}=useTranslation("flights")
     flightList=props.plans.reduce((prev:Flight[],cur)=>  [...prev,...cur.flights],[])
   }
 
-const {mutate}=useMutation(deleteFlight,{onMutate:({planIndex,index})=>{
+const {mutate}=useMutation({ mutationFn:deleteFlight,onMutate:({planIndex,index})=>{
   if (props.plan){
     props.plan.flights.splice(index,1)
    }

@@ -15,7 +15,7 @@ type Props = {
 const UserAddedNoteForm = (props: Props) => {
   const [expanded, setExpanded] = useState<boolean>(false);
   const [autocomplete,setAutocomplete]=useState<google.maps.places.Autocomplete|null>(null)
-  const {mutate,isLoading}=useMutation(newPlace,{onSuccess:(data)=>{
+  const {mutate,isLoading}=useMutation({mutationFn:newPlace,onSuccess:(data)=>{
     props.onSubmit(data.newPlace)
   }})
   const {t}=useTranslation("day")

@@ -44,7 +44,7 @@ const {setSnackBar,snackBarProps}=useSnackBar()
 
 
 //removeItem
-const {mutate:removeItem}=useMutation(listRemove,{onMutate:({dragId})=>{
+const {mutate:removeItem}=useMutation({mutationFn:listRemove,onMutate:({dragId})=>{
    const filteredList=list.filter((item)=> item.dragId !== dragId)
    setList((list)=> filteredList)
   },onSuccess:()=>{
@@ -56,7 +56,7 @@ setSnackBar(t("snack.error"),"error")
 }})
 
 //add item
-const {mutate:addItem}=useMutation(listAdd,{onMutate:(({listItem})=>{
+const {mutate:addItem}=useMutation({mutationFn:listAdd,onMutate:(({listItem})=>{
   setList((list)=>(  [...list,listItem] ))
 }),onSuccess:(data,v)=>{
   setOpen(false)

@@ -167,7 +167,7 @@ max-width: 1000px;
 display: flex;
 align-items: flex-start;
 gap: 50px;
-flex-direction: row;
+
 
 }
 
@@ -209,7 +209,9 @@ height: 260px;
     .container{
     align-items:center;
     }
-
+.header{
+    text-align: center;
+}
     .mainText{
     align-items: center;
     flex-direction: column-reverse;

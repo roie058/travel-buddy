@@ -8,12 +8,13 @@ import styles from './DocsPage.module.css'
 import HeartBtn from '../ui/buttons/HeartBtn'
 
 import { useTranslation } from 'next-i18next'
+import { useRouter } from 'next/router'
 type Props = { }
 
 const Question=({summary,children,id})=>{
-
-    return  <Accordion id={id}  sx={{width:'100%'}}  >
-    <AccordionSummary expandIcon={<Arrow height={30} width={30} />}
+    const {locale}=useRouter()
+    return  <Accordion  id={id}  sx={{width:'100%',textAlign:locale=="he"?"right":"left"}}  >
+    <AccordionSummary   expandIcon={<Arrow height={30} width={30} />}
   >{summary}</AccordionSummary>
     <AccordionDetails>{children}</AccordionDetails>
 </Accordion>
@@ -22,8 +23,8 @@ const Question=({summary,children,id})=>{
 
 const DocsPage = (props: Props) => {
     const { t } = useTranslation('docs')
+    const {locale}=useRouter()
 const isSm=useMediaQuery("(max-width:600px)")
-
   return (
      <Box height={"100%"} width={"100%"} marginBottom={"10%"} display={"flex"} flexDirection={"column"} justifyContent={"center"} alignItems={"center"} >
         <Typography className={styles.mainHeader} textAlign={"center"}  fontWeight={"bold"} variant='h1'>{t("title")}</Typography>
@@ -45,7 +46,7 @@ const isSm=useMediaQuery("(max-width:600px)")
             <ListItem >
             <Card sx={{width:'100%'}}>
     <CardHeader sx={{paddingTop:'3%'}} titleTypographyProps={{className:styles.subHeader,textAlign:'center',fontWeight:"bold"}} title={t("guide2.title")}/>
-    <CardContent>
+    <CardContent >
         <List >
    <ListItem > <ListItemText primaryTypographyProps={{className:styles.text}} >1. {t("guide2.step1")} <span ><Link href={'/map'} style={{fontWeight:'bold'}}>{t("guide2.link1")}</Link></span> {t("guide2.step1rest")}</ListItemText></ListItem>
    <ListItem > <ListItemText primaryTypographyProps={{className:styles.text}} >2. {t("guide2.step2")}</ListItemText></ListItem>
@@ -67,7 +68,7 @@ const isSm=useMediaQuery("(max-width:600px)")
             </ListItem>
             <ListItem><Card sx={{width:'100%'}}>
     <CardHeader sx={{paddingTop:'3%'}} titleTypographyProps={{className:styles.subHeader,textAlign:'center',fontWeight:"bold"}} title={t("guide3.title")}/>
-    <CardContent>
+    <CardContent sx={{textAlign:locale=="he"?"right":"left"}}>
         <List >
    <ListItem > <ListItemText primaryTypographyProps={{className:styles.text}} >{t("guide3.row1")}</ListItemText></ListItem>
    <ListItem > <ListItemText primaryTypographyProps={{className:styles.text}} >{t("guide3.row2")}</ListItemText></ListItem>

@@ -32,7 +32,7 @@ const HotelAdd = (props: Props) => {
    const {t}=useTranslation("hotels")
     const {setSnackBar,snackBarProps}=useSnackBar()
 
-    const {isLoading,mutate}=useMutation(removePlace,{onMutate:({place})=>{
+    const {isLoading,mutate}=useMutation({mutationFn: removePlace,onMutate:({place})=>{
       const dataI=props.plan.liked.hotels.findIndex((places)=>places.location_id==place.location_id)
          props.plan.liked.hotels.splice(dataI,1)
 

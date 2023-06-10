@@ -26,7 +26,7 @@ type Props = {open:boolean,onClose:()=>void,flight?:Flight,plans:Plan[],  setSna
 
 const AddFlightModal = (props: Props) => {
 const {t}=useTranslation("flights")
-const {mutate,isLoading}=useMutation(addNewFlight,{onSuccess:()=>{
+const {mutate,isLoading}=useMutation({mutationFn:addNewFlight,onSuccess:()=>{
   props.onClose()
   props.setSnackBar(t("snack.added"),'success')
 queryClient.invalidateQueries(["plans"])

@@ -11,11 +11,11 @@ import { deleteHandler, getPlans } from '@/util/fetchers'
 export default function PlansPage() {
 
 const {setSnackBar,snackBarProps}=useSnackBar()
-const {data:session}=useSession()
-const newSession:NewSesstion={...session}
+const {data:session}:{data:NewSesstion}=useSession()
+
 const {t}=useTranslation("common")
 
-const {data,isLoading,error,refetch:refetchPlans}= useQuery(['plans'],()=>getPlans(newSession),{enabled:!!newSession?.user?.id})
+const {data,isLoading,error,refetch:refetchPlans}= useQuery({queryKey:['plans'],queryFn:()=>getPlans(session),enabled:!!session})
 if(error){
   setSnackBar(t("errorMsg.fetchPlans"),"error")
 }

@@ -20,7 +20,7 @@ const [submitError, setSubmitError] = useState<undefined|string|unknown>()
 const {t}=useTranslation('plan')
 const {query}=useRouter()
 
- const {mutate,isLoading}=useMutation(addExpense,{onSuccess:(data,v)=>{
+ const {mutate,isLoading}=useMutation({mutationFn:addExpense,onSuccess:(data,v)=>{
    props.openSnackBar(t("snack.expenseAdd"),"success")
    queryClient.invalidateQueries(["plan",v.planId])
    props.onClose()
