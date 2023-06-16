@@ -17,12 +17,12 @@ import { useTranslation } from 'next-i18next'
 type Props = {plan:Plan}
 
 const DashBtn:React.FC<{image:ReactElement,title:string,link:string}>=({image,title,link})=>{
-
+  const{locale}=useRouter()
 
  return <Link href={link} style={{textDecoration:'none'}}>
-  <Card className={styles.btn} elevation={5}    sx={{flexGrow:'3',minHeight:'10vh',display:'flex',alignItems:'center',backgroundColor:'#fefefe'}} >
+  <Card className={styles.btn} elevation={5}    sx={{flexGrow:'3',minHeight:'10vh',display:'flex',alignItems:'center',flexDirection:locale=='he'?"row-reverse":"row",backgroundColor:'#fefefe'}} >
   
-  <CardContent   sx={{display:'flex',alignItems:'center',gap:'15px',marginLeft:'10%'}}>
+  <CardContent   sx={{display:'flex',alignItems:'center',flexDirection:locale=='he'?"row-reverse":"row",gap:'15px',marginX:'10%'}}>
   {image}
 
   <Typography  variant="h2" fontSize={'2rem'}  textTransform={"capitalize"} sx={{textDecorationLine:'none'}}>{ title}</Typography>
@@ -34,7 +34,7 @@ const DashBtn:React.FC<{image:ReactElement,title:string,link:string}>=({image,ti
 
 
 const DashBtns = (props: Props) => {
-    const{ query}=useRouter()
+    const{ query,locale}=useRouter()
     const [isModal, setIsModal] = useState<boolean>(false);
     const {t}=useTranslation("plan")
 const {setSnackBar,snackBarProps}=useSnackBar()
@@ -66,8 +66,8 @@ const {setSnackBar,snackBarProps}=useSnackBar()
         sx={{padding:'0'}}
       >
         
-    <Card elevation={5}    sx={{flexGrow:'3',minHeight:'10vh',display:'flex',alignItems:'center',backgroundColor:'#fefefe'}} >
-    <CardContent sx={{display:'flex',alignItems:'center',gap:'15px',marginLeft:'10%'}}>
+    <Card elevation={5}    sx={{flexGrow:'3',minHeight:'10vh',display:'flex',alignItems:'center',flexDirection:locale=='he'?"row-reverse":"row",backgroundColor:'#fefefe'}} >
+    <CardContent sx={{display:'flex',alignItems:'center',flexDirection:locale=='he'?"row-reverse":"row",gap:'15px',marginX:'10%'}}>
   <EditIcon width={40} height={40}/>
   <Typography variant="h2" fontSize={'2rem'} textTransform={"capitalize"} >{t("edit")}</Typography>
 

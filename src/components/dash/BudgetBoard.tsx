@@ -18,9 +18,10 @@ import { useTranslation } from 'next-i18next'
 import {useMutation} from "@tanstack/react-query"
 import { deleteExpense } from '@/util/fetchers'
 import { queryClient } from '@/pages/_app'
+import {useRouter} from 'next/router'
 type Props = {plan:Plan}
 
-
+const options=[{value:'car',label:'car',he:'רכב'},{value:'public transport',label:'public transport',he:'תחבורה ציבורית'},{value:'insurance',label:'insurance',he:'ביטוח'},{value:'gifts',label:'gifts',he:'מתנות'},{value:'shopping',label:'shopping',he:'קניות'},{value:'attractions',label:'attractions',he:'אטרקציות'},{value:'food',label:'food',he:'אוכל'},{value:'restaurants',label:'restaurants',he:'מסעדות'},{value:'other',label:'other',he:'אחר'}]
 const BudgetBoard = (props: Props) => {
   const [budget, setBudget] = useState<{transportation:number,budget:number,expenses:number,hotels:number,stops:number}>()
   const [totalCost, setTotalCost] = useState<number>()
@@ -28,7 +29,7 @@ const BudgetBoard = (props: Props) => {
   const [open, setOpen] = useState<boolean>(false)
   const {setSnackBar,snackBarProps}=useSnackBar()
   const {t}=useTranslation("plan")
-
+const {locale}=useRouter()
 const currency=props.plan?.budget?.currency??'$'
 
 useEffect(() => {
@@ -88,7 +89,7 @@ const isMobile=useMediaQuery('(max-width:600px)')
           {props.plan.hotels.map((accommodation,i)=>
           <ListItem key={i} sx={{justifyContent:'space-between'}} disablePadding>
           <ListItemText sx={{flex:'none'}} primaryTypographyProps={{color:"#959595",fontSize:isMobile?'0.8rem':'1rem',fontWeight:'bold'}}  >{accommodation.place.name}</ListItemText>
-          <ListItemText sx={{flex:'none'}} primaryTypographyProps={{color:"#959595",fontSize:isMobile?'0.8rem':'1rem',fontWeight:'bold'}}  >{moment(accommodation.end).dayOfYear() - moment(accommodation.start).dayOfYear()} Nights</ListItemText>
+          <ListItemText sx={{flex:'none'}} primaryTypographyProps={{color:"#959595",fontSize:isMobile?'0.8rem':'1rem',fontWeight:'bold'}}  > {moment(accommodation.end).dayOfYear() - moment(accommodation.start).dayOfYear()} {locale=='he'? '- לילות':"Nights"}</ListItemText>
           <ListItemText sx={{flex:'none'}} primaryTypographyProps={{color:"#959595",fontSize:isMobile?'0.8rem':'1rem',fontWeight:'bold'}}  >{accommodation.nightPrice+currency}</ListItemText>
           </ListItem>
           )}
@@ -104,7 +105,7 @@ const isMobile=useMediaQuery('(max-width:600px)')
           {props.plan.flights.map((transport,i)=>
           <ListItem key={i+transport.flightNumber} sx={{justifyContent:'space-between'}} disablePadding>
           <ListItemText sx={{flex:'none'}} primaryTypographyProps={{color:"#959595",fontSize:isMobile?'0.8rem':'1rem',fontWeight:'bold'}}  >{ transport?.origin.iata+"-"+transport?.destination.iata}</ListItemText>
-          <ListItemText sx={{flex:'none'}} primaryTypographyProps={{color:"#959595",fontSize:isMobile?'0.8rem':'1rem',fontWeight:'bold'}}  >{'flight'}</ListItemText>
+          <ListItemText sx={{flex:'none'}} primaryTypographyProps={{color:"#959595",fontSize:isMobile?'0.8rem':'1rem',fontWeight:'bold'}}  >{locale=='he' ? 'טיסה': 'flight'}</ListItemText>
           <ListItemText sx={{flex:'none'}} primaryTypographyProps={{color:"#959595",fontSize:isMobile?'0.8rem':'1rem',fontWeight:'bold'}}  >{transport.price+currency}</ListItemText>
           </ListItem>
           )}
@@ -112,7 +113,7 @@ const isMobile=useMediaQuery('(max-width:600px)')
           {props.plan.budget.transportation.map((transport,i)=>
           <ListItem className={styles.listItem} key={i} sx={{justifyContent:'space-between',position:'relative'}} disablePadding>
           <ListItemText sx={{flex:'none'}} primaryTypographyProps={{color:"#959595",fontSize:isMobile?'0.8rem':'1rem',fontWeight:'bold'}}  >{transport.name}</ListItemText>
-          <ListItemText sx={{flex:'none'}} primaryTypographyProps={{color:"#959595",fontSize:isMobile?'0.8rem':'1rem',fontWeight:'bold'}}  >{transport.category}</ListItemText>
+          <ListItemText sx={{flex:'none'}} primaryTypographyProps={{color:"#959595",fontSize:isMobile?'0.8rem':'1rem',fontWeight:'bold'}}  >{options.find((option)=>option.value==transport.category)[locale=='he'? 'he' : 'label'] }</ListItemText>
           <ListItemText sx={{flex:'none'}} primaryTypographyProps={{color:"#959595",fontSize:isMobile?'0.8rem':'1rem',fontWeight:'bold'}}  >{transport.price+currency}</ListItemText>
           <ListItemButton onClick={()=>{deleteExpenseHandler(transport._id,'transportation')}} className={styles.removeBtn} sx={{display:isMobile?'flex':'none',right:'100%',position:'absolute',flex:"none",color:"#959595",fontSize:isMobile?'0.8rem':'1rem',fontWeight:'bold'}} ><Image  alt='delete expense' src={DeleteIcon } fill sizes='15px' /></ListItemButton>
           </ListItem>
@@ -130,7 +131,7 @@ const isMobile=useMediaQuery('(max-width:600px)')
           {props.plan.budget.expenses.map((expense,i)=>
           <ListItem className={styles.listItem} key={i} sx={{justifyContent:'space-between'}} disablePadding>
           <ListItemText sx={{flex:'none'}} primaryTypographyProps={{color:"#959595",fontSize:isMobile?'0.8rem':'1rem',fontWeight:'bold'}}  >{expense.name}</ListItemText>
-          <ListItemText sx={{flex:'none'}} primaryTypographyProps={{color:"#959595",fontSize:isMobile?'0.8rem':'1rem',fontWeight:'bold'}}  >{expense.category??'other'}</ListItemText>
+          <ListItemText sx={{flex:'none'}} primaryTypographyProps={{color:"#959595",fontSize:isMobile?'0.8rem':'1rem',fontWeight:'bold'}}  >{options.find((option)=>option.value==expense.category)[locale=='he'? 'he' : 'label']}</ListItemText>
           <ListItemText sx={{flex:'none'}} primaryTypographyProps={{color:"#959595",fontSize:isMobile?'0.8rem':'1rem',fontWeight:'bold'}}  >{expense.price+currency}</ListItemText>
           <ListItemButton  onClick={()=>{deleteExpenseHandler(expense._id,'expenses')}} className={styles.removeBtn} sx={{display:isMobile?'flex':'none',right:'100%',position:'absolute',flex:"none",color:"#959595",fontSize:isMobile?'0.8rem':'1rem',fontWeight:'bold',width:'15px',height:'15px'}} ><Image alt='delete expense' fill src={DeleteIcon } sizes='15px'  /></ListItemButton>
           </ListItem>
@@ -138,7 +139,7 @@ const isMobile=useMediaQuery('(max-width:600px)')
           {stopsBudget&&stopsBudget.map((expense,i)=>
           <ListItem key={i+expense.name} sx={{justifyContent:'space-between'}} disablePadding>
           <ListItemText sx={{flex:'none'}} primaryTypographyProps={{color:"#959595",fontSize:isMobile?'0.8rem':'1rem',fontWeight:'bold'}}  >{expense.name}</ListItemText>
-          <ListItemText sx={{flex:'none'}} primaryTypographyProps={{color:"#959595",fontSize:isMobile?'0.8rem':'1rem',fontWeight:'bold'}}  >{expense.category??'other'}</ListItemText>
+          <ListItemText sx={{flex:'none'}} primaryTypographyProps={{color:"#959595",fontSize:isMobile?'0.8rem':'1rem',fontWeight:'bold'}}  >{options.find((option)=>option.value==expense.category)[locale=='he'? 'he' : 'label']}</ListItemText>
           <ListItemText sx={{flex:'none'}} primaryTypographyProps={{color:"#959595",fontSize:isMobile?'0.8rem':'1rem',fontWeight:'bold'}}  >{expense.price+currency}</ListItemText>
           </ListItem>
           )}
@@ -157,7 +158,7 @@ const isMobile=useMediaQuery('(max-width:600px)')
       </Paper>
     
     }
-    <AddExpenseModal openSnackBar={setSnackBar}  open={open} onClose={()=>{setOpen(false)}} />
+    <AddExpenseModal options={options} openSnackBar={setSnackBar}  open={open} onClose={()=>{setOpen(false)}} />
     <SnackBar {...snackBarProps} />
   </>)
 }

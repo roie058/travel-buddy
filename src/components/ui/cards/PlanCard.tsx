@@ -16,7 +16,7 @@ import { queryClient } from '@/pages/_app'
 import { getPlanById } from '@/util/fetchers'
 import { useSession } from 'next-auth/react'
 import { NewSesstion } from '@/pages/api/auth/signup'
-
+import { tripCat } from '@/components/form/NewCreatePlan'
 
 type Props = {
 
@@ -69,7 +69,7 @@ card=<Box className={styles.card} onMouseEnter={prefetch}  >
 <p className={styles.dates}> {dates}</p>
 <div className={styles.tags}>{props.plan?props.plan.tags.map((tag,i)=>{
   const colors=['#FFB74A',"#52FEF4","#6900D1"]
- return <Pill key={tag} text={tag} color={colors[i]}/>
+ return <Pill key={tag} text={router.locale=='he'? tripCat.find((cat)=>cat.value==tag).he :tag} color={colors[i]}/>
   
 
 }):''}      

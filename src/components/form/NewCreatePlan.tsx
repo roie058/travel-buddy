@@ -23,27 +23,27 @@ import {useMutation} from '@tanstack/react-query'
 import { postNewPlan } from '@/util/fetchers'
  type Props = {}
 
- const names = [
- {label:"Adventure 🧭",value:'Adventure'},
-  {label:'Beach & Relaxation 🏖',value:'Beach & Relaxation'},
-  {label:"Business 💼",value:'Business'},
-  {label:"Budget 💵",value:'Budget'},
-  {label:"Backpacking 🎒",value:'Backpacking'},
+ export const tripCat = [
+ {label:"Adventure 🧭",he:"🧭 הרפתקאה",value:'Adventure'},
+  {label:'Beach & Relaxation 🏖',he:"🏖 בטן גב",value:'Beach & Relaxation'},
+  {label:"Business 💼",he:"💼 עסקים",value:'Business'},
+  {label:"Budget 💵",he:"💵 תקציב נמוך",value:'Budget'},
+  {label:"Backpacking 🎒",he:"🎒 תרמילאות",value:'Backpacking'},
 
-  {label:'Culture & History 🗿',value:'Culture & History'},
-  {label:"Cycling 🚴🏼‍♂️",value:'Cycling'},
-  {label:'Diving 🤿',value:'Diving'},
-  {label:'Food 🥐',value:'Food'},
-  {label:'Family Vacation 🧑🏽‍🍼',value:'Family Vacation'},
-  {label:'Honeymoons 🤵🏽👰🏽',value:'Honeymoons'},
-  {label:'Hiking ⛺️',value:'Hiking'},
-  {label:"Luxury 💎",value:'Luxury'},
-  {label:"Road Trip 🛣",value:'Road Trip'},
-  {label:"Romantic ❤️",value:'Romantic'},
-  {label:'Shopping 🛍',value:'Shopping'},
- {label:'Skiing ⛷',value:'Skiing'},
-{label:"Spa & Health 🧘🏼‍♀️",value:'Spa & Health'},
- {label:"Wildlife & Safaris 🐘",value:'Wildlife & Safaris'},
+  {label:'Culture & History 🗿',he:"🗿 תרבות והיסטוריה",value:'Culture & History'},
+  {label:"Cycling 🚴🏼‍♂️",he:"🚴🏼‍♂️ אופניים",value:'Cycling'},
+  {label:'Diving 🤿',he:"🤿 צלילה",value:'Diving'},
+  {label:'Food 🥐',he:"🥐 אוכל",value:'Food'},
+  {label:'Family Vacation 🧑🏽‍🍼',he:"🧑🏽‍🍼 חופשה משפחתית",value:'Family Vacation'},
+  {label:'Honeymoons 🤵🏽👰🏽',he:"🤵🏽👰🏽 ירח דבש",value:'Honeymoons'},
+  {label:'Hiking ⛺️',he:"⛺️ מחנאות",value:'Hiking'},
+  {label:"Luxury 💎",he:"💎 יוקרה",value:'Luxury'},
+  {label:"Road Trip 🛣",he:"🛣 בדרכים",value:'Road Trip'},
+  {label:"Romantic ❤️",he:"❤️ רומנטי",value:'Romantic'},
+  {label:'Shopping 🛍',he:"🛍 קניות",value:'Shopping'},
+ {label:'Skiing ⛷',he:"⛷ סקי",value:'Skiing'},
+{label:"Spa & Health 🧘🏼‍♀️",he:"🧘🏼‍♀️ ספא ובריאות",value:'Spa & Health'},
+ {label:"Wildlife & Safaris 🐘",he:"🐘 חיות וספארי",value:'Wildlife & Safaris'},
  
 ];
 const newCodes=JSON.parse(JSON.stringify(codes))
@@ -193,7 +193,7 @@ const isMobile=useMediaQuery("(max-width:800px)")
 </Box>
 
 <Box width={"600px"} maxWidth={"100%"} minWidth={"100%"} minHeight={"25vh"} height={"100%"} display={step===2? 'flex' : 'none'} flexDirection={"column"} justifyContent={"center"} rowGap={"25px"}>
-<SelectInput setValue={setValue}  inputRef={register}  data={names} />
+<SelectInput setValue={setValue}  inputRef={register}  data={tripCat} />
 </Box>
 
 

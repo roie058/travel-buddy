@@ -2,13 +2,14 @@ import { Box,  FormControl, Autocomplete, AutocompleteChangeDetails, Autocomplet
 import React, { useState } from 'react'
 import ToolTip from '../ToolTip'
 import { useTranslation } from 'next-i18next'
-
+import {useRouter} from 'next/router'
 
 
 type Props = {data:any[],inputRef:any,setValue:any}
 
 const SelectInput = (props: Props) => {
   const {t}=useTranslation("form")
+const {locale}=useRouter()
 const [value,setValue]=useState<undefined|string[]>()
   const handleChange:((event: React.SyntheticEvent<Element, Event>, value: Array<{label:string,value:string}>, reason: AutocompleteChangeReason, details?: AutocompleteChangeDetails<unknown> | undefined) => void) = (event,value) => {
     props.setValue('type',value.map((item)=>item.value))
@@ -29,9 +30,9 @@ const [value,setValue]=useState<undefined|string[]>()
       renderOption={(props, option) => 
         {
         return(
-        <Box component="li"  sx={{ '& > img': { mr: 2, flexShrink: 0 } }} {...props}>
+        <Box component="li"   sx={{ '& > img': { mr: 2, flexShrink: 0 }}} {...props}>
           <option value={option.value}>
-          {option.label}
+          {locale=='he'? option.he : option.label}
           </option>
           
         </Box>

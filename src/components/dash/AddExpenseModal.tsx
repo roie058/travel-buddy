@@ -12,13 +12,12 @@ import { addExpense } from '@/util/fetchers'
 import { useRouter } from 'next/router'
 import { queryClient } from '@/pages/_app'
 
-type Props = {open:boolean,onClose:()=>void,openSnackBar:(message: string, severity: AlertColor) => void}
-const options=['car','public transport',"insurance","gifts","shopping","attractions","food","restaurants","other"]
+type Props = {open:boolean,onClose:()=>void,openSnackBar:(message: string, severity: AlertColor) => void,options:Array<{value:string,label:string,he:string}>}
 const AddExpenseModal = (props: Props) => {
     const {register,formState,getValues,handleSubmit}=useForm({defaultValues:{name:'',category:'other',price:0,position:''}})
 const [submitError, setSubmitError] = useState<undefined|string|unknown>()
 const {t}=useTranslation('plan')
-const {query}=useRouter()
+const {query,locale}=useRouter()
 
  const {mutate,isLoading}=useMutation({mutationFn:addExpense,onSuccess:(data,v)=>{
    props.openSnackBar(t("snack.expenseAdd"),"success")
@@ -61,7 +60,7 @@ mutate({data,planId:String(query.planId)})
 <InputLabel id='category'>{t("budget.form.input2")}</InputLabel>
   <Select label={'category'} labelId='category' {...register('category')} defaultValue={'other'}  >
     {
-       options.map((option)=> <MenuItem key={option} value={option}>{option}</MenuItem>)
+       props.options.map((option)=> <MenuItem key={option.value} value={option.value}>{locale=="he"?option.he:option.label}</MenuItem>)
     }
     
   </Select>
