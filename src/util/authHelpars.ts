@@ -1,5 +1,4 @@
-import User from 'models/User'
-import mongoose from 'mongoose'
+
 import {signIn} from 'next-auth/react'
 
 export interface LoginUserParams{
