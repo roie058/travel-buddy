@@ -40,7 +40,7 @@ const router=useRouter()
     <div style={{display:'flex',flexDirection:'column',position:"sticky",top:'0',
     zIndex: 3,width:'100%'}}>
   <nav className={styles.nav}>
-  {!isMobile&& <Button onClick={()=>{setOpenNav(true)}} className={styles.mobile_navBtn} >
+  {!isMobile&& <Button name="navigation drawer"  onClick={()=>{setOpenNav(true)}} className={styles.mobile_navBtn} >
 <div></div>
 <div></div>
 <div></div>
@@ -78,7 +78,8 @@ const router=useRouter()
   </Select>}
    {session?.user?
           <Button
-        id="button"
+        id="profile"
+        name="user profile"
         aria-controls={open ? 'menu' : undefined}
         aria-haspopup="true"
         aria-expanded={open ? 'true' : undefined}
@@ -89,6 +90,7 @@ const router=useRouter()
       
       </Button>:
       <Button
+      name='login'
       onClick={()=>{router.push('/auth') } }
     >
     {t("profile.login")}

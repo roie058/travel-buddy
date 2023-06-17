@@ -5,8 +5,9 @@ import React, { ChangeEventHandler, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import UiButton from '../ui/buttons/UiButton'
 import DateTimeInput from '../ui/inputs/DateTimeInput'
-import airLines from '../../util/airLines.json'
-import airports from '../../util/airports.json'
+
+import airLines from '../../../public/util/airLines.json';
+import airports from '../../../public/util/airports.json';
 import axios from 'axios'
 import AddFlightModal, { Flight } from './AddFlightModal'
 

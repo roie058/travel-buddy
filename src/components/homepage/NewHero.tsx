@@ -54,7 +54,7 @@ const isSmall=useMediaQuery("(max-width:600px)")
 </Box>
 
 <Box  paddingY={isSmall?"15%":"5%"} flexDirection={locale=='he'? "row-reverse" : "row"}  display={'flex'} alignItems={'center'} textAlign={'center'} flexWrap={"wrap"} justifyContent={"center"} gap={"15px"} maxWidth={'1000px'} >
-{session&& <Typography className={heebo.className} fontWeight={"bold"} variant='h2' fontSize={isXl?"2rem": "3rem"}>{t("startLink")}</Typography>}
+ <Typography className={heebo.className} fontWeight={"bold"} variant='h2' fontSize={isXl?"2rem": "3rem"}>{t("startLink")}</Typography>
 {session? <UiButton style={{height:'50px',width:'200px',padding:'0'}} size='small' clickFn={()=>{router.push('/newplan')}}>{t("button")}</UiButton> :<UiButton style={{height:'50px',width:'200px',padding:'0'}} size='small' color='blue' clickFn={()=>router.push('/auth')}>{t("loginButton")}</UiButton>}
 </Box>
 </Box>

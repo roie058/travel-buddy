@@ -57,7 +57,6 @@ console.log(props.day);
       </div>}
       <div onClick={props.openHandler} className={styles.daySummery}>
       {props.open?<RightArrow width={"24px"} height={"24px"}/>:<Arrow width={"24px"} height="24px"  />}
-
       </div>
       </Box>
     </Box>
