@@ -1,8 +1,9 @@
 import { Box, Card,  CardActions, CardContent, CardHeader, CircularProgress, FormControl, List, ListItem, ListItemIcon, ListItemText, TextField, Typography, useMediaQuery } from '@mui/material'
 import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers'
-import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment'
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { Autocomplete, LoadScriptNext } from '@react-google-maps/api'
-import moment from 'moment'
+
+import dayjs from 'dayjs'
 import React, { useState } from 'react'
 
 import Image from 'next/image'
@@ -120,16 +121,17 @@ const isMobile=useMediaQuery("(max-width:600px)")
         
         <Card sx={{margin:'10% 10% 0% 10%', minWidth:'80%' }}>
 <CardHeader title={t("weather.header")}/>
-<LocalizationProvider dateAdapter={AdapterMoment}>
+<LocalizationProvider dateAdapter={AdapterDayjs}>
 <FormControl fullWidth>
 <Autocomplete onLoad={onLoad} onPlaceChanged={onPlaceChanged} ><TextField fullWidth /></Autocomplete>
 </FormControl>
 <Box width={"100%"} display={"flex"}>
 <FormControl fullWidth >
-<DatePicker inputFormat='DD/MM/YYYY' onChange={(e:any)=>{setStartDate(e._d); setEndDate(e._d)} } value={startDate} renderInput={(props)=><TextField  label={'Start'} {...props}  />}/>
+<DatePicker inputFormat='DD/MM/YYYY' onChange={(e:any)=>{setStartDate(e.$d); setEndDate(e.$d)} } value={startDate} renderInput={(props)=><TextField  label={'Start'} {...props}  />}/>
 </FormControl>
 <FormControl fullWidth >
-<DatePicker shouldDisableDate={(date:any)=>{ return(startDate.getTime()>date._d.getTime() )} } inputFormat='DD/MM/YYYY' onChange={(e)=>setEndDate(e._d)} value={endDate} renderInput={(props)=><TextField label={'End'} {...props}  />}/>
+<DatePicker shouldDisableDate={(date:any)=>{
+ return(startDate.getTime()>date.$d.getTime() )} } inputFormat='DD/MM/YYYY' onChange={(e)=>setEndDate(e.$d)} value={endDate} renderInput={(props)=><TextField label={'End'} {...props}  />}/>
 </FormControl>
 </Box>
 </LocalizationProvider>
@@ -148,7 +150,7 @@ const isMobile=useMediaQuery("(max-width:600px)")
 
         <ListItemIcon ><Image alt={day.icon} width={isMobile? 50:100} height={isMobile? 50:100} src={`/images/weatherIcons/${day.icon}.svg`}/> </ListItemIcon>
         <ListItemText  >{<Typography fontSize={isMobile?'1.5rem' : "2rem"} variant="h4">{`${day.tempmax}/${day.tempmin}c°`}</Typography>} </ListItemText>
-        <ListItemText >{<Typography fontSize={isMobile?'1.2rem' : "1.5rem"} variant="h5">{moment(day.datetime).format('DD.MM.YY')}</Typography>} </ListItemText>
+        <ListItemText >{<Typography fontSize={isMobile?'1.2rem' : "1.5rem"} variant="h5">{dayjs(day.datetime).format('DD.MM.YY')}</Typography>} </ListItemText>
         </ListItem>
         <Typography fontSize={isMobile?'1.5rem' : "2rem"}  variant="h4" >{day.conditions}</Typography>
         <CardContent sx={{width:'80%'}}>
@@ -163,7 +165,6 @@ const isMobile=useMediaQuery("(max-width:600px)")
             <Typography fontSize={isMobile?'0.8rem' : "1rem"} >{day.precipprob}% {t("weather.rainProb")}</Typography>
             <Typography fontSize={isMobile?'0.8rem' : "1rem"} >{day.uvindex} {t("weather.uv")}</Typography>
             </Box>
-            <Typography>{}</Typography>
         </CardContent>
         </  Card>
 })}

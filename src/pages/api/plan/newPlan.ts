@@ -1,11 +1,10 @@
 import dbConnect from "lib/dbConnect";
 import type { NextApiRequest, NextApiResponse } from 'next'
 import mongoose from "mongoose"
-import User from "models/User";
 import Plan from "models/Plan";
 import {  enumerateDaysBetweenDates } from "@/util/dateHandlers";
 import axios from "axios";
-import moment from "moment";
+import dayjs from 'dayjs'
 
 export interface IPlan{
     
@@ -25,7 +24,7 @@ const {city,country,type,title,start,end,image,userId,budget,currency}=req.body
 
 const daysArr=enumerateDaysBetweenDates(start,end)
 
-const {data}=await axios.get(`https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${city+', '+country }/${moment(start).format('YYYY-MM-DD')+'/'+moment(end).format('YYYY-MM-DD')}?unitGroup=metric&elements=datetime%2Cname%2Caddress%2Clatitude%2Clongitude%2Ctemp%2Cprecipprob%2Cconditions%2Cdescription%2Cicon&include=days%2Calerts&key=${process.env.WEATHER_KEY}&contentType=json`) 
+const {data}=await axios.get(`https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${city+', '+country }/${dayjs(start).format('YYYY-MM-DD')+'/'+dayjs(end).format('YYYY-MM-DD')}?unitGroup=metric&elements=datetime%2Cname%2Caddress%2Clatitude%2Clongitude%2Ctemp%2Cprecipprob%2Cconditions%2Cdescription%2Cicon&include=days%2Calerts&key=${process.env.WEATHER_KEY}&contentType=json`) 
 const weatherData= data.days
 const days=daysArr.map((date,i)=>{
 const dailyWeather=weatherData[i]

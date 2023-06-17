@@ -1,9 +1,8 @@
 
 import { Box, List, ListItem, ListItemButton, ListItemText, Paper, Typography, useMediaQuery } from '@mui/material'
 
-import moment from 'moment'
 import Image from 'next/image'
-
+import dayjs from 'dayjs'
 import React, { useEffect, useState } from 'react'
 
 import UiButton from '../ui/buttons/UiButton'
@@ -44,7 +43,7 @@ useEffect(() => {
           budget:props?.plan?.budget.budget,
           transportation:[...props.plan.budget.transportation,...props.plan.flights].reduce((prv,cur:Expense|Flight)=>{return cur?.price? prv+ cur?.price:0},0),
           expenses:props.plan.budget.expenses.reduce((prv,cur)=>{return cur?.price? prv+ cur?.price:0},0),
-          hotels:props.plan.hotels.reduce((prv,cur)=>{return prv+ (moment(cur.end).dayOfYear() - moment(cur.start).dayOfYear())*cur.nightPrice},0),
+          hotels:props.plan.hotels.reduce((prv,cur)=>{return prv+ dayjs(cur.end).diff(cur.start,"days") *cur.nightPrice},0),
         stops:rutineExpenses.reduce((prv,cur)=>{return cur?.price? prv+ cur?.price:0},0)
         }
         setBudget(sumBudget)
@@ -89,7 +88,7 @@ const isMobile=useMediaQuery('(max-width:600px)')
           {props.plan.hotels.map((accommodation,i)=>
           <ListItem key={i} sx={{justifyContent:'space-between'}} disablePadding>
           <ListItemText sx={{flex:'none'}} primaryTypographyProps={{color:"#959595",fontSize:isMobile?'0.8rem':'1rem',fontWeight:'bold'}}  >{accommodation.place.name}</ListItemText>
-          <ListItemText sx={{flex:'none'}} primaryTypographyProps={{color:"#959595",fontSize:isMobile?'0.8rem':'1rem',fontWeight:'bold'}}  > {moment(accommodation.end).dayOfYear() - moment(accommodation.start).dayOfYear()} {locale=='he'? '- לילות':"Nights"}</ListItemText>
+          <ListItemText sx={{flex:'none'}} primaryTypographyProps={{color:"#959595",fontSize:isMobile?'0.8rem':'1rem',fontWeight:'bold'}}  > {dayjs(accommodation.end).diff(accommodation.start,"days")} {locale=='he'? '- לילות':"Nights"}</ListItemText>
           <ListItemText sx={{flex:'none'}} primaryTypographyProps={{color:"#959595",fontSize:isMobile?'0.8rem':'1rem',fontWeight:'bold'}}  >{accommodation.nightPrice+currency}</ListItemText>
           </ListItem>
           )}

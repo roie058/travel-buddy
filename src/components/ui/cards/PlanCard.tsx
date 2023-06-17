@@ -1,7 +1,7 @@
 
 import { Box } from '@mui/material'
 
-import moment from 'moment'
+import dayjs from 'dayjs'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 import React from 'react'
@@ -33,7 +33,7 @@ const PlanCard = (props: Props) => {
 const router=useRouter()
 const { data:session}:{data:NewSesstion}=useSession()
 
-const dates= moment(props.plan?.start).format('DD/MM/YYYY')+'-'+ moment(props.plan?.end).format('DD/MM/YYYY') ;
+const dates= dayjs(props.plan?.start).format('DD/MM/YYYY')+'-'+ dayjs(props.plan?.end).format('DD/MM/YYYY') ;
   const newtripHandler=()=>{
     router.push("/newplan")
   }

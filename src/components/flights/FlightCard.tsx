@@ -1,11 +1,10 @@
 import { Card, ListItemIcon, ListItemText } from '@mui/material'
 import { Box } from '@mui/system'
-import moment from 'moment'
 import Image from 'next/image'
 import React from 'react'
 
 import { Flight } from './AddFlightModal'
-
+import dayjs from 'dayjs'
 type Props = {flight:Flight}
 
 const FlightCard = (props: Props) => {
@@ -17,8 +16,8 @@ const FlightCard = (props: Props) => {
     
     <ListItemText sx={{flexGrow:'50%',flexBasis:'50%'}} primaryTypographyProps={{fontWeight:"bold"}} >{props.flight?.origin.iata+' - '+props.flight?.destination.iata}</ListItemText>
     <ListItemText sx={{flexGrow:"50%",flexBasis:"50%"}} primaryTypographyProps={{fontWeight:"bold"}}>{props.flight?.flightNumber}</ListItemText>
-    <ListItemText sx={{flexGrow:"50%",flexBasis:"50%"}} primaryTypographyProps={{fontWeight:"bold"}}  >{moment(props.flight?.start).format('DD/MM/YYYY')=== moment(props.flight?.end).format('DD/MM/YYYY')?moment(props.flight?.start).format('DD/MM/YYYY'):moment(props.flight?.start).format('DD/MM/YYYY')+'-'+ moment(props.flight?.end).format('DD/MM/YYYY')}</ListItemText>
-    <ListItemText sx={{flexGrow:"50%",flexBasis:"50%"}} primaryTypographyProps={{fontWeight:"bold"}} >{moment(props.flight?.start).format('HH:mm')+'-'+moment(props.flight?.end).format('HH:mm')}</ListItemText>
+    <ListItemText sx={{flexGrow:"50%",flexBasis:"50%"}} primaryTypographyProps={{fontWeight:"bold"}}  >{dayjs(props.flight.start).diff(props.flight?.end,'dates')===0?dayjs(props.flight.start).format('DD/MM/YYYY'):dayjs(props.flight?.start).format('DD/MM/YYYY')+'-'+ dayjs(props.flight?.end).format('DD/MM/YYYY')}</ListItemText>
+    <ListItemText sx={{flexGrow:"50%",flexBasis:"50%"}} primaryTypographyProps={{fontWeight:"bold"}} >{dayjs(props.flight?.start).format('HH:mm')+'-'+dayjs(props.flight?.end).format('HH:mm')}</ListItemText>
     </Box>
           </Card>
           </>

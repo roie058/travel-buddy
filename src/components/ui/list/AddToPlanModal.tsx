@@ -5,8 +5,7 @@ import { IPlace } from '@/dummyData'
 
 import { Avatar, CircularProgress, Dialog, DialogTitle, List, ListItem, ListItemAvatar, ListItemButton, ListItemText } from '@mui/material'
 
-
-import moment from 'moment'
+import dayjs from "dayjs"
 import Image from 'next/image'
 import React from 'react'
 
@@ -26,7 +25,7 @@ const AddToPlanModal = (props: Props) => {
               <Image style={{objectFit:"cover"}} alt={plan._id} fill  src={plan.image}/> 
               </Avatar>
             </ListItemAvatar>
-            <ListItemText sx={{width:'100%'}}  primary={plan.header} secondary={`${plan.country} ${moment(new Date(plan.start)).format('DD.MM')} - ${moment(new Date(plan.end)).format('DD.MM')}` }  />
+            <ListItemText sx={{width:'100%'}}  primary={plan.header} secondary={`${plan.country} ${dayjs(new Date(plan.start)).format('DD.MM')} - ${dayjs(new Date(plan.end)).format('DD.MM')}` }  />
           
           {props.clickedLocation&&props.type&&  <ListItemButton  sx={{justifyContent:'flex-end',width:'40px',height:'40px',padding:'0'}} onClick={()=>props.submitHandler(i)} key={plan._id}>
             {plan.liked[props.type]?.find((place)=>(props?.clickedLocation?.location_id==place.location_id))?<AddedIcon width={30} height={30} />:

@@ -1,6 +1,6 @@
-import Day from "models/Day";
-import moment from "moment";
 
+import { count } from 'console';
+import dayjs from 'dayjs'
 
 const addDays = function(date:Date,days:number) {
     const newDate = new Date(date.valueOf());
@@ -27,17 +27,19 @@ dateArray.push( addDays(startDate,i))
 }
 
 export const  enumerateDaysBetweenDates = function(startDate:Date, endDate:Date) {
-    const currDate = moment(startDate).startOf('day');
-    const lastDate = moment(endDate);
+    const currDate = dayjs(startDate).startOf('day');
+    const lastDate = dayjs(endDate).startOf('day');
     
    
     
     let dates = [currDate.clone().format('MM/DD/YYYY')]
-    while(currDate.add(1, 'days').diff(lastDate) < 0) {
-       
-        dates.push(currDate.clone().format('MM/DD/YYYY'));
+   
+    let count=1;
+    while( currDate.add(count, "day").diff(lastDate,'day') <= 0) {
+        dates.push(currDate.add(count, "day").clone().format('MM/DD/YYYY'));
+        count++;
+        
     }
-//dates.push(lastDate.format('MM/DD/YYYY'))
     return dates;
 };
 

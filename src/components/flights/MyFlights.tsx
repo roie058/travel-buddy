@@ -1,9 +1,8 @@
 
 import { Box, Card, CardContent, CardHeader, Divider, List, ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material'
 
-import moment from 'moment'
 import Image from 'next/image'
-
+import dayjs from 'dayjs'
 
 import React from 'react'
 import { Flight } from './AddFlightModal'
@@ -86,8 +85,8 @@ mutate({planId:planId,flightId:flight._id,planIndex,index})
     
     <ListItemText sx={{flexGrow:'50%',flexBasis:'50%'}} primaryTypographyProps={{fontWeight:"bold"}} >{flight.origin.iata+' - '+flight.destination?.iata}</ListItemText>
     <ListItemText sx={{flexGrow:"50%",flexBasis:"50%"}} primaryTypographyProps={{fontWeight:"bold"}}>{flight.flightNumber}</ListItemText>
-    <ListItemText sx={{flexGrow:"50%",flexBasis:"50%"}}>{moment(flight.start).format('DD/MM/YYYY')=== moment(flight.end).format('DD/MM/YYYY')?moment(flight.start).format('DD/MM/YYYY'):moment(flight.start).format('DD/MM/YYYY')+':'+ moment(flight.end).format('DD/MM/YYYY')}</ListItemText>
-    <ListItemText sx={{flexGrow:"50%",flexBasis:"50%"}}>{moment(flight.start).format('HH:mm')+'-'+moment(flight.end).format('HH:mm')}</ListItemText>
+    <ListItemText sx={{flexGrow:"50%",flexBasis:"50%"}}>{ dayjs(flight.start).diff(flight.end,'day')==0?dayjs(flight.start).format('DD/MM/YYYY'):dayjs(flight.start).format('DD/MM/YYYY')+':'+ dayjs(flight.end).format('DD/MM/YYYY')}</ListItemText>
+    <ListItemText sx={{flexGrow:"50%",flexBasis:"50%"}}>{dayjs(flight.start).format('HH:mm')+'-'+dayjs(flight.end).format('HH:mm')}</ListItemText>
     </Box>
     <ListItemButton onClick={()=>{deleteFlightHandler(flight,index)}} sx={{flexGrow:'0',width:"30px",height:'30px',padding:'0',textAlign:'center',justifyContent:'center'}}><Image alt='delete' fill sizes='30px' src={DeleteIcon}/></ListItemButton>
     

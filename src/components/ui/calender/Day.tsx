@@ -10,7 +10,7 @@ import { Box } from '@mui/material'
 import { Flight } from '@/components/flights/AddFlightModal'
 
 import FlightCard from '@/components/flights/FlightCard'
-import moment from 'moment'
+import dayjs from 'dayjs'
 import { enumerateDaysBetweenDates } from '@/util/dateHandlers'
 import HotelCard from '@/components/hotels/HotelCard'
 import { Days, Hotel, Plan } from '@/components/pageCompnents/Schedule'
@@ -48,7 +48,7 @@ useEffect(() => {
   setDay(props.day)
   setStartFlight( props.plan.flights.find((flight)=>flight.position ==='start'))
   setEndFlight( props.plan.flights.find((flight)=>flight.position ==='end'))
-  const middleFlights=props.plan.flights.filter((flight)=>flight.position==='other'&&moment(flight.start).dayOfYear()===moment(props.plan.days[props.index].date).dayOfYear())
+  const middleFlights=props.plan.flights.filter((flight)=>flight.position==='other'&&dayjs(flight.start).diff(props.plan.days[props.index].date,'day')==0)
   setMiddleFlight( middleFlights);
   props.plan.hotels.forEach((hotel)=>{
     const reservationDates=enumerateDaysBetweenDates(hotel.start,hotel.end);

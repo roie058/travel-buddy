@@ -2,7 +2,7 @@
 
 import { AlertColor, CircularProgress, FormControl, FormHelperText, MenuItem, Select, TextField } from '@mui/material'
 import { Box } from '@mui/system'
-import { Autocomplete } from '@react-google-maps/api'
+ import { Autocomplete } from '@react-google-maps/api'
 
 
 import React, { useState } from 'react'
@@ -17,7 +17,8 @@ import { useTranslation } from 'next-i18next'
 import {useMutation} from '@tanstack/react-query'
 import { editPlan } from '@/util/fetchers'
 import { useRouter } from 'next/router'
-import moment from 'moment'
+
+import dayjs from 'dayjs'
 import { queryClient } from '@/pages/_app'
 
 
@@ -49,7 +50,7 @@ queryClient.invalidateQueries(["plan",query.planId])
 
 
 const onStartDateChange=(e:any)=>{
-  setValue('start',e._d)
+  setValue('start',e.$d)
  }
 
 
@@ -57,7 +58,7 @@ const onStartDateChange=(e:any)=>{
  if(compereFormData(data,{ ...props.plan,start:new Date(props.plan.start),end:new Date(props.plan.end)})){
  setSubmitError(t("errors.sameData"))
  }else{
- const isDateChange=moment(data.start).format('YYYY-MM-DD') !== moment(formState.defaultValues?.start).format('YYYY-MM-DD')||moment(data.end).format('YYYY-MM-DD') !== moment(formState.defaultValues?.end).format('YYYY-MM-DD')
+ const isDateChange=dayjs(data.start).diff(formState.defaultValues?.start,'day')!=0 ||dayjs(data.end).diff(formState.defaultValues?.end,'day') !== 0 ;
 mutate({isDateChange,data})
  }
 }

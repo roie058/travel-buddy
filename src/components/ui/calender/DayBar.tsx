@@ -3,7 +3,7 @@
 import { Days } from '@/components/pageCompnents/Schedule'
 import { Typography, useMediaQuery } from '@mui/material'
 import { Box } from '@mui/system'
-import moment from 'moment'
+import dayjs from 'dayjs'
 import Image from 'next/image'
 import React,{ useState} from 'react'
 import styles from './Day.module.css'
@@ -20,7 +20,7 @@ type Props = {
 const weekDay=(day:string,locale:string)=>{
   
   
-  const date=moment(new Date(day))
+  const date=dayjs(new Date(day))
   let weekDays=["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
   
 if(locale==="he"){
@@ -29,7 +29,7 @@ if(locale==="he"){
 
 
   
-  return weekDays[date.weekday()]
+  return weekDays[date.day()]
 }
 
 
@@ -40,6 +40,7 @@ const[dayOfWeek,setDayOfWeek ]=useState(weekDay(props.date,locale))
 const[day,setDay ]=useState(props.date.split('/')[1])
 
 const mdScreen=useMediaQuery('(max-width:1200px)')
+console.log(props.day);
 
 
   return (
@@ -50,10 +51,10 @@ const mdScreen=useMediaQuery('(max-width:1200px)')
 
       </Box>
       <Box display={'flex'}  gap={1} paddingRight={3} >
-      <div style={{display:'flex',gap:'3px',alignItems:'center'} }>
-      {<Image alt='weather' width={mdScreen?35:35} height={mdScreen?35:35} src={props.day.weather?.icon?`/images/weatherIcons/${props.day.weather?.icon}.svg`:''}/>}
+     {props.day.weather&& <div style={{display:'flex',gap:'3px',alignItems:'center'} }>
+      <Image alt='weather' width={mdScreen?35:35} height={mdScreen?35:35} src={props.day.weather?.icon?`/images/weatherIcons/${props.day.weather?.icon}.svg`:`/images/weatherIcons/clear-day.svg`}/>
       <Typography fontSize={mdScreen? '0.8rem':'1rem'} fontWeight="bold" variant='h3'>{props.day.weather?props.day.weather.temp:18}c°</Typography>
-      </div>
+      </div>}
       <div onClick={props.openHandler} className={styles.daySummery}>
       {props.open?<RightArrow width={"24px"} height={"24px"}/>:<Arrow width={"24px"} height="24px"  />}
 

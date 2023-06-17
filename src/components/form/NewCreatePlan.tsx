@@ -65,7 +65,7 @@ const {mutate,isLoading,error}=useMutation({mutationFn:postNewPlan,onSuccess:()=
 
 
 const onStartDateChange=(e:any)=>{
-    setStartDate(e._d)
+    setStartDate(e.$d)
   
    }
 

@@ -13,7 +13,7 @@ import Image from 'next/image'
 import React, { useEffect, useRef, useState } from 'react'
 import { RoutineItem } from './DayList'
 import { Days, Plan } from '@/components/pageCompnents/Schedule'
-import moment from 'moment'
+import dayjs from 'dayjs'
 import { useTranslation } from 'next-i18next'
 import { useRouter } from 'next/router'
 import {useQuery} from '@tanstack/react-query'
@@ -66,7 +66,7 @@ const res =await geo.geocode({address:props?.plan.country})
 }
 getDefaultLocation()
 const totalDayBudget=Math.round((props.plan.budget.budget - 
-  props.plan.hotels.reduce((prv,cur)=>{return prv+ ((moment(cur.end).dayOfYear() - moment(cur.start).dayOfYear())*cur.nightPrice)},0) -
+  props.plan.hotels.reduce((prv,cur)=>{return prv+ (dayjs(cur.end).diff(cur.start,'day') *cur.nightPrice)},0) -
    props.plan.flights.reduce((prv,cur)=>{return prv+ cur.price},0)-props.plan.budget.expenses.reduce((prv,cur)=> prv+cur.price ,0)-props.plan.budget.transportation.reduce((prv,cur)=> prv+cur.price ,0) )
 / props.plan.days.length)
 setDailyBudget(totalDayBudget)

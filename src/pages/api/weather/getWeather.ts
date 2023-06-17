@@ -5,8 +5,7 @@ import dbConnect from "../../../../lib/dbConnect";
 import Plan from "../../../../models/Plan";
 
 import axios from 'axios';
-import moment from 'moment';
-
+import dayjs from 'dayjs'
 
 
 export default async function handler (req:NextApiRequest, res:NextApiResponse) {
@@ -22,7 +21,7 @@ const {planId,index,location,locale}=req.query
 try {
     // @ts-ignore
     const plan=await Plan.findById(planId)
- const date= moment(new Date(plan.days[Number(index)].date)).format('YYYY-MM-DD');
+ const date= dayjs(new Date(plan.days[Number(index)].date)).format('YYYY-MM-DD');
     
 const {data:curWeather}=await axios.get(`https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${location}/${date}?unitGroup=metric&elements=datetime%2Ctemp%2Cprecipprob%2Cconditions%2Cicon&include=days%2Ccurrent&key=${process.env.WEATHER_KEY}&lang=${locale}&contentType=json`)
 const {data:liveWeather}=await axios.get(`https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${location}/today?unitGroup=metric&elements=datetime%2Ctempmax%2Ctempmin%2Ctemp%2Cprecipprob%2Cconditions%2Cdescription%2Cicon&include=days%2Ccurrent&key=${process.env.WEATHER_KEY}&lang=${locale}&contentType=json`)

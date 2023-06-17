@@ -4,7 +4,7 @@ import mongoose from "mongoose";
 import Plan from "models/Plan";
 import { enumerateDaysBetweenDates } from "@/util/dateHandlers";
 import axios from "axios";
-import moment from "moment";
+import dayjs from 'dayjs'
 import { Days } from "@/components/pageCompnents/Schedule";
 
 export interface IPlan{
@@ -35,7 +35,7 @@ try {
 const dateArr=new Set(plan.days.map((day:Days)=>day.date))
 
         const daysArr=enumerateDaysBetweenDates(data.start,data.end)
-        const {data:weather}=await axios.get(`https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${data.country}/${moment(data.start).format('YYYY-MM-DD')+'/'+moment(data.end).format('YYYY-MM-DD')}?unitGroup=metric&elements=datetime%2Cname%2Caddress%2Clatitude%2Clongitude%2Ctemp%2Cprecipprob%2Cconditions%2Cdescription%2Cicon&include=days%2Calerts&key=${process.env.WEATHER_KEY}&contentType=json`) 
+        const {data:weather}=await axios.get(`https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${data.country}/${dayjs(data.start).format('YYYY-MM-DD')+'/'+dayjs(data.end).format('YYYY-MM-DD')}?unitGroup=metric&elements=datetime%2Cname%2Caddress%2Clatitude%2Clongitude%2Ctemp%2Cprecipprob%2Cconditions%2Cdescription%2Cicon&include=days%2Calerts&key=${process.env.WEATHER_KEY}&contentType=json`) 
         const weatherData= weather.days
          days=daysArr.map((date,i)=>{
             const dailyWeather=weatherData[i]

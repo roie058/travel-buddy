@@ -33,7 +33,7 @@ onError:()=>{
 
     })
     const onStartDateChange=(e:any)=>{
-        setStartDate(e._d)
+        setStartDate(e.$d)
       
        }
 
