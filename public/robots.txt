@@ -1,7 +1,9 @@
-# Block all crawlers for /api
-User-agent: *
-Disallow: /api/*
-
-# Allow all crawlers
+# *
 User-agent: *
 Allow: /
+
+# Host
+Host: https://travel-buddy-one.vercel.app
+
+# Sitemaps
+Sitemap: https://travel-buddy-one.vercel.app/sitemap.xml

@@ -46,7 +46,7 @@ const AddStopModal = (props: Props) => {
           <ListItemButton onClick={() => handleListItemClick(email)} key={email.name}>
             <ListItemAvatar>
               <Avatar  >
-              <Image style={{objectFit:"cover"}} alt={email.name} fill sizes='50vw'  src={email.photo.images.small.url}/> 
+              <Image priority style={{objectFit:"cover"}} alt={email.name} fill sizes='50px'  src={email.photo.images.small.url}/> 
               </Avatar>
             </ListItemAvatar>
             <ListItemText primary={email.name} />
