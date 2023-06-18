@@ -25,6 +25,7 @@ const [value,setValue]=useState<undefined|string[]>()
       multiple 
       
       isOptionEqualToValue={(option,value)=>(option.value===value.value)}
+      getOptionLabel={(option)=>option[locale]}
       options={props.data}
       renderInput={(params)=><TextField  error={value?.length>3}  label={t("type")} {...params} id="select-multiple-chip" />}
       renderOption={(props, option) => 
@@ -32,7 +33,7 @@ const [value,setValue]=useState<undefined|string[]>()
         return(
         <Box component="li"   sx={{ '& > img': { mr: 2, flexShrink: 0 }}} {...props}>
           <option value={option.value}>
-          {locale=='he'? option.he : option.label}
+          { option[locale]+ option.icon}
           </option>
           
         </Box>
