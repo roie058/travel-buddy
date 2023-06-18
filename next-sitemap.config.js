@@ -1,6 +1,6 @@
 /** @type {import('next-sitemap').IConfig} */
 module.exports = {
-  siteUrl: "https://travel-buddy-one.vercel.app",
+  siteUrl: "https://www.travelbuddy.website",
   generateRobotsTxt: true, // (optional)
   // ...other options
 };
