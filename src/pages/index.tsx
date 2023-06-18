@@ -4,6 +4,7 @@ import HomePage from '@/components/pageCompnents/HomePgae'
 
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useTranslation } from 'next-i18next'
+import Footer from '@/components/layout/Footer'
 
 
 
@@ -19,6 +20,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
     <HomePage t={t}/>
+    <Footer/>
     </>
   )
 }

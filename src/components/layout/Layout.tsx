@@ -10,7 +10,6 @@ import {Heebo} from 'next/font/google'
 
 const heebo = Heebo({subsets:["latin",'hebrew']})
 type Props = {
-
     children:string|JSX.Element|JSX.Element[]
 }
 

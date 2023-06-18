@@ -11,7 +11,7 @@ const weather = (props: Props) => {
     return (
         <>
         <Head>
-        <title>Travel Buddy</title>
+        <title>Travel Buddy | Weather</title>
         <meta name="description" content="travel buddy weather" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
     
@@ -20,7 +20,7 @@ const weather = (props: Props) => {
       </Head>
       
        <WeatherPage/>
-
+       <Footer/>
         </>
       )
 }
@@ -29,6 +29,7 @@ export default weather
 
 
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import Footer from '@/components/layout/Footer'
 
 export async function getStaticProps({ locale }) {
   return {

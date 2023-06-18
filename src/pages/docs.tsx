@@ -4,6 +4,7 @@ import Head from 'next/head'
 import React from 'react'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useTranslation } from 'next-i18next'
+import Footer from '@/components/layout/Footer'
 type Props = {}
 
 const docs = (props: Props) => {
@@ -11,13 +12,14 @@ const docs = (props: Props) => {
   return (
     <>
    <Head>
-    <title>Travel Buddy | docs</title>
-    <meta name="description" content="travel buddy how to use guide and coomon questions" />
+    <title>Travel Buddy | Documentation</title>
+    <meta name="description" content="travel buddy how to use guide and comon questions" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" href="/favicon.ico" />
   </Head>
     <main>
  <DocsPage />
+ <Footer/>
     </main>
    </>
   )

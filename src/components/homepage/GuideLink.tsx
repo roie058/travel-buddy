@@ -16,9 +16,9 @@ const GuideLink = ({t}:Props) => {
         <Box height={"100%"}  display={'flex'} justifyContent={"center"} alignItems={"center"} flexDirection={"column"} px={'10%'}  >
         
 <Box display={'flex'}  flexDirection={"column"} >
-<Typography className={heebo.className} variant='h3' fontWeight={"bold"} >{t('docs.header')}</Typography>
-<Typography className={heebo.className} variant='body1'>{t('docs.sub')}</Typography>
-    <Link className={heebo.className}  href={'/docs'}><Typography textAlign={locale=="he"? "right":"left"}>{t('docs.link')}</Typography></Link>
+<Typography textAlign={"center"} className={heebo.className} variant='h3' fontWeight={"bold"} >{t('docs.header')}</Typography>
+<Typography textAlign={"center"} className={heebo.className} variant='body1'>{t('docs.sub')}</Typography>
+    <Link className={heebo.className}  href={'/docs'}><Typography textAlign={"center"}>{t('docs.link')}</Typography></Link>
 
 
 </Box>

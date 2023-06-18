@@ -10,7 +10,6 @@ import { useRouter } from 'next/router'
 import { TFunction } from 'i18next'
 
 import { NewSesstion } from '@/pages/api/auth/signup'
-import { useQuery } from '@tanstack/react-query'
 import { getPlans } from '@/util/fetchers'
 import { queryClient } from '@/pages/_app'
 type Props = {t: TFunction<"home", undefined, "home">}
@@ -23,7 +22,7 @@ const {locale}=useRouter()
 const {data:session}:{data:NewSesstion}=useSession()
 const router=useRouter()
 const isXl=useMediaQuery("(max-width:1350px)")
-const isLg=useMediaQuery("(max-width:900px)")
+
 const isSmall=useMediaQuery("(max-width:600px)")
 
 
@@ -59,7 +58,7 @@ useEffect(()=>{
 <Typography  className={`${heebo.className} ${styles.header}`} fontWeight={"bold"} variant="h1" >{t('h1')}</Typography>
 <Image priority sizes='250px' className={styles.logo}  alt='travel buddy'  src={RoundLogo}   />
 </Box>
-<Typography textAlign={ locale=="he" ? "right" : "left"} className={`${heebo.className} ${styles.sub}`}>{t('sub1')} <span style={{color:"#238080"}}>{t("colorText1")}</span> {locale==='en'?"and":''} <span style={{color:"#0B799D"}}>{t("colorText2")}</span></Typography>
+<Typography textAlign={"center"} className={`${heebo.className} ${styles.sub}`}>{t('sub1')} <span style={{color:"#238080"}}>{t("colorText1")}</span> {locale==='en'?"and":''} <span style={{color:"#0B799D"}}>{t("colorText2")}</span></Typography>
 </Box>
 
 <Box paddingY={isSmall?"15%":"5%"} flexDirection={locale=='he'? "row-reverse" : "row"}  display={'flex'} alignItems={'center'} textAlign={'center'} flexWrap={"wrap"} justifyContent={"center"} gap={"15px"} maxWidth={'1000px'} >

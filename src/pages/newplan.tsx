@@ -7,6 +7,7 @@ const newplan = (props: Props) => {
   return (
     <div>
  <NewCreatePlan/>
+ <Footer/>
     </div>
    
   )
@@ -15,6 +16,7 @@ const newplan = (props: Props) => {
 export default newplan
 
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import Footer from '@/components/layout/Footer'
 
 export async function getStaticProps({ locale }) {
   return {

@@ -7,6 +7,7 @@ const auth = (props: Props) => {
   return (
     <div>
     <Auth />
+    <Footer/>
     </div>
   )
 }
@@ -14,6 +15,8 @@ const auth = (props: Props) => {
 export default auth
 
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+
+import Footer from '@/components/layout/Footer'
 
 export async function getStaticProps({ locale }) {
   return {
