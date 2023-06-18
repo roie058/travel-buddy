@@ -47,8 +47,8 @@ const router=useRouter()
 </Button>}
 {isMobile&& <ul className={(router.pathname!=='/plans/[planId]'&&router.pathname!=='/map')? styles.profile  :styles.navigation }>
         <li style={{borderRadius:'100%',overflow:"hidden",width:'50px',height:'50px'}}>
-            <Link href={'/'}  >
-        <LogoIcon width={50} height={50}   />
+            <Link   href={'/'}  >
+        <LogoIcon name='homepage' width={50} height={50}   />
         </Link>
         </li>
     
