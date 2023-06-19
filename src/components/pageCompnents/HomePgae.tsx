@@ -1,7 +1,7 @@
-
-import Features from '../homepage/Features'
-import GuideLink from '../homepage/GuideLink'
+import dynamic from 'next/dynamic'
 import NewHero from '../homepage/NewHero'
+const DynamicGuideLink = dynamic(() => import("../homepage/GuideLink"), {loading: () => <p>Loading...</p>,})
+const DynamicFeatures = dynamic(() => import("../homepage/Features"), {loading: () => <p>Loading...</p>,})
 import { TFunction } from 'i18next'
 
 
@@ -18,8 +18,8 @@ export default function HomePage({t}:Props) {
     <>
       <main  style={{minHeight:'100vh'}} >
         <NewHero t={t}/>
-        <Features t={t}/>
-        <GuideLink t={t}/>
+        <DynamicFeatures t={t}/>
+        <DynamicGuideLink t={t}/>
          </main>
     </>
   )

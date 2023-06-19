@@ -1,16 +1,26 @@
+
+import dynamic from 'next/dynamic'
+const DateInput = dynamic(() => import('../ui/inputs/DateInput'), {
+  loading: () => <p>Loading...</p>,
+})
+const SelectInput = dynamic(() => import('../ui/inputs/Select'), {
+  loading: () => <p>Loading...</p>,
+})
+const ImageInput = dynamic(() => import('../ui/inputs/ImageInput'), {
+  loading: () => <p>Loading...</p>,
+})
+const UiButton = dynamic(() => import('../ui/buttons/UiButton'), {
+  loading: () => <p>Loading...</p>,
+})
+
+
+
+
 import { Autocomplete, AutocompleteChangeDetails, AutocompleteChangeReason,  Button,  ButtonGroup,  Card, CardHeader, CardMedia,  CircularProgress,  FormControl, FormHelperText, MenuItem, Select, TextField, useMediaQuery } from '@mui/material'
 import React, {  useEffect, useState } from 'react'
-import UiButton from '../ui/buttons/UiButton'
-
 import styles from './NewPlan.module.css'
- import states from '../../../public/util/countriesList.min.json'
-import codes from '../../../public/util/codes.json'
-import DateInput from '../ui/inputs/DateInput'
 import { Box } from '@mui/system'
-import SelectInput from '../ui/inputs/Select'
 import {useSession} from 'next-auth/react'
-
-import ImageInput from '../ui/inputs/ImageInput'
 import { useForm } from 'react-hook-form'
 import { FieldValues, SubmitHandler } from 'react-hook-form/dist/types'
 import {useRouter} from 'next/router'
@@ -45,12 +55,16 @@ import { postNewPlan } from '@/util/fetchers'
  {icon:"🐘",en:"Wildlife & Safaris",he:"חיות וספארי",value:'Wildlife & Safaris'},
  
 ];
+
+import states from '../../../public/util/countriesList.min.json'
+import codes from '../../../public/util/codes.json'
 const newCodes=JSON.parse(JSON.stringify(codes))
 const newStates=JSON.parse(JSON.stringify(states))
+const countries=['Africa','East Asia',"Oceania","Middle East","South America","Central America","North America","Europe",...Object.keys(states)]
 
 const NewCreatePlan = (props: Props) => {
   const {t}=useTranslation("form")
-  const countries=['Africa','East Asia',"Oceania","Middle East","South America","Central America","North America","Europe",...Object.keys(states)]
+
   const {data:session}=useSession()
   const [selectedCountry,setSelectedCountry]=useState<null|string>(null)
   const [selectedCities,setSelectedCities]=useState<null|string[]|unknown[]>(null)
@@ -61,7 +75,6 @@ const router=useRouter()
 
 const newSession:NewSesstion={...session}
 const {mutate,isLoading,error}=useMutation({mutationFn:postNewPlan,onSuccess:()=>{router.push('/plans')}})
-
 
 const onStartDateChange=(e:any)=>{
     setStartDate(e.$d)

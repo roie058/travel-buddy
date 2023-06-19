@@ -1,21 +1,30 @@
+import dynamic from 'next/dynamic'
+const  AddFlightModal= dynamic(()=>import('./AddFlightModal'), {
+    loading: () => <p>Loading...</p>,
+  }) 
+  const  SnackBar= dynamic(()=>import('../ui/SnackBar'), {
+    loading: () => <p>Loading...</p>,
+  })
+  const  Image= dynamic(()=>import('next/image'), {
+    loading: () => <p>Loading...</p>,
+  })
+
+
 import {Autocomplete,  Card, CardContent, CardHeader, CircularProgress, FormControl, FormControlLabel, FormHelperText, FormLabel, Radio, RadioGroup, TextField } from '@mui/material'
 import { Box } from '@mui/system'
 
-import React, { ChangeEventHandler, useState } from 'react'
+import React, { ChangeEventHandler, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import UiButton from '../ui/buttons/UiButton'
 import DateTimeInput from '../ui/inputs/DateTimeInput'
 
-import airLines from '../../../public/util/airLines.json';
-import airports from '../../../public/util/airports.json';
 import axios from 'axios'
-import AddFlightModal, { Flight } from './AddFlightModal'
+import  { Flight } from './AddFlightModal'
 
 
-import Image from 'next/image'
 import { Plan } from '../pageCompnents/Schedule'
 import useSnackBar from '@/hooks/useSnackBar'
-import SnackBar from '../ui/SnackBar'
+
 import ToolTip from '../ui/ToolTip'
 import { useTranslation } from 'next-i18next'
 import { useMutation } from '@tanstack/react-query'
@@ -24,9 +33,9 @@ import { queryClient } from '@/pages/_app'
 
 type Props = {plan?:Plan,plans?:Plan[]}
 
-const allAirlines=Object.keys(airLines).map((id)=>airLines[id])
 
-function getAirportLocation(iata:string){
+async function getAirportLocation  (iata:string){
+   const airports=await import('../../../public/util/airports.json');
 const newAirports=JSON.parse(JSON.stringify(airports))
     for (const property in newAirports) {
         if(newAirports[property].iata == iata ){
@@ -34,6 +43,7 @@ const newAirports=JSON.parse(JSON.stringify(airports))
         
       }
     }
+
     return;
 }
 
@@ -44,7 +54,7 @@ const FlightAdd = (props: Props) => {
 const [airportsData,setAirportsData]=useState<Array<{name:string,iata:string}>>([])
 const {setSnackBar,snackBarProps}=useSnackBar()
 const [open, setOpen] = useState(false)
-
+const [allAirlines, setAllAirlines] = useState<any[]>()
 const [flightData, setFlightData] = useState<Flight>()
 const{t}=useTranslation("flights")
 
@@ -53,6 +63,13 @@ const {mutate,isLoading}=useMutation(addNewFlight,{onSuccess:(data,{planId})=>{
 queryClient.invalidateQueries(["plan",planId])
 
 }})
+
+useEffect(() => {
+    import('../../../public/util/airLines.json').then(data => {
+        const allAirlines=Object.keys(data).map((id)=>data[id])
+        setAllAirlines(allAirlines);
+    });
+  }, []);
 
 const autoCompleteHandler:ChangeEventHandler<HTMLTextAreaElement | HTMLInputElement>=async(e)=>{   
 const {data} =await axios.get(`https://airport-autosuggest.flightright.net/v1/airports/COM?name=${e.target?.value}`)
@@ -66,7 +83,7 @@ const changeHandler=async(inputName:'origin'|'destination'|'airline',value: {
     if(value){
     let newValue:any=value  
     if(inputName!=='airline'){
-    const  airportLocation=getAirportLocation(value.iata);
+    const  airportLocation=await getAirportLocation(value.iata);
 newValue={...value,...airportLocation}
     }
     

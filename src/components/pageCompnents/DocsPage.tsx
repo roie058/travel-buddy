@@ -1,11 +1,13 @@
+import dynamic from 'next/dynamic'
 import { Accordion, AccordionDetails, AccordionSummary, Box, Button, ButtonGroup, Card, CardContent, CardHeader,  List, ListItem, ListItemText, Typography, useMediaQuery } from '@mui/material'
 import React from 'react'
+const Image=dynamic(() => import("next/image"), {loading: () => <p>Loading...</p>,})
+const  HeartBtn =dynamic(() => import("../ui/buttons/HeartBtn"), {loading: () => <p>Loading...</p>,})
 import { Arrow, EditIcon, FlightIcon, HotelIcon, LikedMarker, ScheduleIcon, WeatherIcon } from '../svgComponents'
 import Link from 'next/link'
 import UiButton from '../ui/buttons/UiButton'
-import Image from 'next/image'
+
 import styles from './DocsPage.module.css'
-import HeartBtn from '../ui/buttons/HeartBtn'
 
 import { useTranslation } from 'next-i18next'
 import { useRouter } from 'next/router'
