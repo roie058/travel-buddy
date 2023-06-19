@@ -137,7 +137,7 @@ if(!data.origin.lat){
 
 <FormControl fullWidth >
     <ToolTip title={t("departionTooltip")} right='-5%' top='-20%'>
-     <Autocomplete isOptionEqualToValue={(option,value)=>option.iata===value.iata} onChange={(e,value)=>{changeHandler('origin',value)}}   options={airportsData} getOptionLabel={(option)=>option.name} renderOption={(props, option) => 
+     <Autocomplete isOptionEqualToValue={(option,value)=>option.iata===value.iata} onChange={(e,value)=>{changeHandler('origin',value)}}   options={airportsData??[]} getOptionLabel={(option)=>option.name} renderOption={(props, option) => 
         {
         return(
         <Box component="li"  {...props}>
@@ -153,7 +153,7 @@ if(!data.origin.lat){
 </FormControl>
 <FormControl fullWidth>
 <ToolTip title={t("arrivalTooltip")} right='-5%' top='-20%'>
- <Autocomplete isOptionEqualToValue={(option,value)=>option.iata===value.iata} onChange={(e,value)=>{changeHandler('destination',value)}}   options={airportsData} getOptionLabel={(option)=>option.name} renderOption={(props, option) => 
+ <Autocomplete isOptionEqualToValue={(option,value)=>option.iata===value.iata} onChange={(e,value)=>{changeHandler('destination',value)}}   options={airportsData??[]} getOptionLabel={(option)=>option.name} renderOption={(props, option) => 
         {
         return(
         <Box component="li"  {...props}>
@@ -178,7 +178,7 @@ if(!data.origin.lat){
 </FormControl>
 </Box> 
 <FormControl fullWidth>
-<Autocomplete onChange={(e,value)=>{changeHandler('airline',value)}} isOptionEqualToValue={(option,value)=>option.iata===value.iata}  getOptionLabel={(option:{name:string,iata:string,country:string})=> option.name+" "+ option.iata} options={allAirlines} renderInput={(params)=><TextField   label={t("airline")} {...params}  />} renderOption={(props, option) => 
+<Autocomplete onChange={(e,value)=>{changeHandler('airline',value)}} isOptionEqualToValue={(option,value)=>option.iata===value.iata}  getOptionLabel={(option:{name:string,iata:string,country:string})=> option.name+" "+ option.iata} options={allAirlines??[]} renderInput={(params)=><TextField   label={t("airline")} {...params}  />} renderOption={(props, option) => 
         {
         return(
         <Box key={option.name}    component="li" sx={{ '& > img': { mr: 2, flexShrink: 0 } }}  {...props}>

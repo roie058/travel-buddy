@@ -52,6 +52,7 @@ export const removePlace=({place,category,planId}:{place:IPlace,category:string,
 //flights fns 
  export const deleteFlight=({planId,flightId}:{planId:string,flightId:string,planIndex:number,index:number})=>axios.delete('/api/flight/deleteFlight',{params:{planId,flightId}})
  export const addNewFlight=({planId,flight}:{flight:Flight,planId:string})=>axios.patch('/api/flight/newFlight',{flight,planId})
+ export const editFlight=({planId,flight,flightId}:{flight:FieldValues,planId:string,flightId:string})=>axios.patch('/api/flight/editFlight',{flight,planId,flightId})
 //hotels fns
 export const addReservation=({planId,data}:{data:FieldValues,planId:string})=>axios.patch('/api/hotel/addReservation',{planId,data})
 export const deleteReservation=({planId,hotelId}:{planId:string,hotelId:string,index:number})=>axios.delete('/api/hotel/deleteReservation',{params:{planId,hotelId}})

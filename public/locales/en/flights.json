@@ -13,10 +13,13 @@
     "end":"End",
     "other":"Other",
     "addBtn":"Add",
+    "editBtn":"Change",
+    "editHeader":"Change your flight to",
     "snack":{
         "removed":"Flight Removed",
        "error": "server error, try again",
-       "added":"Flight Added"
+       "added":"Flight Added",
+       "editFlight":"Flight changed"
     },
     "errors":{
         "startTimeReq":"Departure Time Is Required",

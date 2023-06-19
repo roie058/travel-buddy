@@ -3,7 +3,7 @@ User-agent: *
 Allow: /
 
 # Host
-Host: https://travel-buddy-one.vercel.app
+Host: https://travelbuddy.website
 
 # Sitemaps
-Sitemap: https://travel-buddy-one.vercel.app/sitemap.xml
+Sitemap: https://travelbuddy.website/sitemap.xml

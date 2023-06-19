@@ -1,10 +1,10 @@
 
-import { Box, Card, CardContent, CardHeader, Divider, List, ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material'
+import { Box, Card, CardContent, CardHeader, Divider, List, ListItem, ListItemButton, ListItemIcon, ListItemSecondaryAction, ListItemText } from '@mui/material'
 
 import Image from 'next/image'
 import dayjs from 'dayjs'
-
-import React from 'react'
+import dynamic from 'next/dynamic'
+import React, { useState } from 'react'
 import { Flight } from './AddFlightModal'
 import { Plan } from '../pageCompnents/Schedule'
 
@@ -15,11 +15,14 @@ import { useTranslation } from 'next-i18next'
 import { useMutation } from '@tanstack/react-query'
 import { deleteFlight } from '@/util/fetchers'
 import { queryClient } from '@/pages/_app'
+import EditFlight from './EditFlight'
+import { EditIcon } from '../svgComponents'
 
 type Props = {plan?:Plan,plans?:Plan[]}
 
 const MyFlights = (props: Props) => {
 const {setSnackBar,snackBarProps}=useSnackBar()
+const [selectedFlight,setSelectedFlight]=useState<{open:boolean,flight:Flight,plan:Plan}>()
 const {t}=useTranslation("flights")
 
   let flightList:Array<Flight>=[]
@@ -66,6 +69,14 @@ planId=props?.plans[planIndex]._id
 mutate({planId:planId,flightId:flight._id,planIndex,index})
 }
 
+const editOpen =(flight:Flight)=>{
+  let plan=props.plan
+  if(props.plans){
+plan=props.plans.find((plan)=>plan.flights.find((flight)=>flight._id==flight._id));
+  }
+setSelectedFlight({open:true,flight,plan:plan})
+
+}
 
   return (
     <>
@@ -88,18 +99,18 @@ mutate({planId:planId,flightId:flight._id,planIndex,index})
     <ListItemText sx={{flexGrow:"50%",flexBasis:"50%"}}>{ dayjs(flight.start).diff(flight.end,'day')==0?dayjs(flight.start).format('DD/MM/YYYY'):dayjs(flight.start).format('DD/MM/YYYY')+':'+ dayjs(flight.end).format('DD/MM/YYYY')}</ListItemText>
     <ListItemText sx={{flexGrow:"50%",flexBasis:"50%"}}>{dayjs(flight.start).format('HH:mm')+'-'+dayjs(flight.end).format('HH:mm')}</ListItemText>
     </Box>
-    <ListItemButton onClick={()=>{deleteFlightHandler(flight,index)}} sx={{flexGrow:'0',width:"30px",height:'30px',padding:'0',textAlign:'center',justifyContent:'center'}}><Image alt='delete' fill sizes='30px' src={DeleteIcon}/></ListItemButton>
     
-
+    <ListItemButton onClick={()=>{deleteFlightHandler(flight,index)}} sx={{flexGrow:'0',width:"30px",height:'30px',padding:'0',textAlign:'center',justifyContent:'center'}}><Image alt='delete' fill sizes='30px' src={DeleteIcon}/></ListItemButton>
+    <ListItemSecondaryAction onClick={()=>{editOpen(flight)}} sx={{flexGrow:'0',width:"30px",height:'30px',padding:'0',textAlign:'center',justifyContent:'center'}}><EditIcon width={30} height={30}/></ListItemSecondaryAction>
 </ListItem>    
-)
-}
+)}
 </List>
 </CardContent>
 </Card>
 
     </Box>
     <SnackBar {...snackBarProps} />
+    {selectedFlight&& <EditFlight flight={selectedFlight.flight} setSnackBar={setSnackBar} plan={selectedFlight.plan} open={selectedFlight.open} onClose={()=>setSelectedFlight(null)} />}
     </>
   )
 }
