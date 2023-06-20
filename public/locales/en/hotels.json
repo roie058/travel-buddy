@@ -9,12 +9,15 @@
     "endDate":"End Date",
     "ppn":"Price per Night",
     "button":"Add",
-    "priceMin":"We can not help you manage price if you travel for free!"
+    "priceMin":"We can not help you manage price if you travel for free!",
+    "edit":"Change your Reservation to",
+    "editBtn":"Edit"
 },
 "header2":"My Reservations",
 "night":"Night",
 "nights":"Nights",
 "snack":{
+    "editHotel":"Reservation changed",
 "deleteHotel":"Hotel Removed From Plan",
 "serverError":"server error",
 "addReservation":"Reservation Added",

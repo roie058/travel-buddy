@@ -4,6 +4,7 @@ import { Box, Card, CardContent, CardHeader, Divider, List, ListItem, ListItemBu
 import Image from 'next/image'
 import dayjs from 'dayjs'
 import dynamic from 'next/dynamic'
+const EditFlight=dynamic(()=>import('./EditFlight'),{loading:()=><div>loading...</div>})
 import React, { useState } from 'react'
 import { Flight } from './AddFlightModal'
 import { Plan } from '../pageCompnents/Schedule'
@@ -15,7 +16,7 @@ import { useTranslation } from 'next-i18next'
 import { useMutation } from '@tanstack/react-query'
 import { deleteFlight } from '@/util/fetchers'
 import { queryClient } from '@/pages/_app'
-import EditFlight from './EditFlight'
+
 import { EditIcon } from '../svgComponents'
 
 type Props = {plan?:Plan,plans?:Plan[]}

@@ -56,6 +56,6 @@ export const removePlace=({place,category,planId}:{place:IPlace,category:string,
 //hotels fns
 export const addReservation=({planId,data}:{data:FieldValues,planId:string})=>axios.patch('/api/hotel/addReservation',{planId,data})
 export const deleteReservation=({planId,hotelId}:{planId:string,hotelId:string,index:number})=>axios.delete('/api/hotel/deleteReservation',{params:{planId,hotelId}})
-
+export const editReservation=({data,planId,hotelId}:{data:FieldValues,planId:string,hotelId:string})=>axios.patch('/api/hotel/editHotel',{data,planId,hotelId})
 //weather fns
 export const getWeatherByDates=({locale,start,end,location}:{locale:string,start:Date,end:Date,location:string})=>axios.get("/api/weather/getWeatherByDates",{params:{start,end,location,locale}}).then((value)=>value.data.weather)

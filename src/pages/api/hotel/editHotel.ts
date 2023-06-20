@@ -4,7 +4,6 @@ import mongoose from "mongoose";
 import Plan from "models/Plan";
 
 
-
 export default async function handler (req:NextApiRequest, res:NextApiResponse) {
 await dbConnect()
 
@@ -14,23 +13,22 @@ dbConnect().catch(err=>res.json(err))
 if(method==='PATCH'){
 if(!req.body)return res.status(400).json({error:'data is missing'})
 
-const {flight,planId,flightId}=req.body
+const {data,planId,hotelId}=req.body
 
 try {
-
     // @ts-ignore
 const plan=await Plan.findById(planId)
 
-const flightIndex=plan.flights.findIndex((curFlight)=>curFlight._id==flightId)
 
-plan.flights[flightIndex].price=flight.price;
-plan.flights[flightIndex].start=flight.start;
-plan.flights[flightIndex].end=flight.end;
-plan.flights[flightIndex].flightNumber=flight.flightNumber;
+const hotelIndex=plan.hotels.findIndex((curHotel)=>curHotel._id==hotelId)
+
+plan.hotels[hotelIndex].nightPrice=data.nightPrice;
+plan.hotels[hotelIndex].start=data.start;
+plan.hotels[hotelIndex].end=data.end;
 
  await plan.save()
-         return res.status(200).json({success:true,flight:plan.flights[flightIndex]})
 
+         return res.status(201).json({success:true,hotels:plan.hotels[hotelIndex]})
 } catch (error) {
     if(error&&error instanceof mongoose.Error.ValidationError){
          for(let field in error.errors){

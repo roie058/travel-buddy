@@ -1,5 +1,5 @@
 import { AlertColor, Box, CircularProgress, FormControl, Modal, TextField, Typography } from '@mui/material'
-import React, { useState } from 'react'
+import React from 'react'
 import UiButton from '../ui/buttons/UiButton'
 import { useTranslation } from 'react-i18next'
 import { FieldValues, useForm } from 'react-hook-form'
@@ -14,7 +14,6 @@ type Props = {open:boolean,onClose:() => void,flight:Flight,plan:Plan,setSnackBa
 
 const EditFlight = ({open,onClose,flight,plan,setSnackBar}: Props) => {
     const {register,handleSubmit,control}=useForm({defaultValues:{flightNumber:flight.flightNumber,start:new Date(flight.start)?? new Date(),end:new Date(flight.end)?? new Date(),price:flight.price,place:flight}})
-    const [submitError, setSubmitError] = useState<undefined|string|unknown>()
    const {t}=useTranslation("flights")
 
     const {mutate,isLoading}=useMutation({mutationFn: editFlight,
