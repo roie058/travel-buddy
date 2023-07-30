@@ -3,7 +3,7 @@ User-agent: *
 Allow: /
 
 # Host
-Host: https://www.travelbuddy.website
+Host: https://travelbuddy.website
 
 # Sitemaps
-Sitemap: https://www.travelbuddy.website/sitemap.xml
+Sitemap: https://travelbuddy.website/sitemap.xml

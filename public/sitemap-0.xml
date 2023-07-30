@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:news="http://www.google.com/schemas/sitemap-news/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:mobile="http://www.google.com/schemas/sitemap-mobile/1.0" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
-<url><loc>https://www.travelbuddy.website</loc><lastmod>2023-07-30T17:21:05.736Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-<url><loc>https://www.travelbuddy.website/auth</loc><lastmod>2023-07-30T17:21:05.736Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-<url><loc>https://www.travelbuddy.website/docs</loc><lastmod>2023-07-30T17:21:05.736Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-<url><loc>https://www.travelbuddy.website/flights</loc><lastmod>2023-07-30T17:21:05.736Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-<url><loc>https://www.travelbuddy.website/forget-password</loc><lastmod>2023-07-30T17:21:05.736Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-<url><loc>https://www.travelbuddy.website/map</loc><lastmod>2023-07-30T17:21:05.736Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-<url><loc>https://www.travelbuddy.website/newplan</loc><lastmod>2023-07-30T17:21:05.736Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-<url><loc>https://www.travelbuddy.website/plans</loc><lastmod>2023-07-30T17:21:05.736Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-<url><loc>https://www.travelbuddy.website/weather</loc><lastmod>2023-07-30T17:21:05.736Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-<url><loc>https://www.travelbuddy.website/he/docs</loc><lastmod>2023-07-30T17:21:05.736Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-<url><loc>https://www.travelbuddy.website/he/map</loc><lastmod>2023-07-30T17:21:05.736Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-<url><loc>https://www.travelbuddy.website/he</loc><lastmod>2023-07-30T17:21:05.736Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-<url><loc>https://www.travelbuddy.website/he/auth</loc><lastmod>2023-07-30T17:21:05.736Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-<url><loc>https://www.travelbuddy.website/he/forget-password</loc><lastmod>2023-07-30T17:21:05.736Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-<url><loc>https://www.travelbuddy.website/he/newplan</loc><lastmod>2023-07-30T17:21:05.736Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-<url><loc>https://www.travelbuddy.website/he/flights</loc><lastmod>2023-07-30T17:21:05.736Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-<url><loc>https://www.travelbuddy.website/he/weather</loc><lastmod>2023-07-30T17:21:05.736Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://travelbuddy.website</loc><lastmod>2023-07-30T18:02:03.976Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://travelbuddy.website/auth</loc><lastmod>2023-07-30T18:02:03.976Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://travelbuddy.website/docs</loc><lastmod>2023-07-30T18:02:03.976Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://travelbuddy.website/flights</loc><lastmod>2023-07-30T18:02:03.976Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://travelbuddy.website/forget-password</loc><lastmod>2023-07-30T18:02:03.976Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://travelbuddy.website/map</loc><lastmod>2023-07-30T18:02:03.976Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://travelbuddy.website/newplan</loc><lastmod>2023-07-30T18:02:03.976Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://travelbuddy.website/plans</loc><lastmod>2023-07-30T18:02:03.976Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://travelbuddy.website/weather</loc><lastmod>2023-07-30T18:02:03.976Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://travelbuddy.website/he/forget-password</loc><lastmod>2023-07-30T18:02:03.976Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://travelbuddy.website/he/docs</loc><lastmod>2023-07-30T18:02:03.976Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://travelbuddy.website/he/map</loc><lastmod>2023-07-30T18:02:03.976Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://travelbuddy.website/he/auth</loc><lastmod>2023-07-30T18:02:03.976Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://travelbuddy.website/he</loc><lastmod>2023-07-30T18:02:03.976Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://travelbuddy.website/he/newplan</loc><lastmod>2023-07-30T18:02:03.976Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://travelbuddy.website/he/flights</loc><lastmod>2023-07-30T18:02:03.976Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://travelbuddy.website/he/weather</loc><lastmod>2023-07-30T18:02:03.976Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
 </urlset>

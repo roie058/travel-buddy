@@ -26,7 +26,7 @@ export const PasswordLink = ({
       <Body style={main}>
         <Container style={container}>
           <Img
-            src={`https://www.travelbuddy.website/images/logo.png`}
+            src={`https://travelbuddy.website/images/logo.png`}
             width="40"
             height="33"
             alt="travelbuddy"
