@@ -13,17 +13,15 @@ const { method } = req
 dbConnect().catch(err=>res.json(err))
 if(method==='PATCH'){
 if(!req.body)return res.status(400).json({error:'data is missing'})
-
-const {flight,planId,flightId}=req.body
+const {planId,flightId}=req.body
 
 try {
-
     // @ts-ignore
 const plan=await Plan.findById(planId)
 
 const flightIndex=plan.flights.findIndex((curFlight)=>curFlight._id==flightId)
 
-plan.flights[flightIndex]=flight;
+plan.flights[flightIndex].booked=!plan.flights[flightIndex].booked;
  await plan.save()
          return res.status(200).json({success:true,flight:plan.flights[flightIndex]})
 

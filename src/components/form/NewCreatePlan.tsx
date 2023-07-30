@@ -56,6 +56,7 @@ import { postNewPlan } from '@/util/fetchers'
  
 ];
 
+
 import states from '../../../public/util/countriesList.min.json'
 import codes from '../../../public/util/codes.json'
 const newCodes=JSON.parse(JSON.stringify(codes))
@@ -70,7 +71,7 @@ const NewCreatePlan = (props: Props) => {
   const [selectedCities,setSelectedCities]=useState<null|string[]|unknown[]>(null)
   const [step, setStep] = useState(0)
   const [startDate,setStartDate]=useState<null|Date>(new Date())
-const {register,handleSubmit,formState,setValue,control,getValues }=useForm({mode:"all",defaultValues:{title:'',currency:'$',country:'',city:'',type:[],start:new Date(),end:new Date(),image:'',userId:"",budget:""},})
+const {register,handleSubmit,formState,setValue,control,getValues }=useForm({mode:"all",defaultValues:{title:'',currency:"$",country:'',city:'',type:[],start:new Date(),end:new Date(),image:'',userId:"",budget:""},})
 const router=useRouter()
 
 const newSession:NewSesstion={...session}

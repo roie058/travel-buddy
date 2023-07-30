@@ -1,4 +1,6 @@
 import { Flight } from "@/components/flights/AddFlightModal"
+import { Result } from "@/components/flights/FlightResult"
+
 import { Plan } from "@/components/pageCompnents/Schedule"
 import { RoutineItem } from "@/components/ui/calender/DayList"
 import { IPlace } from "@/dummyData"
@@ -50,8 +52,26 @@ export const editPlace=({ position,planId,index,place,budget,dragId,description}
 export const removePlace=({place,category,planId}:{place:IPlace,category:string,planId:string})=>axios.patch('/api/place/newPlace',{place,category,planId})
 
 //flights fns 
+export const getFlights=({flyFrom,sort,flyTo,dateFrom,returnFrom,adults=1,children=0,infants=0,priceFrom,priceTo,maxStopovers=2,curr="EUR"}:{flyFrom:string,flyTo:string,dateFrom:string,returnFrom?:string,adults?:number,children?:number,infants?:number,priceTo:number,priceFrom:number,maxStopovers?:number,curr:string,sort:"price"|"duration"|"quality"})=>axios.get("https://api.tequila.kiwi.com/v2/search",{headers:{ apikey:process.env.KIWI_KEY},params:
+{
+  fly_from:flyFrom,
+  fly_to:flyTo,
+  date_from:dateFrom,
+  date_to:dateFrom,
+  return_from:returnFrom,
+  return_to:returnFrom,
+  adults,
+  children,
+  infants,
+  price_from:priceFrom,
+  price_to:priceTo,
+  max_sector_stopovers:maxStopovers,
+  curr,
+  sort
+}}).then((value)=>value.data)
  export const deleteFlight=({planId,flightId}:{planId:string,flightId:string,planIndex:number,index:number})=>axios.delete('/api/flight/deleteFlight',{params:{planId,flightId}})
- export const addNewFlight=({planId,flight}:{flight:Flight,planId:string})=>axios.patch('/api/flight/newFlight',{flight,planId})
+ export const bookFlight=({planId,flightId}:{planId:string,flightId:string,planIndex:number,index:number})=>axios.patch('/api/flight/bookFlight',{planId,flightId})
+ export const addNewFlight=({planId,flight}:{flight:Flight|Result,planId:string})=>axios.patch('/api/flight/newFlight',{flight,planId})
  export const editFlight=({planId,flight,flightId}:{flight:FieldValues,planId:string,flightId:string})=>axios.patch('/api/flight/editFlight',{flight,planId,flightId})
 //hotels fns
 export const addReservation=({planId,data}:{data:FieldValues,planId:string})=>axios.patch('/api/hotel/addReservation',{planId,data})

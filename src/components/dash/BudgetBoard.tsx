@@ -102,7 +102,7 @@ const isMobile=useMediaQuery('(max-width:600px)')
       </Box>
       <List>
           {props.plan.flights.map((transport,i)=>
-          <ListItem key={i+transport.flightNumber} sx={{justifyContent:'space-between'}} disablePadding>
+          <ListItem key={i+transport.flightNumber[0]} sx={{justifyContent:'space-between'}} disablePadding>
           <ListItemText sx={{flex:'none'}} primaryTypographyProps={{color:"#959595",fontSize:isMobile?'0.8rem':'1rem',fontWeight:'bold'}}  >{ transport?.origin.iata+"-"+transport?.destination.iata}</ListItemText>
           <ListItemText sx={{flex:'none'}} primaryTypographyProps={{color:"#959595",fontSize:isMobile?'0.8rem':'1rem',fontWeight:'bold'}}  >{locale=='he' ? 'טיסה': 'flight'}</ListItemText>
           <ListItemText sx={{flex:'none'}} primaryTypographyProps={{color:"#959595",fontSize:isMobile?'0.8rem':'1rem',fontWeight:'bold'}}  >{transport.price+currency}</ListItemText>

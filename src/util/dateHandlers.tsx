@@ -42,4 +42,12 @@ export const  enumerateDaysBetweenDates = function(startDate:Date, endDate:Date)
     return dates;
 };
 
+export function timeConvert(time:number) { 
+let string="";
+if(Math.floor(time/24/60)>0)string=Math.floor(time/24/60)+"d "
+if(Math.floor(time/60%24)>0)string+=Math.floor(time/60%24)+"h "
+if(Math.floor(time%60)>0)string+=Math.floor(time%60)+"m"
+    return string;
+  }
+
 

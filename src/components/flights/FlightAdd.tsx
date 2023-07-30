@@ -5,22 +5,14 @@ const  AddFlightModal= dynamic(()=>import('./AddFlightModal'), {
   const  SnackBar= dynamic(()=>import('../ui/SnackBar'), {
     loading: () => <p>Loading...</p>,
   })
-  const  Image= dynamic(()=>import('next/image'), {
-    loading: () => <p>Loading...</p>,
-  })
 
+import { Button, ButtonGroup, Card, CardContent, CardHeader, CircularProgress, FormControl, FormControlLabel, FormHelperText, FormLabel, Radio, RadioGroup, TextField } from '@mui/material'
 
-import {Autocomplete,  Card, CardContent, CardHeader, CircularProgress, FormControl, FormControlLabel, FormHelperText, FormLabel, Radio, RadioGroup, TextField } from '@mui/material'
-import { Box } from '@mui/system'
-
-import React, { ChangeEventHandler, useEffect, useState } from 'react'
-import { useForm } from 'react-hook-form'
+import React, { MouseEventHandler, useState } from 'react'
+import { useFieldArray, useForm } from 'react-hook-form'
 import UiButton from '../ui/buttons/UiButton'
-import DateTimeInput from '../ui/inputs/DateTimeInput'
 
-import axios from 'axios'
 import  { Flight } from './AddFlightModal'
-
 
 import { Plan } from '../pageCompnents/Schedule'
 import useSnackBar from '@/hooks/useSnackBar'
@@ -30,67 +22,54 @@ import { useTranslation } from 'next-i18next'
 import { useMutation } from '@tanstack/react-query'
 import { addNewFlight } from '@/util/fetchers'
 import { queryClient } from '@/pages/_app'
+import SingleFlightForm from './SingleFlightForm'
 
 type Props = {plan?:Plan,plans?:Plan[]}
 
-
-async function getAirportLocation  (iata:string){
-   const airports=await import('../../../public/util/airports.json');
-const newAirports=JSON.parse(JSON.stringify(airports))
-    for (const property in newAirports) {
-        if(newAirports[property].iata == iata ){
-           return {lat:newAirports[property].lat,lng:newAirports[property].lon}
-        
-      }
-    }
-
-    return;
+type FieldValues= {
+  flightDetails: {
+      departure: Date;
+      arrival: Date;
+      airline: {iata:string};
+      destination: {name:string,iata:string,lat:number,lng:number};
+      origin: {name:string,iata:string,lat:number,lng:number};
+      flightNumber: string;
+  }[];
+  position: string;
+  price: number;
 }
 
 
-
 const FlightAdd = (props: Props) => {
-    const {register,control,setError,handleSubmit,setValue,formState}=useForm({defaultValues:{start:new Date(),end:new Date(),airline:'',destination:"",origin:'',flightNumber:"",position:'',price:0}})
-const [airportsData,setAirportsData]=useState<Array<{name:string,iata:string}>>([])
+    const {register,control,setError,handleSubmit,setValue,formState,getValues,clearErrors}=useForm({defaultValues:{flightDetails:[{departure:new Date(),arrival:new Date(),airline:'',destination:"",origin:'',flightNumber:""}],position:'',price:0}})
+
 const {setSnackBar,snackBarProps}=useSnackBar()
 const [open, setOpen] = useState(false)
-const [allAirlines, setAllAirlines] = useState<any[]>()
 const [flightData, setFlightData] = useState<Flight>()
 const{t}=useTranslation("flights")
-
+const { update,remove } = useFieldArray({name:"flightDetails",control:control});
 const {mutate,isLoading}=useMutation(addNewFlight,{onSuccess:(data,{planId})=>{
     setSnackBar(t("snack.added"),'success')
 queryClient.invalidateQueries(["plan",planId])
 
 }})
 
-useEffect(() => {
-    import('../../../public/util/airLines.json').then(data => {
-        const allAirlines=Object.keys(data).map((id)=>data[id])
-        setAllAirlines(allAirlines);
-    });
-  }, []);
 
-const autoCompleteHandler:ChangeEventHandler<HTMLTextAreaElement | HTMLInputElement>=async(e)=>{   
-const {data} =await axios.get(`https://airport-autosuggest.flightright.net/v1/airports/COM?name=${e.target?.value}`)
-setAirportsData(data)
+const addStop:MouseEventHandler=(e)=>{
+  e.preventDefault()
+ 
+  const array= getValues("flightDetails")
+  update(array.length,{departure:new Date(),arrival:new Date(),airline:'',destination:"",origin:"",flightNumber:""})
+
+}
+const removeStop:MouseEventHandler=(e)=>{
+  e.preventDefault()
+  const array= getValues("flightDetails")
+  remove(array.length-1)
+
 }
 
-const changeHandler=async(inputName:'origin'|'destination'|'airline',value: {
-    name: string;
-    iata: string;
-} | null)=>{ 
-    if(value){
-    let newValue:any=value  
-    if(inputName!=='airline'){
-    const  airportLocation=await getAirportLocation(value.iata);
-newValue={...value,...airportLocation}
-    }
-    
-        setValue(inputName,newValue) 
-        setAirportsData([])
-    }else return;
-    }
+console.log(formState.errors);
 
 
 const onClose=()=>{
@@ -98,118 +77,99 @@ const onClose=()=>{
 }
 
 const submitHandler=async (data:any)=>{
-if(!data.origin.lat){
-    setError("origin",{message:t("errors.originReq")})
-    return
-}if(!data.destination.lat){
-    setError("destination",{message:t("errors.dstReq")})
-    return
-}if(!data.airline.iata){
-    setError("airline",{message:t("errors.airlineReq")})
-}
-   if(!data.start){
-                setError("start",{message:t("errors.startTimeReq")})
-                return
-                    }  if(!data.end){
-                        setError('end',{message:t("errors.endTimeReq")})
-                        return
-                            }if(!data.position){
-                                                setError('position',{message:t("errors.typeReq")})
-                                                return
-                                                    }
-                                                    if(props.plan){
-                                                        mutate({flight:data,planId:props.plan._id}) 
-                                                    }else{
-                                                        setFlightData(data);
-                                                        setOpen(true);
-                                                    }                               
-}
+  const flightDetails:FieldValues["flightDetails"]=data.flightDetails
+const formattedData:Flight={
+  ...data,
+  booked:true,
+  departure:flightDetails[0].departure,
+  arrival:flightDetails[flightDetails.length-1].arrival,
+  stops:flightDetails.length-1,
+  origin:flightDetails[0].origin,
+  destination:flightDetails[flightDetails.length-1].destination,
+  airline:flightDetails.map((detail)=>(detail.airline.iata)),
+  flightNumber:flightDetails.map((detail)=>(detail.flightNumber)),
+  flightDetails:flightDetails.map((details)=>({
+airline:details.airline.iata,
+cityFrom:details.origin.name,
+cityTo:details.destination.name,
+flyFrom:details.origin.iata,
+flyTo:details.destination.iata,
+local_arrival:details.arrival,
+local_departure:details.departure,
+utc_arrival:details.arrival,
+utc_departure:details.departure,
+return:0
+}))
 
+
+}
+ if(data.flightDetails.some((detail)=>detail.origin.name===""||!detail?.origin?.name)){
+  const index=data.flightDetails.findIndex((detail)=>detail.origin.name===""||!detail?.origin?.name)
+  if(index!==-1){
+    setError(`flightDetails.${index}.origin`,{message:t("errors.originReq")})
+    return
+  }
+ }if(data.flightDetails.some((detail)=>detail.destination.name===""||!detail?.destination?.name)){
+  const index=data.flightDetails.findIndex((detail)=>detail.destination.name===""||!detail?.destination?.name)
+  if(index!==-1){
+    setError(`flightDetails.${index}.destination`,{message:t("errors.dstReq")})
+    return
+  } 
+ }if( data.flightDetails.some((detail)=>detail.airline.iata===""||!detail?.airline?.iata) ){
+   const index=data.flightDetails.findIndex((detail)=>detail.airline.iata===""||!detail?.airline?.iata)
+   if(index!==-1){
+   setError(`flightDetails.${index}.airline`,{message:t("errors.airlineReq")})
+     return
+   }
+ }
+    if(!data.flightDetails.some((detail)=>!detail.departure)){
+      const index=data.flightDetails.findIndex((detail)=>!detail.departure)
+      if(index!==-1){
+        setError(`flightDetails.${index}.departure`,{message:t("errors.startTimeReq")})
+        return
+      }
+                 
+                     }  if(!data.flightDetails.some((detail)=>!detail.arrival)){
+                      const index=data.flightDetails.findIndex((detail)=>!detail.arrival)
+                      if(index!==-1){
+                        setError(`flightDetails.${index}.arrival`,{message:t("errors.endTimeReq")})
+                        return
+                      }
+                             }if(!data.position){
+                                                 setError('position',{message:t("errors.typeReq")})
+                                                 return
+                                                     }
+                                                     
+                                                     
+                                                     if(props.plan){
+                                                         mutate({flight:formattedData,planId:props.plan._id}) 
+                                                     }else{
+                                                         setFlightData(formattedData);
+                                                         setOpen(true);
+                                                     }                               
+}
 
   return (
     <>
-    <Card>
+    <Card sx={{overflowY:"scroll"}}>
         <CardHeader sx={{textAlign:'center'}} title={t("header")}></CardHeader>
         <CardContent sx={{display:'flex',justifyContent:'center'}} >
             
 <form style={{display:'flex',flexDirection:'column',gap:'30px',maxWidth:"500px"}} onSubmit={handleSubmit((data)=>{submitHandler(data)})}>
-    <Box justifyContent={"center"} gap={3} display="flex"  >
 
-<FormControl fullWidth >
-    <ToolTip title={t("departionTooltip")} right='-5%' top='-20%'>
-     <Autocomplete isOptionEqualToValue={(option,value)=>option.iata===value.iata} onChange={(e,value)=>{changeHandler('origin',value)}}   options={airportsData??[]} getOptionLabel={(option)=>option.name} renderOption={(props, option) => 
-        {
-        return(
-        <Box component="li"  {...props}>
-          <option value={option.iata}>
-          {option.name}
-          </option>
-          
-        </Box>
-      )}
-    }  renderInput={(params)=><TextField   onChange={autoCompleteHandler}   label={t("origin")} {...params}  />} /> 
-   </ToolTip>
-   {formState.errors.origin&& <FormHelperText sx={{color:'red'}}>{formState.errors.origin.message}</FormHelperText>}
-</FormControl>
-<FormControl fullWidth>
-<ToolTip title={t("arrivalTooltip")} right='-5%' top='-20%'>
- <Autocomplete isOptionEqualToValue={(option,value)=>option.iata===value.iata} onChange={(e,value)=>{changeHandler('destination',value)}}   options={airportsData??[]} getOptionLabel={(option)=>option.name} renderOption={(props, option) => 
-        {
-        return(
-        <Box component="li"  {...props}>
-          <option value={option.iata}>
-          {option.name}
-          </option>
-          
-        </Box>
-      )}
-    }  renderInput={(params)=><TextField  onChange={autoCompleteHandler}   label={t("destination")} {...params}  />} /> 
-</ToolTip>
-{formState.errors.destination&& <FormHelperText sx={{color:'red'}}>{formState.errors.destination.message}</FormHelperText>}
-</FormControl>
+{getValues("flightDetails").map((flight,index)=>
+<SingleFlightForm clearErrors={clearErrors} key={index} index={index} setValue={setValue} control={control} register={register} formState={formState}  />
+)}
+<ButtonGroup fullWidth>
+<Button disabled={getValues("flightDetails").length<=1} onClick={removeStop}  sx={{textTransform:"capitalize"}}>{t("removeStop")} -</Button>
+<Button onClick={addStop}  sx={{textTransform:"capitalize"}}>{t("addStop")} +</Button>
 
-</Box>
- <Box justifyContent={"center"} gap={3} display="flex"  >
-<FormControl fullWidth>
-    <DateTimeInput name='start' value={new Date()}  control={control} label={t("departure")} />
-</FormControl>
-<FormControl fullWidth>
-<DateTimeInput name='end' value={new Date()}   control={control} label={t("arrival")} />
-</FormControl>
-</Box> 
-<FormControl fullWidth>
-<Autocomplete onChange={(e,value)=>{changeHandler('airline',value)}} isOptionEqualToValue={(option,value)=>option.iata===value.iata}  getOptionLabel={(option:{name:string,iata:string,country:string})=> option.name+" "+ option.iata} options={allAirlines??[]} renderInput={(params)=><TextField   label={t("airline")} {...params}  />} renderOption={(props, option) => 
-        {
-        return(
-        <Box key={option.name}    component="li" sx={{ '& > img': { mr: 2, flexShrink: 0 } }}  {...props}>
-           <Image
-        loading="lazy"
-        width="60"
-        height={'30'}
-       src={`https://daisycon.io/images/airline/?width=60&height=30&color=ffffff&iata=${option.iata}`}
-        
-        alt=""
-      /> 
-          <option  value={option.iata}>
-          
-          {option.name}
-          </option>
-          
-        </Box>
-      )}} />
-      {formState.errors.airline&& <FormHelperText sx={{color:'red'}}>{formState.errors.airline.message}</FormHelperText>}
-</FormControl>
-<Box justifyContent={"center"} gap={3} display="flex"   >
+</ButtonGroup>
 
 <FormControl fullWidth>
-<TextField label={t("flightNum")} {...register('flightNumber',{required:t("errors.flightNumReq")})} />
+<TextField label={t("price")} type={'number'} {...register('price',{valueAsNumber:true,min:{value:0,message:t("priceReq")}})} />
 </FormControl>
 <FormControl fullWidth>
-<TextField label={t("price")} type={'number'} {...register('price',{valueAsNumber:true})} />
-</FormControl>
-
-</Box>
-<FormControl fullWidth    >
 <FormLabel  id="demo-radio-buttons-group-label">{t("type")}</FormLabel>
 <ToolTip title={t("positionTooltip")}>
 <RadioGroup  name="radio-buttons-group"   defaultValue={'start'} sx={{justifyContent:'center'}}   row >

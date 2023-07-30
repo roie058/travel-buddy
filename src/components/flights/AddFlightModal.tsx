@@ -8,21 +8,30 @@ import { addNewFlight } from '@/util/fetchers'
 import { queryClient } from '@/pages/_app'
 import { AlertColor } from '@mui/material'
 import { useTranslation } from 'react-i18next'
+import { RouteObj } from './ResultCard'
+import { Result } from './FlightResult'
 
 
 export interface Flight {
     _id?:string,
-    airline:{name:string, iata: string, country:string}
-    ,destination:{iata:string, name: string, lat: number, lng: number},
-     end:Date,
-     flightNumber: string,
-     origin:{iata: string, name: string, lat: number, lng: number}
-     ,start:Date,position:string,price?:number
-  
+    addedMethod:"manual"|"kiwi"
+     flightNumber:string[],
+     booked:boolean,
+     departure:Date,
+     arrival:Date,
+     airline:string[],
+     flightId?:string
+     bookLink?:string
+     stops:number|"direct",
+     origin:{lat:number,lng:number,iata:string,name:string},
+     destination:{lat:number,lng:number,iata:string,name:string},
+     position:string,
+     price?:number,
+     flightDetails:RouteObj[]
     }
 
 
-type Props = {open:boolean,onClose:()=>void,flight?:Flight,plans:Plan[],  setSnackBar:(message: string, severity: AlertColor) => void}
+type Props = {open:boolean,onClose:()=>void,flight?:Flight|Result,plans:Plan[],  setSnackBar:(message: string, severity: AlertColor) => void}
 
 const AddFlightModal = (props: Props) => {
 const {t}=useTranslation("flights")

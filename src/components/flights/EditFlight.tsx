@@ -1,20 +1,28 @@
-import { AlertColor, Box, CircularProgress, FormControl, Modal, TextField, Typography } from '@mui/material'
-import React from 'react'
+import { AlertColor, Box, Button, ButtonGroup, CircularProgress, FormControl, FormControlLabel, FormHelperText, FormLabel, Modal, Radio, RadioGroup, Switch, TextField, Typography } from '@mui/material'
+import React, { MouseEventHandler } from 'react'
 import UiButton from '../ui/buttons/UiButton'
 import { useTranslation } from 'react-i18next'
-import { FieldValues, useForm } from 'react-hook-form'
+import { useFieldArray, useForm } from 'react-hook-form'
 import { useMutation } from '@tanstack/react-query'
 import { Flight } from './AddFlightModal'
 import { Plan } from '../pageCompnents/Schedule'
 import { queryClient } from '@/pages/_app'
 import { editFlight } from '@/util/fetchers'
-import DateTimeInput from '../ui/inputs/DateTimeInput'
+import {useRouter} from 'next/router'
+import ToolTip from '../ui/ToolTip'
 
-type Props = {open:boolean,onClose:() => void,flight:Flight,plan:Plan,setSnackBar:(text:string,alart:AlertColor)=>void}
+import SingleFlightEditForm from './SingleFlightEditForm'
+import { RouteObj } from './ResultCard'
+import axios from 'axios'
 
-const EditFlight = ({open,onClose,flight,plan,setSnackBar}: Props) => {
-    const {register,handleSubmit,control}=useForm({defaultValues:{flightNumber:flight.flightNumber,start:new Date(flight.start)?? new Date(),end:new Date(flight.end)?? new Date(),price:flight.price,place:flight}})
+
+type Props = {onClose:() => void,flight:Flight,plan:Plan,setSnackBar:(text:string,alart:AlertColor)=>void}
+
+const EditFlight = ({onClose,flight,plan,setSnackBar}: Props) => {
+    const {register,handleSubmit,control,getValues,setValue,formState,setError}=useForm({defaultValues:{...flight,departure:new Date(flight.departure),arrival:new Date(flight.arrival)}})
    const {t}=useTranslation("flights")
+const {locale}=useRouter()
+   const { update,remove } = useFieldArray({name:"flightDetails",control:control});
 
     const {mutate,isLoading}=useMutation({mutationFn: editFlight,
 onSuccess:()=>{
@@ -29,55 +37,121 @@ onError:()=>{
 
     })
 
-    const onSubmit=async(data:FieldValues)=>{
-    mutate({flight:data,planId:plan._id,flightId:flight._id})   
+    const onSubmit=async(data:Flight)=>{
+
+const formattedData:Flight={
+...data,
+arrival:data.flightDetails[data.flightDetails.length-1].local_arrival,
+departure:data.flightDetails[0].local_departure,
+flightDetails:data.flightDetails.map((detail:RouteObj)=>({...detail,utc_arrival:detail.local_arrival,utc_departure:detail.local_departure}))
+}
+
+if(data.flightDetails.some((detail)=>detail.flyFrom==""||!detail?.flyFrom)){
+  const index=data.flightDetails.findIndex((detail)=>detail.flyFrom===""||!detail?.flyFrom)
+  if(index!==-1){
+    setError(`flightDetails.${index}.flyFrom`,{message:t("errors.originReq")})
+    return
+  }
+ }if(data.flightDetails.some((detail)=>detail.flyTo===""||!detail?.flyTo)){
+  const index=data.flightDetails.findIndex((detail)=>detail.flyTo===""||!detail?.flyTo)
+  if(index!==-1){
+    setError(`flightDetails.${index}.flyTo`,{message:t("errors.dstReq")})
+    return
+  } 
+ }if( data.flightDetails.some((detail)=>detail.airline===""||!detail?.airline) ){
+   const index=data.flightDetails.findIndex((detail)=>detail.airline===""||!detail?.airline)
+   if(index!==-1){
+   setError(`flightDetails.${index}.airline`,{message:t("errors.airlineReq")})
+     return
+   }
+ }
+    if(!data.flightDetails.some((detail)=>!detail.local_departure)){
+      const index=data.flightDetails.findIndex((detail)=>!detail.local_departure)
+      if(index!==-1){
+        setError(`flightDetails.${index}.local_departure`,{message:t("errors.startTimeReq")})
+        return
+      }
+                 
+                     }  if(!data.flightDetails.some((detail)=>!detail.local_arrival)){
+                      const index=data.flightDetails.findIndex((detail)=>!detail.local_arrival)
+                      if(index!==-1){
+                        setError(`flightDetails.${index}.local_arrival`,{message:t("errors.endTimeReq")})
+                        return
+                      }
+                             }if(!data.position){
+                                                 setError('position',{message:t("errors.typeReq")})
+                                                 return
+                                                     }
+
+    mutate({flight:formattedData,planId:plan._id,flightId:flight._id})   
+        }
+
+        const addStop:MouseEventHandler=(e)=>{
+          e.preventDefault()
+          const array= getValues("flightDetails")
+          update(array.length,{airline:"",cityFrom:"",cityTo:"",flyFrom:"",flyTo:"",local_arrival:new Date(),local_departure:new Date(),utc_arrival:new Date(),utc_departure:new Date(),return:0
+          })
+        
+        }
+        const removeStop:MouseEventHandler= async(e)=>{
+          e.preventDefault()
+          const array= getValues("flightDetails")
+          
+          remove(array.length-1)
+          setValue("arrival",array[array.length-2].local_arrival)
+          const {data} =await axios.get(`https://api.tequila.kiwi.com/locations/query`,{headers:{apikey:process?.env?.KIWI_KEY},params:{term:array[array.length-2].cityTo,location_types:"airport",locale:locale==="he"?"iw-IL":"en-US"}})
+          const destination=data.locations[0]
+          getValues("airline").pop()
+          getValues("flightNumber").pop()
+          setValue("destination",{iata:array[array.length-2].flyTo,name:destination.name,lat:destination.lat,lng:destination.lon})
         }
 
 
 
-
   return (
-    <Modal  open={open} sx={{zIndex:'10'}} onClose={onClose}>
-        <Box sx={ {position: 'absolute' as 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: '60%',
-    maxWidth:'600px',
+
+        <Box sx={ {
     bgcolor: 'white',
-   borderRadius:'30px',
     boxShadow: 24,
     p: 4,}}>
+      <Button onClick={onClose} sx={{textTransform:"capitalize"}} >{t("back")}</Button>
       <Typography id="modal-modal-title" variant="h6" component="h2">
         {t("editHeader")} <span style={{color:"turquoise",fontWeight:'bold',textDecoration:'underline'}}>{flight.destination.name}</span>
       </Typography>
       <form style={{display:'flex',flexDirection:'column',gap:'30px'}} onSubmit={handleSubmit((data)=>{onSubmit(data)})}>
 
- <Box justifyContent={"center"} gap={3} display="flex"  >
-<FormControl fullWidth>
-    <DateTimeInput name='start' value={flight.start}  control={control} label={t("departure")} />
-</FormControl>
-<FormControl fullWidth>
-<DateTimeInput name='end' value={flight.end}  control={control} label={t("arrival")} />
-</FormControl>
-</Box> 
+      {getValues("flightDetails").map((flight,index)=>
+<SingleFlightEditForm getValues={getValues} key={index} index={index} setValue={setValue} control={control} register={register} formState={formState}  />
+)}
+<ButtonGroup fullWidth>
+<Button disabled={getValues("flightDetails").length<=1} onClick={removeStop}  sx={{textTransform:"capitalize"}}>{t("removeStop")} -</Button>
+<Button onClick={addStop}  sx={{textTransform:"capitalize"}}>{t("addStop")} +</Button>
 
-<Box justifyContent={"center"} gap={3} display="flex"   >
+</ButtonGroup>
 
 <FormControl fullWidth>
-<TextField label={t("flightNum")} {...register('flightNumber',{required:t("errors.flightNumReq")})} />
+<TextField label={t("price")} type={'number'} {...register('price',{valueAsNumber:true,required:t("priceReq"),min:{value:0,message:t("priceReq")}})} />
+{formState.errors.price&& <FormHelperText sx={{color:"red"}}>{formState.errors.price.message}</FormHelperText>}
 </FormControl>
 <FormControl fullWidth>
-<TextField label={t("price")} type={'number'} {...register('price',{valueAsNumber:true})} />
+<FormLabel  id="demo-radio-buttons-group-label">{t("type")}</FormLabel>
+<ToolTip title={t("positionTooltip")}>
+<RadioGroup  name="radio-buttons-group"   defaultValue={'start'} sx={{justifyContent:'center'}}   row >
+    <FormControlLabel {...register('position')}  defaultChecked value="start" control={<Radio />} label={t("start")} />
+    <FormControlLabel {...register('position')} value="end"  control={<Radio />} label={t("end")}/>
+    <FormControlLabel {...register('position')} value="other"  control={<Radio />} label={t("other")} />
+</RadioGroup>
+</ToolTip>
+{formState.errors.position&& <FormHelperText sx={{color:'red'}}>{formState.errors.position.message}</FormHelperText>}
 </FormControl>
-
-</Box>
-
+<FormControl>
+<FormControlLabel control={<Switch defaultChecked={formState.defaultValues.booked} {...register("booked")} />} label={t("booked")} />
+</FormControl>
 
 {isLoading?<CircularProgress size={'2rem'}/>:<UiButton submit size='small' clickFn={()=>{}} >{t("editBtn")}</UiButton>}
 
 </form>
-    </Box></Modal>
+    </Box>
   )
 }
 

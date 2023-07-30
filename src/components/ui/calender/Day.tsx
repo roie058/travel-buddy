@@ -46,9 +46,9 @@ const openHandler=()=>{
 
 useEffect(() => {
   setDay(props.day)
-  setStartFlight( props.plan.flights.find((flight)=>flight.position ==='start'))
-  setEndFlight( props.plan.flights.find((flight)=>flight.position ==='end'))
-  const middleFlights=props.plan.flights.filter((flight)=>flight.position==='other'&&dayjs(flight.start).diff(props.plan.days[props.index].date,'day')==0)
+  setStartFlight( props.plan.flights.find((flight)=>flight.position ==='start'&&flight.booked))
+  setEndFlight( props.plan.flights.find((flight)=>flight.position ==='end'&&flight.booked))
+  const middleFlights=props.plan.flights.filter((flight)=>flight.position==='other'&&flight.booked&&dayjs(flight.departure).diff(props.plan.days[props.index].date,'day')==0)
   setMiddleFlight( middleFlights);
   props.plan.hotels.forEach((hotel)=>{
     const reservationDates=enumerateDaysBetweenDates(hotel.start,hotel.end);

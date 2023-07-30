@@ -24,7 +24,7 @@ const flights = (props: Props) => {
   <Flights  />
   <Footer/>
   <Script  onError={(e)=>{console.log(e);
-  }}   src="https://widgets.skyscanner.net/widget-server/js/loader.js" defer={false}  strategy="lazyOnload" async />
+  }}   src="https://widgets.skyscanner.net/widget-server/js/loader.js" defer={false}  strategy="lazyOnload" />
     </>
   )
 }

@@ -18,6 +18,9 @@ const nextConfig = {
     MAPS_API_KEY: process.env.MAPS_API_KEY,
     GOOGLE_MAPS_LIBERIES: process.env.GOOGLE_MAPS_LIBERIES,
     RAPID_KEY: process.env.RAPID_KEY,
+    RESEND_KEY: process.env.RESEND_KEY,
+    EMAIL_COMPANY: process.env.EMAIL_COMPANY,
+    KIWI_KEY: process.env.KIWI_KEY,
   },
   images: {
     remotePatterns: [
@@ -61,6 +64,11 @@ const nextConfig = {
         hostname: "source.unsplash.com",
         pathname: "/**",
       },
+      {
+        protocol: "https",
+        hostname: "images.kiwi.com",
+        pathname: "/**",
+      },
     ],
     domains: [
       "media-cdn.tripadvisor.com",
@@ -71,6 +79,7 @@ const nextConfig = {
       "daisycon.io",
       "flagcdn.com",
       "source.unsplash.com",
+      "images.kiwi.com",
     ],
   },
 };
