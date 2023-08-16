@@ -22,18 +22,17 @@ const {locale}=useRouter()
 const {data:session}:{data:NewSesstion}=useSession()
 const router=useRouter()
 const isXl=useMediaQuery("(max-width:1350px)")
-
 const isSmall=useMediaQuery("(max-width:600px)")
 
 
-const prefetchTodos = async () => {
-  if(session)await queryClient.prefetchQuery({queryKey:['plans'],queryFn:()=>getPlans(session)})
-}
-useEffect(()=>{
-  if(session){
-    prefetchTodos()
+ const prefetchPlans = async () => {
+   await queryClient.prefetchQuery({queryKey:['plans'],queryFn:()=>getPlans(session),retry:false})
+ }
+ useEffect(()=>{
+   if(session){
+     prefetchPlans()
   }
-},[session])
+ },[session])
 
 
   return (
