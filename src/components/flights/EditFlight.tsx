@@ -136,8 +136,8 @@ if(data.flightDetails.some((detail)=>detail.flyFrom==""||!detail?.flyFrom)){
 <FormControl fullWidth>
 <FormLabel  id="demo-radio-buttons-group-label">{t("type")}</FormLabel>
 <ToolTip title={t("positionTooltip")}>
-<RadioGroup  name="radio-buttons-group"   defaultValue={'start'} sx={{justifyContent:'center'}}   row >
-    <FormControlLabel {...register('position')}  defaultChecked value="start" control={<Radio />} label={t("start")} />
+<RadioGroup  name="radio-buttons-group"   defaultValue={flight.position} sx={{justifyContent:'center'}}   row >
+    <FormControlLabel {...register('position')}   value="start" control={<Radio />} label={t("start")} />
     <FormControlLabel {...register('position')} value="end"  control={<Radio />} label={t("end")}/>
     <FormControlLabel {...register('position')} value="other"  control={<Radio />} label={t("other")} />
 </RadioGroup>

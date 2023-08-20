@@ -148,7 +148,7 @@ setSelectedFlight({open:true,flight,plan:plan})
         </Box>
         <ButtonGroup  sx={{borderColor:"gray",marginRight:"10%"}}>
       <Button onClick={()=>{deleteFlightHandler(flight,index)}} sx={{flexGrow:'0',textAlign:'center',borderColor:"lightGray",justifyContent:'center'}}><Image alt='delete' fill sizes='30px' src={DeleteIcon}/></Button>
-     {flight.addedMethod === "manual" ? <Button onClick={()=>{console.log(props.plan.flights);editOpen(flight)}} sx={{flexGrow:'0',borderColor:"gray",width:"30px",height:'30px',padding:'0',textAlign:'center',justifyContent:'center'}}><EditIcon width={30} height={30}/></Button>:
+     {flight.addedMethod === "manual" ? <Button onClick={()=>{editOpen(flight)}} sx={{flexGrow:'0',borderColor:"gray",width:"30px",height:'30px',padding:'0',textAlign:'center',justifyContent:'center'}}><EditIcon width={30} height={30}/></Button>:
      <Button onClick={()=>{bookFlightHandler(flight,index) }} sx={{ color:flight.booked? "gray" :"info",textTransform:"capitalize",flexGrow:'0',borderColor:"lightGray",textAlign:'center',justifyContent:'center'}}>{flight.booked?t("booked"):t("book")}</Button>
      }
 
