@@ -20,7 +20,7 @@ import { queryClient } from '@/pages/_app'
 import {useRouter} from 'next/router'
 type Props = {plan:Plan}
 
-const options=[{value:'car',label:'car',he:'רכב'},{value:'public transport',label:'public transport',he:'תחבורה ציבורית'},{value:'insurance',label:'insurance',he:'ביטוח'},{value:'gifts',label:'gifts',he:'מתנות'},{value:'shopping',label:'shopping',he:'קניות'},{value:'attractions',label:'attractions',he:'אטרקציות'},{value:'food',label:'food',he:'אוכל'},{value:'restaurants',label:'restaurants',he:'מסעדות'},{value:'other',label:'other',he:'אחר'}]
+const options=[{value:'car',label:'car',he:'רכב'},{value:'public transport',label:'public transport',he:'תחבורה ציבורית'},{value:'insurance',label:'insurance',he:'ביטוח'},{value:'gifts',label:'gifts',he:'מתנות'},{value:'shopping',label:'shopping',he:'קניות'},{value:'attractions',label:'attractions',he:'אטרקציות'},{value:'food',label:'food',he:'אוכל'},{value:'restaurants',label:'restaurants',he:'מסעדות'},{value:'other',label:'other',he:'אחר'},{value:'Note',label:'Note',he:'פתק'}]
 const BudgetBoard = (props: Props) => {
   const [budget, setBudget] = useState<{transportation:number,budget:number,expenses:number,hotels:number,stops:number}>()
   const [totalCost, setTotalCost] = useState<number>()
@@ -61,6 +61,7 @@ const deleteExpenseHandler=async (id:string|undefined,type:"transportation"|'exp
   if(!id)return;
   mutate({planId:props?.plan?._id,expenseId:id,expenseType:type})
 }
+
 
 
 
