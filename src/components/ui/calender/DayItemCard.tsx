@@ -62,7 +62,7 @@ const typeInDay={breakfest:<BreakfestIcon  width={75} height={75}/>,lunch:<Lunch
             <Typography variant='h5' fontSize={"1rem"} fontWeight="bold">{props.listItem.place.name} </Typography>
             {!props.minify&&  <p className={styles.address}><Pin height={10} width={10} /> {props.listItem.place.address}</p>}
         
-    <Button sx={{textTransform:'capitalize',backgroundColor:'white',border:`1px solid ${color}`,borderRadius:'30px',paddingX:2,fontWeight:'bold',color:color}} onClick={openHandler}>{t("infoBtn")}</Button>
+    <Button sx={{whiteSpace:"nowrap",textTransform:'capitalize',backgroundColor:'white',border:`1px solid ${color}`,borderRadius:'30px',paddingX:2,fontWeight:'bold',color:color}} onClick={openHandler}>{t("infoBtn")}</Button>
         </CardContent>
        
           </Card>

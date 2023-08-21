@@ -127,7 +127,7 @@ mutate(list)
     
      <DragDropContext onDragEnd={handleDragEnd} >
      
-        <Box sx={{justifyContent:'center'}} paddingTop={'5%'} display={'flex'} flexWrap={"wrap"}  >
+        <Box sx={{justifyContent:'center'}} paddingTop={'2%'} display={'flex'} flexWrap={"wrap"}  >
         {list&& list.days.map((date:Days,i)=>{
        
       return  <Day key={i} plan={list}  index={i} day={date} />
