@@ -35,7 +35,6 @@ const{t}=useTranslation("hotels")
 const {mutate}=useMutation({mutationFn: deleteReservation,
   onMutate:({index})=>{
     props.plan?.hotels.splice(index,1)
-
   },
 onSuccess:()=>{
   setSnackBar(t("snack.removeReservation"),"error")
@@ -49,6 +48,8 @@ onError:()=>{
 
 
 const deleteHotelHandler = async (hotel:Hotel,index:number)=>{
+
+
 mutate({planId:props.plan._id,hotelId:hotel._id,index})
 
 }

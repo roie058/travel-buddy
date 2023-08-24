@@ -21,8 +21,8 @@ const {planId,flightId}=req.query
 try {
     // @ts-ignore
 const plan=await Plan.findById(planId)
-const flightIndex=plan.flights.findIndex((flight)=>flight._id===flightId)
-plan.flights.splice(flightIndex,1)
+const flightList=plan.flights.filter((flight)=>flight._id!=flightId)
+plan.flights=flightList
 await plan.save()
 
          return res.status(201).json({success:true,plan})

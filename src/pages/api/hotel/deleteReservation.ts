@@ -23,8 +23,9 @@ const {planId,hotelId}=req.query
 try {
     // @ts-ignore
 const plan=await Plan.findById(planId)
-const hotelIndex=plan.hotels.findIndex((hotel:Hotel)=>hotel._id===hotelId)
-plan.hotels.splice(hotelIndex,1)
+
+plan.hotels=plan.hotels.filter((hotel:Hotel)=> hotelId!=hotel._id)
+
 await plan.save()
 
          return res.status(201).json({success:true,plan})

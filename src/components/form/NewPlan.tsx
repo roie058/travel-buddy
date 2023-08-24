@@ -53,7 +53,7 @@ const  [isForm,setIsForm]=useState(false)
   return (<>
   {isForm?
  <NewPlanForm/> :  
-  <BeforePrompt />
+  <BeforePrompt setIsForm={setIsForm} />
   }  
   </> 
   )

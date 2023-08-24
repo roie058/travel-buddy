@@ -52,13 +52,13 @@ useEffect(() => {
   setMiddleFlight( middleFlights);
   props.plan.hotels.forEach((hotel)=>{
     const reservationDates=enumerateDaysBetweenDates(hotel.start,hotel.end);
-     if(new Set(reservationDates).has(props.day.date)){
-      if(reservationDates[0]===props.day.date||reservationDates[reservationDates.length-1]!==props.day.date){
+     if(new Set(reservationDates).has(props.day.date)){     
+      if(reservationDates[reservationDates.length-1]!==props.day.date){
         setEndHotel(hotel)
-      }else{
+      }
+      if(reservationDates[0]!==props.day.date){
         setStartHotel(hotel)
       }
-      
      }
 
   })
