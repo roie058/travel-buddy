@@ -39,6 +39,7 @@ import { postNewPlan } from '@/util/fetchers'
   {icon:"💼",en:"Business",he:"עסקים",value:'Business'},
   {icon:"💵",en:"Budget",he:"תקציב נמוך",value:'Budget'},
   {icon:"🎒",en:"Backpacking",he:"תרמילאות",value:'Backpacking'},
+  {icon:"🏙️",en:"City",he:"עיר",value:'City'},
   {icon:"🗿",en:'Culture & History',he:"תרבות והיסטוריה",value:'Culture & History'},
   {icon:"🚴🏼‍♂️",en:"Cycling",he:"אופניים",value:'Cycling'},
   {icon:"🤿",en:'Diving',he:"צלילה",value:'Diving'},

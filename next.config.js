@@ -21,6 +21,7 @@ const nextConfig = {
     RESEND_KEY: process.env.RESEND_KEY,
     EMAIL_COMPANY: process.env.EMAIL_COMPANY,
     KIWI_KEY: process.env.KIWI_KEY,
+    OPENAI_KEY: process.env.OPENAI_KEY,
   },
   images: {
     remotePatterns: [
