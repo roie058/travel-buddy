@@ -87,7 +87,7 @@ mutate(newData)
      <FormControl fullWidth >
       <InputLabel id='duration'>Duration</InputLabel>
       <Select name='duration' {...register("duration")} defaultValue={"Weekend"} label="Duration"  labelId='duration' aria-label='Duration'  >
-        {['1-4 days',"Weekend","Long weekend","One week","Two weeks",'Three weeks','One month','Two months+'].map((value)=><MenuItem value={value} >{value}</MenuItem>)}
+        {['1-4 days',"Weekend","Long weekend","One week","Two weeks",'Three weeks','One month','Two months+'].map((value)=><MenuItem key={value} value={value} >{value}</MenuItem>)}
       </Select>
      </FormControl>
   </Box>
@@ -124,7 +124,7 @@ mutate(newData)
 <FormControl sx={{width:500}} >
 <InputLabel id='climate' >Climate</InputLabel>
   <Select labelId='Climate' {...register("climate")} defaultValue={"humid continental"} label={"Climate"} >
-   { [{value:"humid continental",label:"Humid continental"},{value:"tropical",label:"Tropical"},{value:"desert",label:"Desert"},{value:"mediterranean",label:"Mediterranean"},{value:"savanna",label:"Savanna"},{value:"alpine",label:"Alpine"},].map((option,i)=><MenuItem  value={option.value}>{option.label}</MenuItem>)}
+   { [{value:"humid continental",label:"Humid continental"},{value:"tropical",label:"Tropical"},{value:"desert",label:"Desert"},{value:"mediterranean",label:"Mediterranean"},{value:"savanna",label:"Savanna"},{value:"alpine",label:"Alpine"},].map((option,i)=><MenuItem key={option.label}  value={option.value}>{option.label}</MenuItem>)}
   </Select>
 </FormControl>
 {isLoading? <CircularProgress/> :<Button type="submit">Submit</Button>}
