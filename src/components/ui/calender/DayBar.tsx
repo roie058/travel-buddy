@@ -40,7 +40,6 @@ const[dayOfWeek,setDayOfWeek ]=useState(weekDay(props.date,locale))
 const[day,setDay ]=useState(props.date.split('/')[1])
 
 const mdScreen=useMediaQuery('(max-width:1200px)')
-console.log(props.day);
 
 
   return (

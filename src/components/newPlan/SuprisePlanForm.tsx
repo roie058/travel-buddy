@@ -3,7 +3,7 @@ import { Box, Button, ButtonGroup, Card, CardActionArea, CardActions, CardConten
 import React, { useState } from 'react'
 import { FieldValues, useForm } from 'react-hook-form'
 import Image from 'next/dist/client/image'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 import MonthInput from '../ui/inputs/MonthInput'
 import SelectInput from '../ui/inputs/Select'
 import { tripCat } from './NewPlanForm'
@@ -20,7 +20,7 @@ type Props = {}
 const marks=[{value:0,label:"Low"},{value:0.5,label:"Medium"},{value:1,label:"High"}]
 const SuprisePlanForm = (props: Props) => {
   const {t}=useTranslation("form")
-  const {register,getValues,setValue,control,handleSubmit}=useForm({defaultValues:{type:[],company:"Solo",budgetLevel:0.5,date:dayjs(new Date()).format("MMMM YYYY"),duration:"Weekend",climate:"humid continental"}})
+  const {register,setValue,control,handleSubmit}=useForm({defaultValues:{type:[],company:"Solo",budgetLevel:0.5,date:dayjs(new Date()).format("MMMM YYYY"),duration:"Weekend",climate:"humid continental"}})
   const [step, setStep] = useState(0)
   const [resultList, setResultList] = useState<[{description:string,destination:string}]>()
   const {setSnackBar,snackBarProps}=useSnackBar()
@@ -46,9 +46,6 @@ const submitFn= async (data:FieldValues)=>{
 mutate(newData)
 }
  
-
-
-  console.log(getValues());
   
   return (
     <>
@@ -79,7 +76,7 @@ mutate(newData)
     })}>
     <Box sx={{height:"calc(100vh - 60px)",mx:"10%"}}  textAlign={"center"} display={"flex"} flexDirection={"column"} justifyContent={"center"} alignItems={"center"}>
     
-    <Box  width={"600px"} maxWidth={"100%"}  minHeight={"25vh"} height={"100%"} display={step===0? 'flex' : 'none'} flexDirection={"column"} justifyContent={"center"} rowGap={"25px"}>
+    <Box  width={"600px"} maxWidth={"100%"}  minHeight={"25vh"} height={"600px"} display={step===0? 'flex' : 'none'} flexDirection={"column"} justifyContent={"center"} rowGap={"25px"}>
     <Typography variant="h1" fontSize={"3rem"}>When are we going?</Typography>
      <FormControl >
       <MonthInput onChange={(value)=>{setValue("date",value.format('MMMM YYYY'))}} label='Select Month' name='date' control={control}/>
@@ -91,7 +88,7 @@ mutate(newData)
       </Select>
      </FormControl>
   </Box>
-  <Box  width={"600px"} maxWidth={"100%"}  minHeight={"25vh"} height={"100%"} display={step===1? 'flex' : 'none'} flexDirection={"column"} justifyContent={"center"} rowGap={"25px"}>
+  <Box  width={"600px"} maxWidth={"100%"}  minHeight={"25vh"} height={"600px"} display={step===1? 'flex' : 'none'} flexDirection={"column"} justifyContent={"center"} rowGap={"25px"}>
     <Typography variant="h1" fontSize={"3rem"}>Who are going?</Typography>
      <FormControl >
      <RadioGroup defaultValue={"Solo"} >
@@ -110,13 +107,13 @@ mutate(newData)
 </RadioGroup>
      </FormControl>
   </Box>
-  <Box  width={"600px"} maxWidth={"100%"} minWidth={"100%"} minHeight={"25vh"} height={"100%"} display={step===2? 'flex' : 'none'} flexDirection={"column"} justifyContent={"center"} alignItems={"center"} rowGap={"25px"}>
+  <Box  width={"600px"} maxWidth={"100%"} minWidth={"100%"} minHeight={"25vh"} height={"600px"} display={step===2? 'flex' : 'none'} flexDirection={"column"} justifyContent={"center"} alignItems={"center"} rowGap={"25px"}>
     <Typography variant="h1" fontSize={"3rem"}>What is your budget?</Typography>
      <FormControl sx={{width:'250px'}} >
 <Slider  marks={marks} defaultValue={0.5}  {...register('budgetLevel')} min={0} max={1} step={0.5} />
      </FormControl>
   </Box>
-  <Box  width={"600px"} maxWidth={"100%"} minWidth={"100%"} minHeight={"25vh"} height={"100%"} display={step===3? 'flex' : 'none'} flexDirection={"column"} justifyContent={"center"} alignItems={"center"} rowGap={"25px"}>
+  <Box  width={"600px"} maxWidth={"100%"} minWidth={"100%"} minHeight={"25vh"} height={"600px"} display={step===3? 'flex' : 'none'} flexDirection={"column"} justifyContent={"center"} alignItems={"center"} rowGap={"25px"}>
     <Typography variant="h1" fontSize={"3rem"}>Type of trip</Typography>
     <Box width={500} >
     <SelectInput  setValue={setValue}  inputRef={register}  data={tripCat} />
@@ -127,15 +124,15 @@ mutate(newData)
    { [{value:"humid continental",label:"Humid continental"},{value:"tropical",label:"Tropical"},{value:"desert",label:"Desert"},{value:"mediterranean",label:"Mediterranean"},{value:"savanna",label:"Savanna"},{value:"alpine",label:"Alpine"},].map((option,i)=><MenuItem key={option.label}  value={option.value}>{option.label}</MenuItem>)}
   </Select>
 </FormControl>
-{isLoading? <CircularProgress/> :<Button type="submit">Submit</Button>}
   </Box>
-  
-
-<ButtonGroup sx={{marginBottom:"10%"}}>
+<Box display={"flex"} flexDirection={"column"} sx={{marginBottom:"10%"}}>
+<ButtonGroup >
 <Button disabled={step===0} onClick={()=>{setStep((step)=>step-1)}}>{t("back")}</Button>
 <Button disabled={step===3} onClick={()=>{setStep((step)=>step+1)}}>{t("next")}</Button>
 </ButtonGroup>
-
+{isLoading? <CircularProgress/> :<Button disabled={step!== 3} variant="contained" type="submit">Submit</Button>}
+</Box>
+  
     </Box>
     </form>
   }

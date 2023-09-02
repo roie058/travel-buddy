@@ -3,7 +3,7 @@
 
 import PlansPage from '@/components/pageCompnents/PlansPage'
 import Head from 'next/head'
-
+import Footer from '@/components/layout/Footer'
 
 
 
@@ -24,7 +24,7 @@ export default function Plan() {
 }
 
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import Footer from '@/components/layout/Footer'
+
 
 export async function getServerSideProps({locale}){
 

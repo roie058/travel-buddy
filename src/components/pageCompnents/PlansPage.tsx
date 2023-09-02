@@ -8,6 +8,7 @@ import { CircularProgress } from '@mui/material'
 import { useQuery,useMutation} from '@tanstack/react-query'
 import { useTranslation } from 'react-i18next'
 import { deleteHandler, getPlans } from '@/util/fetchers'
+
 export default function PlansPage() {
 
 const {setSnackBar,snackBarProps}=useSnackBar()

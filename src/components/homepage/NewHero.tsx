@@ -25,8 +25,8 @@ const isXl=useMediaQuery("(max-width:1350px)")
 const isSmall=useMediaQuery("(max-width:600px)")
 
 
- const prefetchPlans = async () => {
-   await queryClient.prefetchQuery({queryKey:['plans'],queryFn:()=>getPlans(session),retry:false})
+ const prefetchPlans = () => {
+     queryClient.prefetchQuery({queryKey:['plans'],queryFn:()=>getPlans(session),retry:false})
  }
  useEffect(()=>{
    if(session){
